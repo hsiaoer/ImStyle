@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var openPhotoLib: UIButton!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var clearImageButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,11 @@ class ViewController: UIViewController {
     
     @IBAction func openLibraryAction(_ sender: Any) {
         self.openPhotoLibrary()
-        
+    }
+    
+    @IBAction func clearImage(_ sender: Any) {
+        self.imageView.image = nil
+        self.clearImageButton.isEnabled = false
     }
     
     func openPhotoLibrary() {
@@ -37,7 +42,8 @@ class ViewController: UIViewController {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            self.present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true)
+            self.clearImageButton.isEnabled = true
             
         } else {
             print("Cannot open photo library")
@@ -59,9 +65,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
             return
         }
         
-        // do something with it
+        // save to imageView
         imageView.image = image
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
