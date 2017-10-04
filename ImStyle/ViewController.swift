@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import QuartzCore
+import CoreML
 
 class ViewController: UIViewController {
     // image selection reference:
@@ -17,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var openPhotoLib: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var clearImageButton: UIButton!
+    @IBOutlet weak var styleTransferButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,18 @@ class ViewController: UIViewController {
     @IBAction func clearImage(_ sender: Any) {
         self.imageView.image = nil
         self.clearImageButton.isEnabled = false
+        self.styleTransferButton.isEnabled = false
+    }
+    
+    @IBAction func applyStyleTransfer(_ sender: Any) {
+        print("Running style transfer")
+        // disable style transfer button to prevent multiple stylings
+        self.styleTransferButton.isEnabled = false
+        
+//        let transferedImage = self.applyStyleTransfer(image: (self.imageView.image)!, model: "./Models/wave.mlmodel")
+        
+        // update image
+//        self.imageView.image = transferedImage
     }
     
     func openPhotoLibrary() {
@@ -44,11 +58,16 @@ class ViewController: UIViewController {
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
             self.present(imagePicker, animated: true)
             self.clearImageButton.isEnabled = true
+            self.styleTransferButton.isEnabled = true
             
         } else {
             print("Cannot open photo library")
             return
         }
+    }
+    
+    func applyStyleTransfer(image: UIImage, model: String) {
+        
     }
 
 }
