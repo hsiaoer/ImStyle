@@ -32,7 +32,7 @@
         <!--Image Transfer-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Image Transfer" customClass="ViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Image Transfer" customClass="ImageViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -101,6 +101,7 @@
         <!--Video Feed-->
         <scene sceneID="hh0-V3-CdF">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gaH-IX-sq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="p7U-Dw-j5H" userLabel="Video Feed" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cAa-iY-KxD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -110,7 +111,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="Aqe-L8-sn8"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gaH-IX-sq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-244" y="65"/>
         </scene>
