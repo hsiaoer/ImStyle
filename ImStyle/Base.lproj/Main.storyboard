@@ -22,7 +22,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pKE-2r-Pu5"/>
-                        <segue destination="p7U-Dw-j5H" kind="relationship" relationship="viewControllers" id="BrD-MJ-i0W"/>
+                        <segue destination="BRE-eg-EID" kind="relationship" relationship="viewControllers" id="orL-YD-MD9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -99,20 +99,56 @@
             <point key="canvasLocation" x="-244" y="-602"/>
         </scene>
         <!--Video Feed-->
-        <scene sceneID="hh0-V3-CdF">
+        <scene sceneID="eqh-Lu-IY9">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gaH-IX-sq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="p7U-Dw-j5H" userLabel="Video Feed" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cAa-iY-KxD">
+                <viewController id="BRE-eg-EID" userLabel="Video Feed" customClass="VideoFeedViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q1I-ma-Aqc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="No1-aN-WDj"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0qU-kT-YCK">
+                                <rect key="frame" x="8" y="139.5" width="359" height="359"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0qU-kT-YCK" secondAttribute="height" multiplier="1:1" id="dSF-fZ-J9r"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvZ-Fd-sDp">
+                                <rect key="frame" x="148" y="530" width="79" height="30"/>
+                                <state key="normal" title="Save Image"/>
+                                <connections>
+                                    <action selector="save_image:" destination="BRE-eg-EID" eventType="touchUpInside" id="JBM-cP-FU7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsJ-Rr-Dbl">
+                                <rect key="frame" x="114.5" y="568" width="145" height="30"/>
+                                <state key="normal" title="Toggle Style Transfer"/>
+                                <connections>
+                                    <action selector="toggle_transfer:" destination="BRE-eg-EID" eventType="touchUpInside" id="QhL-th-MuP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ybc-kP-tAC" firstAttribute="bottom" secondItem="zsJ-Rr-Dbl" secondAttribute="bottom" constant="20" id="0kx-rU-DYZ"/>
+                            <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" id="7ph-El-kSU"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="8" id="Yg9-W0-7N5"/>
+                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" id="is4-7b-3pO"/>
+                            <constraint firstItem="Ybc-kP-tAC" firstAttribute="trailing" secondItem="0qU-kT-YCK" secondAttribute="trailing" constant="8" id="l4g-VV-viI"/>
+                            <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" constant="8" id="uU6-fU-ycw"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="centerY" secondItem="Ybc-kP-tAC" secondAttribute="centerY" id="zXt-bj-LhB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="Aqe-L8-sn8"/>
+                    <tabBarItem key="tabBarItem" title="Item" id="hMH-S1-wP1"/>
+                    <connections>
+                        <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
+                        <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="65"/>
+            <point key="canvasLocation" x="-244" y="78"/>
         </scene>
     </scenes>
 </document>
