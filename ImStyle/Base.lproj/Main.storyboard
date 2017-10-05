@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M70-vv-JVJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="8Xf-mO-7dc">
+            <objects>
+                <tabBarController id="M70-vv-JVJ" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="W0n-Pz-GPI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pKE-2r-Pu5"/>
+                        <segue destination="p7U-Dw-j5H" kind="relationship" relationship="viewControllers" id="BrD-MJ-i0W"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1196" y="-267"/>
+        </scene>
+        <!--Image Transfer-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Image Transfer" customClass="ViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,20 +54,18 @@
                                     <action selector="openLibraryAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aVk-he-r6c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-5k-i1s">
-                                <rect key="frame" x="140" y="574" width="95" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Style Transfer"/>
-                                <connections>
-                                    <action selector="applyStyleTransfer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QJt-Ty-m4C"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
-                                <rect key="frame" x="146" y="612" width="82" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
+                                <rect key="frame" x="277" y="574" width="82" height="30"/>
                                 <state key="normal" title="Clear Image"/>
                                 <connections>
                                     <action selector="clearImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3CS-8g-KDM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-5k-i1s">
+                                <rect key="frame" x="16" y="574" width="95" height="30"/>
+                                <state key="normal" title="Style Transfer"/>
+                                <connections>
+                                    <action selector="applyStyleTransfer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QJt-Ty-m4C"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -56,12 +73,20 @@
                         <constraints>
                             <constraint firstItem="C98-04-51X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="6rq-xu-Hrq"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bz0-7A-pKE"/>
+                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="DqM-nO-B5z"/>
+                            <constraint firstItem="Z8d-Ak-LeK" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="F8g-40-mmk"/>
                             <constraint firstItem="DnA-df-WAg" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="8" id="Gmz-yL-XOx"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HUr-gh-GTN"/>
+                            <constraint firstAttribute="trailing" secondItem="Wfg-5k-i1s" secondAttribute="trailingMargin" constant="272" id="W35-Od-rQF"/>
+                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="baseline" secondItem="Z8d-Ak-LeK" secondAttribute="baseline" id="kKN-OB-5T6"/>
+                            <constraint firstItem="Z8d-Ak-LeK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rEl-cC-5MW"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="DnA-df-WAg" secondAttribute="centerX" id="ruR-RW-Ks7"/>
+                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="58" id="zJl-Vf-gJo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="2uf-vN-XZ9"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="clearImageButton" destination="Z8d-Ak-LeK" id="Xig-pG-KSl"/>
                         <outlet property="imageView" destination="C98-04-51X" id="gWZ-6Y-AiY"/>
@@ -71,7 +96,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="-244" y="-602"/>
+        </scene>
+        <!--Video Feed-->
+        <scene sceneID="hh0-V3-CdF">
+            <objects>
+                <viewController id="p7U-Dw-j5H" userLabel="Video Feed" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cAa-iY-KxD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="No1-aN-WDj"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="Aqe-L8-sn8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gaH-IX-sq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-244" y="65"/>
         </scene>
     </scenes>
 </document>
