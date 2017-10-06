@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		2A59884B1F8585E1008138F2 /* style.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2A59884A1F858549008138F2 /* style.mlmodel */; };
 		2A59884D1F858CE4008138F2 /* UIImage+scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A59884C1F858CE4008138F2 /* UIImage+scaling.swift */; };
+		2A9DB9211F8701070055ADD2 /* StyleTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */; };
+		F89189051F86EC270054136C /* VideoFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89189041F86EC270054136C /* VideoFeedViewController.swift */; };
 		F8A401471F8435E8006EB964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401461F8435E8006EB964 /* AppDelegate.swift */; };
-		F8A401491F8435E8006EB964 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401481F8435E8006EB964 /* ViewController.swift */; };
+		F8A401491F8435E8006EB964 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401481F8435E8006EB964 /* ImageViewController.swift */; };
 		F8A4014C1F8435E8006EB964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8A4014A1F8435E8006EB964 /* Main.storyboard */; };
 		F8A4014E1F8435E8006EB964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A4014D1F8435E8006EB964 /* Assets.xcassets */; };
 		F8A401511F8435E8006EB964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8A4014F1F8435E8006EB964 /* LaunchScreen.storyboard */; };
@@ -38,9 +40,11 @@
 /* Begin PBXFileReference section */
 		2A59884A1F858549008138F2 /* style.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = style.mlmodel; sourceTree = "<group>"; };
 		2A59884C1F858CE4008138F2 /* UIImage+scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+scaling.swift"; sourceTree = "<group>"; };
+		2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTransfer.swift; sourceTree = "<group>"; };
+		F89189041F86EC270054136C /* VideoFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedViewController.swift; sourceTree = "<group>"; };
 		F8A401431F8435E8006EB964 /* ImStyle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImStyle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A401461F8435E8006EB964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F8A401481F8435E8006EB964 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F8A401481F8435E8006EB964 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		F8A4014B1F8435E8006EB964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8A4014D1F8435E8006EB964 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8A401501F8435E8006EB964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -103,12 +107,14 @@
 			isa = PBXGroup;
 			children = (
 				F8A401461F8435E8006EB964 /* AppDelegate.swift */,
-				F8A401481F8435E8006EB964 /* ViewController.swift */,
+				F8A401481F8435E8006EB964 /* ImageViewController.swift */,
+				F89189041F86EC270054136C /* VideoFeedViewController.swift */,
 				F8A4014A1F8435E8006EB964 /* Main.storyboard */,
 				F8A4014D1F8435E8006EB964 /* Assets.xcassets */,
 				F8A4014F1F8435E8006EB964 /* LaunchScreen.storyboard */,
 				F8A401521F8435E8006EB964 /* Info.plist */,
 				2A59884C1F858CE4008138F2 /* UIImage+scaling.swift */,
+				2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */,
 			);
 			path = ImStyle;
 			sourceTree = "<group>";
@@ -265,9 +271,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8A401491F8435E8006EB964 /* ViewController.swift in Sources */,
+				2A9DB9211F8701070055ADD2 /* StyleTransfer.swift in Sources */,
+				F8A401491F8435E8006EB964 /* ImageViewController.swift in Sources */,
 				2A59884D1F858CE4008138F2 /* UIImage+scaling.swift in Sources */,
 				F8A401471F8435E8006EB964 /* AppDelegate.swift in Sources */,
+				F89189051F86EC270054136C /* VideoFeedViewController.swift in Sources */,
 				2A59884B1F8585E1008138F2 /* style.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,10 +443,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 554X9B982N;
+				DEVELOPMENT_TEAM = W93W78DLP2;
 				INFOPLIST_FILE = ImStyle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyle;
+				PRODUCT_BUNDLE_IDENTIFIER = "ImageStyle.ImStyle-Ian";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -450,10 +458,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 554X9B982N;
+				DEVELOPMENT_TEAM = W93W78DLP2;
 				INFOPLIST_FILE = ImStyle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyle;
+				PRODUCT_BUNDLE_IDENTIFIER = "ImageStyle.ImStyle-Ian";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

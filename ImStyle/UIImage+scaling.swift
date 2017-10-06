@@ -1,4 +1,4 @@
-//
+//  tab image ref: https://icons8.com
 //  reference: https://github.com/prisma-ai/torch2coreml/blob/master/example/fast-neural-style/ios/StyleTransfer/UIImage%2Bscaling.swift
 //
 import UIKit
