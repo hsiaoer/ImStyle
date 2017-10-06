@@ -13,12 +13,14 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var styleLabel: UILabel!
     @IBOutlet weak var styleModelPicker: UIPickerView!
+    @IBOutlet weak var styleModelImagePreview: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        styleModelPicker.delegate = self
-        styleModelPicker.dataSource = self
+        self.styleModelPicker.delegate = self
+        self.styleModelPicker.dataSource = self
+        self.styleModelImagePreview.image = UIImage(named: modelList[0] + "-source-image")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,5 +43,6 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         setModel(targetModel: modelList[row])
+        self.styleModelImagePreview.image = UIImage(named: modelList[row] + "-source-image")
     }
 }
