@@ -188,7 +188,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NmY-aJ-2eq"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="D8G-WJ-zgz"/>
+                    <tabBarItem key="tabBarItem" title="Style" image="icons8-Settings-50" selectedImage="icons8-Settings-50" id="D8G-WJ-zgz"/>
                     <connections>
                         <outlet property="styleLabel" destination="fTC-6y-52B" id="qOE-f7-M50"/>
                         <outlet property="styleModelImagePreview" destination="xtt-fM-zfd" id="pfd-at-5YG"/>
@@ -203,5 +203,6 @@
     <resources>
         <image name="icons8-Camera-50" width="25" height="25"/>
         <image name="icons8-Movie-50" width="25" height="25"/>
+        <image name="icons8-Settings-50" width="25" height="25"/>
     </resources>
 </document>
