@@ -54,25 +54,25 @@
                                     <action selector="openLibraryAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aVk-he-r6c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
-                                <rect key="frame" x="277" y="574" width="82" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
+                                <rect key="frame" x="16" y="574" width="82" height="30"/>
                                 <state key="normal" title="Clear Image"/>
                                 <connections>
                                     <action selector="clearImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3CS-8g-KDM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-5k-i1s">
-                                <rect key="frame" x="16" y="574" width="95" height="30"/>
-                                <state key="normal" title="Style Transfer"/>
-                                <connections>
-                                    <action selector="styleTransferButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRO-yr-bjw"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVr-2V-yBt">
-                                <rect key="frame" x="148" y="574" width="79" height="30"/>
+                                <rect key="frame" x="274" y="574" width="79" height="30"/>
                                 <state key="normal" title="Save Image"/>
                                 <connections>
                                     <action selector="save_image:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SeE-mt-EXf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-5k-i1s">
+                                <rect key="frame" x="140" y="574" width="95" height="30"/>
+                                <state key="normal" title="Style Transfer"/>
+                                <connections>
+                                    <action selector="styleTransferButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRO-yr-bjw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -80,17 +80,15 @@
                         <constraints>
                             <constraint firstItem="C98-04-51X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="6rq-xu-Hrq"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bz0-7A-pKE"/>
-                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="DqM-nO-B5z"/>
-                            <constraint firstItem="Z8d-Ak-LeK" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="F8g-40-mmk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Wfg-5k-i1s" secondAttribute="bottom" constant="14" id="ChX-dV-sZs"/>
+                            <constraint firstItem="Z8d-Ak-LeK" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="D3y-Hg-lnI"/>
+                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="G2t-P6-frS"/>
                             <constraint firstItem="DnA-df-WAg" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="8" id="Gmz-yL-XOx"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HUr-gh-GTN"/>
-                            <constraint firstAttribute="trailing" secondItem="Wfg-5k-i1s" secondAttribute="trailingMargin" constant="272" id="W35-Od-rQF"/>
                             <constraint firstItem="WVr-2V-yBt" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="bWq-Ff-H5i"/>
-                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="baseline" secondItem="Z8d-Ak-LeK" secondAttribute="baseline" id="kKN-OB-5T6"/>
-                            <constraint firstItem="WVr-2V-yBt" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="qvI-B4-u3G"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WVr-2V-yBt" secondAttribute="trailing" constant="22" id="exq-Ci-Vtq"/>
                             <constraint firstItem="Z8d-Ak-LeK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rEl-cC-5MW"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="DnA-df-WAg" secondAttribute="centerX" id="ruR-RW-Ks7"/>
-                            <constraint firstItem="Wfg-5k-i1s" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="58" id="zJl-Vf-gJo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -131,7 +129,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsJ-Rr-Dbl">
-                                <rect key="frame" x="114.5" y="568" width="145" height="30"/>
+                                <rect key="frame" x="115" y="568" width="145" height="30"/>
                                 <state key="normal" title="Toggle Style Transfer"/>
                                 <connections>
                                     <action selector="toggle_transfer:" destination="BRE-eg-EID" eventType="touchUpInside" id="QhL-th-MuP"/>
