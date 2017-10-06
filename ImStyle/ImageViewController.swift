@@ -23,7 +23,6 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var styleTransferButton: UIButton!
     
-    private let transfer_model = style().model;
     private let image_size = 720
     
     override func viewDidLoad() {
@@ -56,7 +55,7 @@ class ImageViewController: UIViewController {
         // disable style transfer button to prevent multiple stylings
         self.styleTransferButton.isEnabled = false
         
-        let stylized_image = applyStyleTransfer(uiImage: image, model: transfer_model)
+        let stylized_image = applyStyleTransfer(uiImage: image, model: model)
         
         // update image
         self.imageView.image = stylized_image

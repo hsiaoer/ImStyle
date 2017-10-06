@@ -15,8 +15,34 @@ import Photos
 import CoreImage
 import VideoToolbox
 
+let modelList = ["mosaic_style", "udnie_style"]
+var model = mosaic_style().model
+
+func setModel(targetModel: String) {
+    switch targetModel {
+    case "mosaic_style":
+        model = mosaic_style().model
+    case "udnie_style":
+        model = udnie_style().model
+    default:
+        break
+    }
+}
+
+func modelInput(inputImage: CVPixelBuffer) -> MLFeatureProvider {
+    switch String(describing: type(of: model)) {
+    case "mosaic_style":
+        return mosaic_styleInput(inputImage: inputImage)
+    case "udnie_style":
+        return udnie_styleInput(inputImage: inputImage)
+    // default to mosaic style
+    default:
+        return mosaic_styleInput(inputImage: inputImage)
+    }
+}
+
 func applyStyleTransfer(uiImage: UIImage, model: MLModel) -> UIImage {
-    let input = styleInput(inputImage: uiImage.buffer()!)
+    let input = modelInput(inputImage: uiImage.buffer()!)
     let outFeatures = try! model.prediction(from: input)
     let output = outFeatures.featureValue(for: "outputImage")!.imageBufferValue!
     return toUIImage(pixelBuffer: output)
