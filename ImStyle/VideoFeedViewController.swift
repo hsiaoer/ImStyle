@@ -11,8 +11,6 @@ class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleB
     let cameraSession = AVCaptureSession()
     var perform_transfer = true
     
-    var model = style().model
-    
     private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
     override func viewDidLoad() {
