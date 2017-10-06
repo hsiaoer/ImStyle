@@ -65,7 +65,7 @@
                                 <rect key="frame" x="16" y="574" width="95" height="30"/>
                                 <state key="normal" title="Style Transfer"/>
                                 <connections>
-                                    <action selector="applyStyleTransfer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QJt-Ty-m4C"/>
+                                    <action selector="styleTransferButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRO-yr-bjw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -91,7 +91,7 @@
                         <outlet property="clearImageButton" destination="Z8d-Ak-LeK" id="Xig-pG-KSl"/>
                         <outlet property="imageView" destination="C98-04-51X" id="gWZ-6Y-AiY"/>
                         <outlet property="openPhotoLib" destination="DnA-df-WAg" id="mwQ-3r-CR3"/>
-                        <outlet property="styleTransferButton" destination="Wfg-5k-i1s" id="CxM-wM-XXJ"/>
+                        <outlet property="styleTransferButton" destination="Wfg-5k-i1s" id="ja8-B2-yH4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

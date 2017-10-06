@@ -45,16 +45,17 @@ class ImageViewController: UIViewController {
         self.styleTransferButton.isEnabled = false
     }
     
-    @IBAction func applyStyleTransfer(_ sender: Any) {
-        print("Running style transfer")
-        let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit).cgImage!
+    
+    @IBAction func styleTransferButtonPressed(_ sender: Any) {
+        print("Starting Style Transfer")
+        let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
         // disable style transfer button to prevent multiple stylings
         self.styleTransferButton.isEnabled = false
         
-        let transferedImage = self.applyStyleTransfer(cgImage: image)
+        let transferedImage = applyStyleTransfer(uiImage: image, model: transfer_model)
         
         // update image
-        self.imageView.image = UIImage(cgImage: transferedImage)
+        self.imageView.image = transferedImage
     }
     
     func openPhotoLibrary() {
@@ -70,48 +71,6 @@ class ImageViewController: UIViewController {
             print("Cannot open photo library")
             return
         }
-    }
-    
-    private func applyStyleTransfer(cgImage: CGImage) -> CGImage {
-        let input = styleInput(inputImage: pixelBuffer(cgImage: cgImage, width: image_size, height: image_size))
-        let outFeatures = try! transfer_model.prediction(from: input)
-        let output = outFeatures.featureValue(for: "outputImage")!.imageBufferValue!
-        CVPixelBufferLockBaseAddress(output, .readOnly)
-        let width = CVPixelBufferGetWidth(output)
-        let height = CVPixelBufferGetHeight(output)
-        let data = CVPixelBufferGetBaseAddress(output)!
-        
-        let outContext = CGContext(data: data,
-                                   width: width,
-                                   height: height,
-                                   bitsPerComponent: 8,
-                                   bytesPerRow: CVPixelBufferGetBytesPerRow(output),
-                                   space: CGColorSpaceCreateDeviceRGB(),
-                                   bitmapInfo: CGImageByteOrderInfo.order32Little.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue)!
-        let outImage = outContext.makeImage()!
-        CVPixelBufferUnlockBaseAddress(output, .readOnly)
-        
-        return outImage
-    }
-    
-    // Reference: https://github.com/prisma-ai/torch2coreml/blob/master/example/fast-neural-style/ios/StyleTransfer/ViewController.swift
-    private func pixelBuffer(cgImage: CGImage, width: Int, height: Int) -> CVPixelBuffer {
-        var pixelBuffer: CVPixelBuffer? = nil
-        let status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_32BGRA , nil, &pixelBuffer)
-        if status != kCVReturnSuccess {
-            fatalError("Cannot create pixel buffer for image")
-        }
-        
-        CVPixelBufferLockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags.init(rawValue: 0))
-        let data = CVPixelBufferGetBaseAddress(pixelBuffer!)
-        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue)
-        let context = CGContext(data: data, width: width, height: height, bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer!), space: rgbColorSpace, bitmapInfo: bitmapInfo.rawValue)
-        
-        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
-        CVPixelBufferUnlockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
-        
-        return pixelBuffer!
     }
 
 }
