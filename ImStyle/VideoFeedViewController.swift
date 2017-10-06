@@ -59,6 +59,11 @@ class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleB
         cameraSession.startRunning()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        cameraSession.stopRunning()
+    }
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection){
         connection.videoOrientation = .portrait
         if let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) {
