@@ -20,14 +20,18 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var openPhotoLib: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var clearImageButton: UIButton!
+    @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var styleTransferButton: UIButton!
     
     private let transfer_model = style().model;
+    private var stylized_image : UIImage? = nil
     private let image_size = 720
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.saveImageButton.isEnabled = false
+        self.styleTransferButton.isEnabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +47,7 @@ class ImageViewController: UIViewController {
         self.imageView.image = nil
         self.clearImageButton.isEnabled = false
         self.styleTransferButton.isEnabled = false
+        self.saveImageButton.isEnabled = false
     }
     
     
@@ -52,10 +57,11 @@ class ImageViewController: UIViewController {
         // disable style transfer button to prevent multiple stylings
         self.styleTransferButton.isEnabled = false
         
-        let transferedImage = applyStyleTransfer(uiImage: image, model: transfer_model)
+        stylized_image = applyStyleTransfer(uiImage: image, model: transfer_model)
         
         // update image
-        self.imageView.image = transferedImage
+        self.imageView.image = stylized_image!
+        self.saveImageButton.isEnabled = true
     }
     
     func openPhotoLibrary() {
@@ -64,15 +70,17 @@ class ImageViewController: UIViewController {
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
             self.present(imagePicker, animated: true)
-            self.clearImageButton.isEnabled = true
-            self.styleTransferButton.isEnabled = true
-            
         } else {
             print("Cannot open photo library")
             return
         }
     }
-
+    
+    @IBAction func save_image(_ sender: Any) {
+        self.saveToPhotoLibrary(uiImage: stylized_image!)
+        self.imageView.image = stylized_image!
+    }
+    
 }
 
 extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -89,6 +97,8 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
         
         // save to imageView
         imageView.image = image
+        self.clearImageButton.isEnabled = true
+        self.styleTransferButton.isEnabled = true
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

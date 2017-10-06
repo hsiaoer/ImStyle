@@ -68,6 +68,14 @@
                                     <action selector="styleTransferButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRO-yr-bjw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVr-2V-yBt">
+                                <rect key="frame" x="148" y="574" width="79" height="30"/>
+                                <state key="normal" title="Save Image"/>
+                                <connections>
+                                    <action selector="clearImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="95Q-3x-d8d"/>
+                                    <action selector="save_image:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SeE-mt-EXf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -78,7 +86,9 @@
                             <constraint firstItem="DnA-df-WAg" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="8" id="Gmz-yL-XOx"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HUr-gh-GTN"/>
                             <constraint firstAttribute="trailing" secondItem="Wfg-5k-i1s" secondAttribute="trailingMargin" constant="272" id="W35-Od-rQF"/>
+                            <constraint firstItem="WVr-2V-yBt" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="bWq-Ff-H5i"/>
                             <constraint firstItem="Wfg-5k-i1s" firstAttribute="baseline" secondItem="Z8d-Ak-LeK" secondAttribute="baseline" id="kKN-OB-5T6"/>
+                            <constraint firstItem="WVr-2V-yBt" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="qvI-B4-u3G"/>
                             <constraint firstItem="Z8d-Ak-LeK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rEl-cC-5MW"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="DnA-df-WAg" secondAttribute="centerX" id="ruR-RW-Ks7"/>
                             <constraint firstItem="Wfg-5k-i1s" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="58" id="zJl-Vf-gJo"/>
@@ -91,6 +101,7 @@
                         <outlet property="clearImageButton" destination="Z8d-Ak-LeK" id="Xig-pG-KSl"/>
                         <outlet property="imageView" destination="C98-04-51X" id="gWZ-6Y-AiY"/>
                         <outlet property="openPhotoLib" destination="DnA-df-WAg" id="mwQ-3r-CR3"/>
+                        <outlet property="saveImageButton" destination="WVr-2V-yBt" id="Uq9-Dg-vlp"/>
                         <outlet property="styleTransferButton" destination="Wfg-5k-i1s" id="ja8-B2-yH4"/>
                     </connections>
                 </viewController>
