@@ -72,7 +72,6 @@
                                 <rect key="frame" x="148" y="574" width="79" height="30"/>
                                 <state key="normal" title="Save Image"/>
                                 <connections>
-                                    <action selector="clearImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="95Q-3x-d8d"/>
                                     <action selector="save_image:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SeE-mt-EXf"/>
                                 </connections>
                             </button>
