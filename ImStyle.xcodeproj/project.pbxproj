@@ -10,6 +10,7 @@
 		2A59884B1F8585E1008138F2 /* style.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2A59884A1F858549008138F2 /* style.mlmodel */; };
 		2A59884D1F858CE4008138F2 /* UIImage+scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A59884C1F858CE4008138F2 /* UIImage+scaling.swift */; };
 		2A9DB9211F8701070055ADD2 /* StyleTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */; };
+		2AB20B461F870CEA001EA50B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB20B451F870CEA001EA50B /* Util.swift */; };
 		F89189051F86EC270054136C /* VideoFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89189041F86EC270054136C /* VideoFeedViewController.swift */; };
 		F8A401471F8435E8006EB964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401461F8435E8006EB964 /* AppDelegate.swift */; };
 		F8A401491F8435E8006EB964 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401481F8435E8006EB964 /* ImageViewController.swift */; };
@@ -41,6 +42,7 @@
 		2A59884A1F858549008138F2 /* style.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = style.mlmodel; sourceTree = "<group>"; };
 		2A59884C1F858CE4008138F2 /* UIImage+scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+scaling.swift"; sourceTree = "<group>"; };
 		2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTransfer.swift; sourceTree = "<group>"; };
+		2AB20B451F870CEA001EA50B /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		F89189041F86EC270054136C /* VideoFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedViewController.swift; sourceTree = "<group>"; };
 		F8A401431F8435E8006EB964 /* ImStyle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImStyle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A401461F8435E8006EB964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				F8A401461F8435E8006EB964 /* AppDelegate.swift */,
 				F8A401481F8435E8006EB964 /* ImageViewController.swift */,
 				F89189041F86EC270054136C /* VideoFeedViewController.swift */,
+				2AB20B451F870CEA001EA50B /* Util.swift */,
 				F8A4014A1F8435E8006EB964 /* Main.storyboard */,
 				F8A4014D1F8435E8006EB964 /* Assets.xcassets */,
 				F8A4014F1F8435E8006EB964 /* LaunchScreen.storyboard */,
@@ -275,6 +278,7 @@
 				F8A401491F8435E8006EB964 /* ImageViewController.swift in Sources */,
 				2A59884D1F858CE4008138F2 /* UIImage+scaling.swift in Sources */,
 				F8A401471F8435E8006EB964 /* AppDelegate.swift in Sources */,
+				2AB20B461F870CEA001EA50B /* Util.swift in Sources */,
 				F89189051F86EC270054136C /* VideoFeedViewController.swift in Sources */,
 				2A59884B1F8585E1008138F2 /* style.mlmodel in Sources */,
 			);

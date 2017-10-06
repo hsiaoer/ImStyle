@@ -84,22 +84,9 @@ class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleB
         perform_transfer = !perform_transfer
         self.saveImageButton.isEnabled = perform_transfer
     }
-    
-    // following 2 functions from https://www.hackingwithswift.com/example-code/media/uiimagewritetosavedphotosalbum-how-to-write-to-the-ios-photo-album
+
     @IBAction func save_image(_ sender: Any) {
-        UIImageWriteToSavedPhotosAlbum(self.imageView.image!, self, #selector(image_callback(_:didFinishSavingWithError:contextInfo:)), nil)
-    }
-    
-    @objc func image_callback(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        } else {
-            let ac = UIAlertController(title: "Saved!", message: "Your stylized image has been saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        }
+        self.saveToPhotoLibrary(uiImage: self.imageView.image!)
     }
     
 }
