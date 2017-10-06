@@ -18,6 +18,7 @@ class ImageViewController: UIViewController {
     // https://medium.com/@abhimuralidharan/accessing-photos-in-ios-swift-3-43da29ca4ccb
     
     @IBOutlet weak var openPhotoLib: UIButton!
+    @IBOutlet weak var takePhoto: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var saveImageButton: UIButton!
@@ -39,6 +40,10 @@ class ImageViewController: UIViewController {
     
     @IBAction func openLibraryAction(_ sender: Any) {
         self.openPhotoLibrary()
+    }
+    
+    @IBAction func openCameraAction(_ sender: Any) {
+        self.openCamera()
     }
     
     @IBAction func clearImage(_ sender: Any) {
@@ -70,6 +75,18 @@ class ImageViewController: UIViewController {
             self.present(imagePicker, animated: true)
         } else {
             print("Cannot open photo library")
+            return
+        }
+    }
+    
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            self.present(imagePicker, animated: true)
+        } else {
+            print("Cannot open camera")
             return
         }
     }
