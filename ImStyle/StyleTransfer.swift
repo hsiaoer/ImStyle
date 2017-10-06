@@ -15,6 +15,7 @@ import Photos
 import CoreImage
 import VideoToolbox
 
+let modelNames = ["Mosaic", "Udnie"]
 let modelList = ["mosaic_style", "udnie_style"]
 var model = mosaic_style().model
 

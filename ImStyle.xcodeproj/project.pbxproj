@@ -12,6 +12,7 @@
 		2A9DB9211F8701070055ADD2 /* StyleTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */; };
 		2AB20B461F870CEA001EA50B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB20B451F870CEA001EA50B /* Util.swift */; };
 		F83C391F1F87276700D21F2E /* udnie_style.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = F83C391E1F87276700D21F2E /* udnie_style.mlmodel */; };
+		F83C39211F87AFBB00D21F2E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83C39201F87AFBB00D21F2E /* SettingsViewController.swift */; };
 		F89189051F86EC270054136C /* VideoFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89189041F86EC270054136C /* VideoFeedViewController.swift */; };
 		F8A401471F8435E8006EB964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401461F8435E8006EB964 /* AppDelegate.swift */; };
 		F8A401491F8435E8006EB964 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A401481F8435E8006EB964 /* ImageViewController.swift */; };
@@ -45,6 +46,7 @@
 		2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTransfer.swift; sourceTree = "<group>"; };
 		2AB20B451F870CEA001EA50B /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		F83C391E1F87276700D21F2E /* udnie_style.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = udnie_style.mlmodel; sourceTree = "<group>"; };
+		F83C39201F87AFBB00D21F2E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F89189041F86EC270054136C /* VideoFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedViewController.swift; sourceTree = "<group>"; };
 		F8A401431F8435E8006EB964 /* ImStyle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImStyle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A401461F8435E8006EB964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				F8A401461F8435E8006EB964 /* AppDelegate.swift */,
 				F8A401481F8435E8006EB964 /* ImageViewController.swift */,
 				F89189041F86EC270054136C /* VideoFeedViewController.swift */,
+				F83C39201F87AFBB00D21F2E /* SettingsViewController.swift */,
 				2AB20B451F870CEA001EA50B /* Util.swift */,
 				F8A4014A1F8435E8006EB964 /* Main.storyboard */,
 				F8A4014D1F8435E8006EB964 /* Assets.xcassets */,
@@ -285,6 +288,7 @@
 				2AB20B461F870CEA001EA50B /* Util.swift in Sources */,
 				F89189051F86EC270054136C /* VideoFeedViewController.swift in Sources */,
 				2A59884B1F8585E1008138F2 /* mosaic_style.mlmodel in Sources */,
+				F83C39211F87AFBB00D21F2E /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

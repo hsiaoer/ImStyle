@@ -23,6 +23,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pKE-2r-Pu5"/>
                         <segue destination="BRE-eg-EID" kind="relationship" relationship="viewControllers" id="orL-YD-MD9"/>
+                        <segue destination="R3T-sn-l8G" kind="relationship" relationship="viewControllers" id="aVj-zD-tkz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -54,7 +55,7 @@
                                     <action selector="openLibraryAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aVk-he-r6c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
                                 <rect key="frame" x="16" y="574" width="82" height="30"/>
                                 <state key="normal" title="Clear Image"/>
                                 <connections>
@@ -87,7 +88,9 @@
                             <constraint firstItem="C98-04-51X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HUr-gh-GTN"/>
                             <constraint firstItem="WVr-2V-yBt" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="bWq-Ff-H5i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WVr-2V-yBt" secondAttribute="trailing" constant="22" id="exq-Ci-Vtq"/>
-                            <constraint firstItem="Z8d-Ak-LeK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rEl-cC-5MW"/>
+                            <constraint firstItem="WVr-2V-yBt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="lQY-Tn-gCh"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Z8d-Ak-LeK" secondAttribute="trailingMargin" id="min-S8-87G"/>
+                            <constraint firstItem="Z8d-Ak-LeK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rEl-cC-5MW"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="DnA-df-WAg" secondAttribute="centerX" id="ruR-RW-Ks7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -104,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="-602"/>
+            <point key="canvasLocation" x="-244" y="-946"/>
         </scene>
         <!--Video Feed-->
         <scene sceneID="eqh-Lu-IY9">
@@ -156,7 +159,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="78"/>
+            <point key="canvasLocation" x="-244" y="-242"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="5Sx-xb-JTI">
+            <objects>
+                <viewController id="R3T-sn-l8G" userLabel="Settings" customClass="SettingsViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fDY-hI-RRV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Style" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTC-6y-52B">
+                                <rect key="frame" x="16" y="35" width="71" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nc7-B5-MOe">
+                                <rect key="frame" x="0.0" y="35" width="375" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="NmY-aJ-2eq"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="D8G-WJ-zgz"/>
+                    <connections>
+                        <outlet property="styleLabel" destination="fTC-6y-52B" id="qOE-f7-M50"/>
+                        <outlet property="styleModelPicker" destination="nc7-B5-MOe" id="SNQ-Th-lpy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nc0-8K-i1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-244" y="530.28485757121439"/>
         </scene>
     </scenes>
     <resources>
