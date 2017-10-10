@@ -24,6 +24,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pKE-2r-Pu5"/>
                         <segue destination="BRE-eg-EID" kind="relationship" relationship="viewControllers" id="orL-YD-MD9"/>
                         <segue destination="R3T-sn-l8G" kind="relationship" relationship="viewControllers" id="aVj-zD-tkz"/>
+                        <segue destination="kh7-vI-flb" kind="relationship" relationship="viewControllers" id="U1k-JH-TnA"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -171,6 +172,48 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-244" y="-242"/>
+        </scene>
+        <!--VR-->
+        <scene sceneID="28o-F5-BJj">
+            <objects>
+                <viewController id="kh7-vI-flb" customClass="VRViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mrn-kE-5P1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9s-cA-GV1">
+                                <rect key="frame" x="67" y="365" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="k9s-cA-GV1" secondAttribute="height" multiplier="1:1" id="lB2-Ut-dNO"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6sO-cO-xDX">
+                                <rect key="frame" x="67" y="42" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="6sO-cO-xDX" secondAttribute="height" multiplier="1:1" id="ltf-jZ-1ZY"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k9s-cA-GV1" firstAttribute="centerX" secondItem="Tx8-ws-PpY" secondAttribute="centerX" id="IKb-aI-kqS"/>
+                            <constraint firstItem="6sO-cO-xDX" firstAttribute="leading" secondItem="Tx8-ws-PpY" secondAttribute="leading" constant="67" id="edg-IQ-aYB"/>
+                            <constraint firstItem="k9s-cA-GV1" firstAttribute="leading" secondItem="Tx8-ws-PpY" secondAttribute="leading" constant="67" id="h5h-JY-9dQ"/>
+                            <constraint firstItem="Tx8-ws-PpY" firstAttribute="bottom" secondItem="k9s-cA-GV1" secondAttribute="bottom" constant="13" id="j53-xo-aLp"/>
+                            <constraint firstItem="6sO-cO-xDX" firstAttribute="centerX" secondItem="Tx8-ws-PpY" secondAttribute="centerX" id="qrI-3Q-F92"/>
+                            <constraint firstItem="6sO-cO-xDX" firstAttribute="top" secondItem="Tx8-ws-PpY" secondAttribute="top" constant="22" id="wdX-Uh-GRW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Tx8-ws-PpY"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="VR" id="VmY-zF-5De"/>
+                    <connections>
+                        <outlet property="leftEyeView" destination="k9s-cA-GV1" id="61P-NA-fDP"/>
+                        <outlet property="rightEyeView" destination="6sO-cO-xDX" id="rM0-ZQ-HhY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d8C-bR-pcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1196" y="548.27586206896558"/>
         </scene>
         <!--Settings-->
         <scene sceneID="5Sx-xb-JTI">

@@ -77,10 +77,14 @@ class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleB
                     outImage = uiImage;
                 }
                 DispatchQueue.main.async {
-                    self.imageView.image = outImage;
+                    self.updateOutputImage(uiImage: outImage);
                 }
             }
         }
+    }
+    
+    func updateOutputImage(uiImage: UIImage) {
+        self.imageView.image = uiImage;
     }
     
     @IBAction func toggle_transfer(_ sender: Any) {
