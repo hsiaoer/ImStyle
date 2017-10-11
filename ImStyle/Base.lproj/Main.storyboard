@@ -23,8 +23,8 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pKE-2r-Pu5"/>
                         <segue destination="BRE-eg-EID" kind="relationship" relationship="viewControllers" id="orL-YD-MD9"/>
-                        <segue destination="R3T-sn-l8G" kind="relationship" relationship="viewControllers" id="aVj-zD-tkz"/>
                         <segue destination="kh7-vI-flb" kind="relationship" relationship="viewControllers" id="U1k-JH-TnA"/>
+                        <segue destination="R3T-sn-l8G" kind="relationship" relationship="viewControllers" id="aVj-zD-tkz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -205,7 +205,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tx8-ws-PpY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="VR" id="VmY-zF-5De"/>
+                    <tabBarItem key="tabBarItem" title="VR" image="icons8-VR-50" id="VmY-zF-5De"/>
                     <connections>
                         <outlet property="leftEyeView" destination="k9s-cA-GV1" id="61P-NA-fDP"/>
                         <outlet property="rightEyeView" destination="6sO-cO-xDX" id="rM0-ZQ-HhY"/>
@@ -258,5 +258,6 @@
         <image name="icons8-Camera-50" width="25" height="25"/>
         <image name="icons8-Movie-50" width="25" height="25"/>
         <image name="icons8-Settings-50" width="25" height="25"/>
+        <image name="icons8-VR-50" width="25" height="25"/>
     </resources>
 </document>
