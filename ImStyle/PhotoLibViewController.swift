@@ -13,7 +13,7 @@ import CoreML
 import Photos
 import CoreImage
 
-class ImageViewController: UIViewController {
+class PhotoLibViewController: UIViewController {
     // image selection reference:
     // https://medium.com/@abhimuralidharan/accessing-photos-in-ios-swift-3-43da29ca4ccb
     
@@ -97,7 +97,7 @@ class ImageViewController: UIViewController {
     
 }
 
-extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension PhotoLibViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         defer {
             picker.dismiss(animated: true)

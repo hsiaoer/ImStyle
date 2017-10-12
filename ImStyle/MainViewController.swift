@@ -4,7 +4,7 @@ import UIKit
 import AVFoundation
 import VideoToolbox
 
-class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
 
     @IBOutlet weak var imageView: UIImageView!
@@ -14,7 +14,7 @@ class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleB
     @IBOutlet weak var styleTransferButton: UIButton!
     
     let cameraSession = AVCaptureSession()
-    var perform_transfer = true
+    var perform_transfer = false
     
     private let image_size = 720
     

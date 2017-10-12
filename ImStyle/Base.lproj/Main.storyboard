@@ -31,10 +31,10 @@
             </objects>
             <point key="canvasLocation" x="-1196" y="-267"/>
         </scene>
-        <!--Image Transfer-->
+        <!--Photo Lib View-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Image Transfer" customClass="ImageViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Photo Lib View" customClass="PhotoLibViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,10 +121,10 @@
             </objects>
             <point key="canvasLocation" x="-244" y="-946"/>
         </scene>
-        <!--Video Feed-->
+        <!--Main View-->
         <scene sceneID="eqh-Lu-IY9">
             <objects>
-                <viewController id="BRE-eg-EID" userLabel="Video Feed" customClass="VideoFeedViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BRE-eg-EID" userLabel="Main View" customClass="MainViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q1I-ma-Aqc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -225,13 +225,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9s-cA-GV1">
-                                <rect key="frame" x="67" y="365" width="240" height="240"/>
+                                <rect key="frame" x="67" y="364" width="241" height="241"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="k9s-cA-GV1" secondAttribute="height" multiplier="1:1" id="lB2-Ut-dNO"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6sO-cO-xDX">
-                                <rect key="frame" x="67" y="42" width="240" height="240"/>
+                                <rect key="frame" x="67" y="42" width="241" height="241"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="6sO-cO-xDX" secondAttribute="height" multiplier="1:1" id="ltf-jZ-1ZY"/>
                                 </constraints>
