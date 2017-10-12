@@ -14,6 +14,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="8Xf-mO-7dc">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="M70-vv-JVJ" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="W0n-Pz-GPI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -27,7 +28,6 @@
                         <segue destination="R3T-sn-l8G" kind="relationship" relationship="viewControllers" id="aVj-zD-tkz"/>
                     </connections>
                 </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="-267"/>
         </scene>
@@ -137,17 +137,33 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvZ-Fd-sDp">
-                                <rect key="frame" x="148" y="530" width="79" height="30"/>
+                                <rect key="frame" x="280" y="568" width="79" height="30"/>
                                 <state key="normal" title="Save Image"/>
                                 <connections>
                                     <action selector="save_image:" destination="BRE-eg-EID" eventType="touchUpInside" id="JBM-cP-FU7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsJ-Rr-Dbl">
-                                <rect key="frame" x="115" y="568" width="145" height="30"/>
-                                <state key="normal" title="Toggle Style Transfer"/>
+                                <rect key="frame" x="140" y="568" width="95" height="30"/>
+                                <state key="normal" title="Style Transfer"/>
                                 <connections>
                                     <action selector="toggle_transfer:" destination="BRE-eg-EID" eventType="touchUpInside" id="QhL-th-MuP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
+                                <rect key="frame" x="149" y="530" width="76" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Take Photo"/>
+                                <connections>
+                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPA-3G-PLh">
+                                <rect key="frame" x="16" y="568" width="82" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Clear Image"/>
+                                <connections>
+                                    <action selector="clearImageAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="be0-Hh-WSN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -156,17 +172,20 @@
                             <constraint firstItem="Ybc-kP-tAC" firstAttribute="bottom" secondItem="zsJ-Rr-Dbl" secondAttribute="bottom" constant="20" id="0kx-rU-DYZ"/>
                             <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" id="7ph-El-kSU"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="8" id="Yg9-W0-7N5"/>
-                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" id="is4-7b-3pO"/>
+                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" constant="132" id="is4-7b-3pO"/>
                             <constraint firstItem="Ybc-kP-tAC" firstAttribute="trailing" secondItem="0qU-kT-YCK" secondAttribute="trailing" constant="8" id="l4g-VV-viI"/>
-                            <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" constant="8" id="uU6-fU-ycw"/>
+                            <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" constant="-30" id="uU6-fU-ycw"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="centerY" secondItem="Ybc-kP-tAC" secondAttribute="centerY" id="zXt-bj-LhB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Video" image="icons8-Movie-50" selectedImage="icons8-Movie-50" id="hMH-S1-wP1"/>
                     <connections>
+                        <outlet property="clearImageButton" destination="dPA-3G-PLh" id="nsz-qw-dpP"/>
                         <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
+                        <outlet property="styleTransferButton" destination="zsJ-Rr-Dbl" id="vZn-F0-0KZ"/>
+                        <outlet property="takePhotoButton" destination="iKA-oc-ihR" id="ADS-Ly-8s6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>

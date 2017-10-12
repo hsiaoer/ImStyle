@@ -6,10 +6,17 @@ import VideoToolbox
 
 class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveImageButton: UIButton!
+    @IBOutlet weak var clearImageButton: UIButton!
+    @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var styleTransferButton: UIButton!
+    
     let cameraSession = AVCaptureSession()
     var perform_transfer = true
+    
+    private let image_size = 720
     
     private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
@@ -88,12 +95,36 @@ class VideoFeedViewController: UIViewController, AVCaptureVideoDataOutputSampleB
     }
     
     @IBAction func toggle_transfer(_ sender: Any) {
-        perform_transfer = !perform_transfer
-        self.saveImageButton.isEnabled = perform_transfer
+        if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
+            let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
+            // disable style transfer button to prevent multiple stylings
+            self.styleTransferButton.isEnabled = false
+            
+            let stylized_image = applyStyleTransfer(uiImage: image, model: model)
+            
+            // update image
+            self.imageView.image = stylized_image
+        } else {
+            perform_transfer = !perform_transfer
+            self.saveImageButton.isEnabled = perform_transfer
+        }
     }
 
     @IBAction func save_image(_ sender: Any) {
         self.saveToPhotoLibrary(uiImage: self.imageView.image!)
+    }
+    
+    @IBAction func takePhotoAction(_ sender: Any) {
+        cameraSession.stopRunning()
+        self.takePhotoButton.isEnabled = false
+        self.saveImageButton.isEnabled = true
+        self.styleTransferButton.isEnabled = !perform_transfer
+    }
+    
+    @IBAction func clearImageAction(_ sender: Any) {
+        cameraSession.startRunning()
+        self.takePhotoButton.isEnabled = true
+        self.styleTransferButton.isEnabled = true
     }
     
 }
