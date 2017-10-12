@@ -46,16 +46,6 @@
                                     <constraint firstAttribute="width" secondItem="C98-04-51X" secondAttribute="height" multiplier="1:1" constant="-137" id="DsM-e6-gMv"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnA-df-WAg">
-                                <rect key="frame" x="54" y="524" width="134" height="42"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="YhE-pj-i61"/>
-                                </constraints>
-                                <state key="normal" title="Open Photo Library"/>
-                                <connections>
-                                    <action selector="openLibraryAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aVk-he-r6c"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
                                 <rect key="frame" x="16" y="574" width="82" height="30"/>
                                 <state key="normal" title="Clear Image"/>
@@ -77,19 +67,20 @@
                                     <action selector="styleTransferButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRO-yr-bjw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fn-Vm-Hjf">
-                                <rect key="frame" x="240" y="530" width="76" height="30"/>
-                                <state key="normal" title="Take Photo"/>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnA-df-WAg">
+                                <rect key="frame" x="120" y="524" width="134" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="YhE-pj-i61"/>
+                                </constraints>
+                                <state key="normal" title="Open Photo Library"/>
                                 <connections>
-                                    <action selector="openCameraAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xdc-na-u1B"/>
+                                    <action selector="openLibraryAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aVk-he-r6c"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="7fn-Vm-Hjf" secondAttribute="trailing" constant="59" id="6ro-VG-rDK"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="6rq-xu-Hrq"/>
-                            <constraint firstItem="7fn-Vm-Hjf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DnA-df-WAg" secondAttribute="trailing" constant="8" symbolic="YES" id="7o4-LX-Lfp"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bz0-7A-pKE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Wfg-5k-i1s" secondAttribute="bottom" constant="14" id="ChX-dV-sZs"/>
                             <constraint firstItem="Z8d-Ak-LeK" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="D3y-Hg-lnI"/>
@@ -98,11 +89,10 @@
                             <constraint firstItem="C98-04-51X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HUr-gh-GTN"/>
                             <constraint firstItem="WVr-2V-yBt" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="bWq-Ff-H5i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WVr-2V-yBt" secondAttribute="trailing" constant="22" id="exq-Ci-Vtq"/>
-                            <constraint firstItem="7fn-Vm-Hjf" firstAttribute="baseline" secondItem="DnA-df-WAg" secondAttribute="baseline" id="hVt-Zv-jws"/>
                             <constraint firstItem="WVr-2V-yBt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="lQY-Tn-gCh"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Z8d-Ak-LeK" secondAttribute="trailingMargin" id="min-S8-87G"/>
                             <constraint firstItem="Z8d-Ak-LeK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rEl-cC-5MW"/>
-                            <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="DnA-df-WAg" secondAttribute="centerX" constant="66.5" id="ruR-RW-Ks7"/>
+                            <constraint firstItem="C98-04-51X" firstAttribute="centerX" secondItem="DnA-df-WAg" secondAttribute="centerX" constant="0.5" id="ruR-RW-Ks7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -114,7 +104,6 @@
                         <outlet property="openPhotoLib" destination="DnA-df-WAg" id="mwQ-3r-CR3"/>
                         <outlet property="saveImageButton" destination="WVr-2V-yBt" id="Uq9-Dg-vlp"/>
                         <outlet property="styleTransferButton" destination="Wfg-5k-i1s" id="ja8-B2-yH4"/>
-                        <outlet property="takePhoto" destination="7fn-Vm-Hjf" id="iCf-vU-ECj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
