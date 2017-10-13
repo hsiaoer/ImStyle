@@ -19,6 +19,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     private var isRearCamera = true
     private var captureDevice: AVCaptureDevice?
+    private var prevImage: UIImage?
     private let image_size = 720
     private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
@@ -131,15 +132,21 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func toggle_transfer(_ sender: Any) {
-        if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
+        if (self.styleTransferButton.titleLabel?.text == "Undo Style") {
+            self.styleTransferButton.setTitle("Style Transfer", for: [])
+            self.imageView.image = self.prevImage
+        } else if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
+            // save unstyled image
+            self.prevImage = self.imageView.image!
             let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
-            // disable style transfer button to prevent multiple stylings
-            self.styleTransferButton.isEnabled = false
             
             let stylized_image = applyStyleTransfer(uiImage: image, model: model)
             
             // update image
             self.imageView.image = stylized_image
+            
+            // update SF button label
+            self.styleTransferButton.setTitle("Undo Style", for: [])
         } else {
             perform_transfer = !perform_transfer
             self.saveImageButton.isEnabled = perform_transfer
@@ -162,6 +169,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         cameraSession.startRunning()
         self.takePhotoButton.isEnabled = true
         self.styleTransferButton.isEnabled = true
+        
+        // reset SF button label
+        self.styleTransferButton.setTitle("Style Transfer", for: [])
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
