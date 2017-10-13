@@ -26,11 +26,11 @@ class SettingsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
         self.updateImage()
     }
     
     func updateImage() {
+        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
         self.styleModelImagePreview.image = UIImage(named: modelList[modelPicker.currentStyle] + "-source-image")
     }
     
@@ -39,9 +39,14 @@ class SettingsViewController: UIViewController {
 class ModelPickerController: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
     var currentStyle = 0
     var settingsView: SettingsViewController?
+    var mainView: MainViewController?
     
     func setSettingsView(sv: SettingsViewController) {
         self.settingsView = sv
+    }
+    
+    func setMainView(mv: MainViewController) {
+        self.mainView = mv
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -61,6 +66,9 @@ class ModelPickerController: UIPickerView, UIPickerViewDataSource, UIPickerViewD
         self.currentStyle = row
         if (self.settingsView != nil) {
             self.settingsView!.updateImage()
+        }
+        if (self.mainView != nil) {
+            self.mainView!.updatePicker()
         }
     }
 }

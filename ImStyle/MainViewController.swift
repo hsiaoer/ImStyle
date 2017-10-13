@@ -27,6 +27,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         self.styleModelPicker.delegate = modelPicker
         self.styleModelPicker.dataSource = modelPicker
+        modelPicker.setMainView(mv: self)
         self.styleModelPicker.isHidden = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
@@ -73,7 +74,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         cameraSession.startRunning()
         
-        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
+        self.updatePicker()
+        
+        self.styleModelPicker.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -121,6 +124,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         catch let error as NSError {
             NSLog("\(error), \(error.localizedDescription)")
         }
+    }
+    
+    func updatePicker() {
+        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
     }
     
     @IBAction func toggle_transfer(_ sender: Any) {
