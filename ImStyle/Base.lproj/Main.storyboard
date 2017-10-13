@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M70-vv-JVJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8F2-HT-Bsu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,64 +11,44 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
-        <scene sceneID="8Xf-mO-7dc">
-            <objects>
-                <tabBarController id="M70-vv-JVJ" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="W0n-Pz-GPI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pKE-2r-Pu5"/>
-                        <segue destination="BRE-eg-EID" kind="relationship" relationship="viewControllers" id="orL-YD-MD9"/>
-                        <segue destination="kh7-vI-flb" kind="relationship" relationship="viewControllers" id="U1k-JH-TnA"/>
-                        <segue destination="R3T-sn-l8G" kind="relationship" relationship="viewControllers" id="aVj-zD-tkz"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="887-0F-mK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1196" y="-267"/>
-        </scene>
         <!--Photo Lib View-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Photo Lib View" customClass="PhotoLibViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoLibViewController" id="BYZ-38-t0r" userLabel="Photo Lib View" customClass="PhotoLibViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C98-04-51X">
-                                <rect key="frame" x="8" y="20" width="359" height="496"/>
+                                <rect key="frame" x="8" y="20" width="359" height="557"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="C98-04-51X" secondAttribute="height" multiplier="1:1" constant="-137" id="DsM-e6-gMv"/>
+                                    <constraint firstAttribute="width" secondItem="C98-04-51X" secondAttribute="height" multiplier="1:1" constant="-198" id="DsM-e6-gMv"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8d-Ak-LeK">
-                                <rect key="frame" x="16" y="574" width="82" height="30"/>
+                                <rect key="frame" x="16" y="623" width="82" height="30"/>
                                 <state key="normal" title="Clear Image"/>
                                 <connections>
                                     <action selector="clearImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3CS-8g-KDM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVr-2V-yBt">
-                                <rect key="frame" x="274" y="574" width="79" height="30"/>
+                                <rect key="frame" x="274" y="623" width="79" height="30"/>
                                 <state key="normal" title="Save Image"/>
                                 <connections>
                                     <action selector="save_image:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SeE-mt-EXf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-5k-i1s">
-                                <rect key="frame" x="140" y="574" width="95" height="30"/>
+                                <rect key="frame" x="140" y="623" width="95" height="30"/>
                                 <state key="normal" title="Style Transfer"/>
                                 <connections>
                                     <action selector="styleTransferButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRO-yr-bjw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnA-df-WAg">
-                                <rect key="frame" x="120" y="524" width="134" height="42"/>
+                                <rect key="frame" x="120" y="580" width="134" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="YhE-pj-i61"/>
                                 </constraints>
@@ -85,7 +65,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Wfg-5k-i1s" secondAttribute="bottom" constant="14" id="ChX-dV-sZs"/>
                             <constraint firstItem="Z8d-Ak-LeK" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="D3y-Hg-lnI"/>
                             <constraint firstItem="Wfg-5k-i1s" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="G2t-P6-frS"/>
-                            <constraint firstItem="DnA-df-WAg" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="8" id="Gmz-yL-XOx"/>
+                            <constraint firstItem="DnA-df-WAg" firstAttribute="top" secondItem="C98-04-51X" secondAttribute="bottom" constant="3" id="Gmz-yL-XOx"/>
                             <constraint firstItem="C98-04-51X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HUr-gh-GTN"/>
                             <constraint firstItem="WVr-2V-yBt" firstAttribute="top" secondItem="Wfg-5k-i1s" secondAttribute="top" id="bWq-Ff-H5i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WVr-2V-yBt" secondAttribute="trailing" constant="22" id="exq-Ci-Vtq"/>
@@ -96,8 +76,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Image" image="icons8-Camera-50" selectedImage="icons8-Camera-50" id="2uf-vN-XZ9"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="clearImageButton" destination="Z8d-Ak-LeK" id="Xig-pG-KSl"/>
                         <outlet property="imageView" destination="C98-04-51X" id="gWZ-6Y-AiY"/>
@@ -108,25 +87,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="-946"/>
+            <point key="canvasLocation" x="-244" y="-946.77661169415296"/>
         </scene>
         <!--Main View-->
         <scene sceneID="eqh-Lu-IY9">
             <objects>
-                <viewController id="BRE-eg-EID" userLabel="Main View" customClass="MainViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="BRE-eg-EID" userLabel="Main View" customClass="MainViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q1I-ma-Aqc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0qU-kT-YCK">
-                                <rect key="frame" x="8" y="20" width="359" height="598"/>
+                                <rect key="frame" x="8" y="20" width="359" height="627"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="0qU-kT-YCK" secondAttribute="height" multiplier="1:1" constant="-239" id="dSF-fZ-J9r"/>
+                                    <constraint firstAttribute="width" secondItem="0qU-kT-YCK" secondAttribute="height" multiplier="1:1" constant="-268" id="dSF-fZ-J9r"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvZ-Fd-sDp">
-                                <rect key="frame" x="280" y="568" width="79" height="30"/>
+                                <rect key="frame" x="280" y="605" width="79" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Save Image"/>
                                 <userDefinedRuntimeAttributes>
@@ -139,7 +118,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsJ-Rr-Dbl">
-                                <rect key="frame" x="140" y="568" width="95" height="30"/>
+                                <rect key="frame" x="140" y="605" width="95" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Style Transfer"/>
                                 <userDefinedRuntimeAttributes>
@@ -151,22 +130,8 @@
                                     <action selector="toggle_transfer:" destination="BRE-eg-EID" eventType="touchUpInside" id="QhL-th-MuP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
-                                <rect key="frame" x="149" y="530" width="76" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Take Photo"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPA-3G-PLh">
-                                <rect key="frame" x="16" y="568" width="82" height="30"/>
+                                <rect key="frame" x="16" y="605" width="82" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Clear Image"/>
@@ -212,16 +177,30 @@
                                     <action selector="toggleShowStylePicker:" destination="BRE-eg-EID" eventType="touchUpInside" id="HoA-cA-QBT"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
+                                <rect key="frame" x="149" y="554" width="76" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Take Photo"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Ybc-kP-tAC" firstAttribute="bottom" secondItem="zsJ-Rr-Dbl" secondAttribute="bottom" constant="20" id="0kx-rU-DYZ"/>
+                            <constraint firstItem="Ybc-kP-tAC" firstAttribute="bottom" secondItem="zsJ-Rr-Dbl" secondAttribute="bottom" constant="32" id="0kx-rU-DYZ"/>
                             <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" id="7ph-El-kSU"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="8" id="Yg9-W0-7N5"/>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="centerX" secondItem="Ybc-kP-tAC" secondAttribute="centerX" constant="132" id="is4-7b-3pO"/>
                             <constraint firstItem="Ybc-kP-tAC" firstAttribute="trailing" secondItem="0qU-kT-YCK" secondAttribute="trailing" constant="8" id="l4g-VV-viI"/>
                             <constraint firstItem="zsJ-Rr-Dbl" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" constant="-30" id="uU6-fU-ycw"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="centerY" secondItem="Ybc-kP-tAC" secondAttribute="centerY" id="zXt-bj-LhB"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="centerY" secondItem="Ybc-kP-tAC" secondAttribute="centerY" constant="-10" id="zXt-bj-LhB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
                     </view>
@@ -239,16 +218,31 @@
             </objects>
             <point key="canvasLocation" x="-245.59999999999999" y="-219.04047976011995"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="rmA-9e-umb">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="8F2-HT-Bsu" customClass="PageViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" id="gkl-Yp-Hhg"/>
+                        <segue destination="BRE-eg-EID" kind="showDetail" id="Vge-br-bGc"/>
+                        <segue destination="kh7-vI-flb" kind="showDetail" id="l9d-kx-VgC"/>
+                        <segue destination="R3T-sn-l8G" kind="showDetail" id="AoX-vA-CQE"/>
+                    </connections>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IRh-nT-nGZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1233" y="214"/>
+        </scene>
         <!--VR-->
         <scene sceneID="28o-F5-BJj">
             <objects>
-                <viewController id="kh7-vI-flb" customClass="VRViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VRViewController" id="kh7-vI-flb" customClass="VRViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mrn-kE-5P1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9s-cA-GV1">
-                                <rect key="frame" x="67" y="364" width="241" height="241"/>
+                                <rect key="frame" x="67" y="413" width="241" height="241"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="k9s-cA-GV1" secondAttribute="height" multiplier="1:1" id="lB2-Ut-dNO"/>
                                 </constraints>
@@ -279,12 +273,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8C-bR-pcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="548.27586206896558"/>
+            <point key="canvasLocation" x="-244" y="503"/>
         </scene>
         <!--Settings-->
         <scene sceneID="5Sx-xb-JTI">
             <objects>
-                <viewController id="R3T-sn-l8G" userLabel="Settings" customClass="SettingsViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" id="R3T-sn-l8G" userLabel="Settings" customClass="SettingsViewController" customModule="ImStyle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDY-hI-RRV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nc0-8K-i1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="530.28485757121439"/>
+            <point key="canvasLocation" x="-246" y="1209"/>
         </scene>
     </scenes>
     <resources>

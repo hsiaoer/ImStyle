@@ -6,7 +6,6 @@ import VideoToolbox
 
 class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
@@ -34,6 +33,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
         self.imageView.addGestureRecognizer(tap)
         self.imageView.isUserInteractionEnabled = true
+        
+//        let swipeToSettings: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "toSettings")
+//        swipeToSettings.direction = .left
+//        self.view.addGestureRecognizer(swipeToSettings)
         
         self.captureDevice = AVCaptureDevice.default(for: .video)!
         
@@ -196,23 +199,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
     }
     
+//    func toSettings(recognizer : UISwipeGestureRecognizer) {
+//        self.performSegue(withIdentifier: "SettingsViewController", sender: self)
+//    }
+    
 }
-
-//extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return modelNames.count
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return modelNames[row]
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        setModel(targetModel: modelList[row])
-//    }
-//}
-

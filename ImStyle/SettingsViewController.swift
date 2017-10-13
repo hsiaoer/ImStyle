@@ -72,5 +72,3 @@ class ModelPickerController: UIPickerView, UIPickerViewDataSource, UIPickerViewD
         }
     }
 }
-
-let modelPicker = ModelPickerController()

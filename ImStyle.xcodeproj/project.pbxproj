@@ -12,6 +12,7 @@
 		2A9DB9211F8701070055ADD2 /* StyleTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */; };
 		2AB20B461F870CEA001EA50B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB20B451F870CEA001EA50B /* Util.swift */; };
 		2AB93AE61F8D5B5B00BD56C2 /* VRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB93AE51F8D5B5B00BD56C2 /* VRViewController.swift */; };
+		F815AAA01F9069FA00F59A96 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F815AA9F1F9069FA00F59A96 /* PageViewController.swift */; };
 		F83C391F1F87276700D21F2E /* udnie_style.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = F83C391E1F87276700D21F2E /* udnie_style.mlmodel */; };
 		F83C39211F87AFBB00D21F2E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83C39201F87AFBB00D21F2E /* SettingsViewController.swift */; };
 		F89189051F86EC270054136C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89189041F86EC270054136C /* MainViewController.swift */; };
@@ -47,6 +48,7 @@
 		2A9DB9201F8701070055ADD2 /* StyleTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTransfer.swift; sourceTree = "<group>"; };
 		2AB20B451F870CEA001EA50B /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		2AB93AE51F8D5B5B00BD56C2 /* VRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VRViewController.swift; sourceTree = "<group>"; };
+		F815AA9F1F9069FA00F59A96 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		F83C391E1F87276700D21F2E /* udnie_style.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = udnie_style.mlmodel; sourceTree = "<group>"; };
 		F83C39201F87AFBB00D21F2E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F89189041F86EC270054136C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				F8A401481F8435E8006EB964 /* PhotoLibViewController.swift */,
 				F89189041F86EC270054136C /* MainViewController.swift */,
 				F83C39201F87AFBB00D21F2E /* SettingsViewController.swift */,
+				F815AA9F1F9069FA00F59A96 /* PageViewController.swift */,
 				2AB20B451F870CEA001EA50B /* Util.swift */,
 				F8A4014A1F8435E8006EB964 /* Main.storyboard */,
 				F8A4014D1F8435E8006EB964 /* Assets.xcassets */,
@@ -285,6 +288,7 @@
 			files = (
 				F83C391F1F87276700D21F2E /* udnie_style.mlmodel in Sources */,
 				2A9DB9211F8701070055ADD2 /* StyleTransfer.swift in Sources */,
+				F815AAA01F9069FA00F59A96 /* PageViewController.swift in Sources */,
 				F8A401491F8435E8006EB964 /* PhotoLibViewController.swift in Sources */,
 				2A59884D1F858CE4008138F2 /* UIImage+scaling.swift in Sources */,
 				2AB93AE61F8D5B5B00BD56C2 /* VRViewController.swift in Sources */,
