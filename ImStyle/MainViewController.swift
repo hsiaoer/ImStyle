@@ -12,6 +12,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var styleTransferButton: UIButton!
+    @IBOutlet weak var styleModelPicker: UIPickerView!
     
     let cameraSession = AVCaptureSession()
     var perform_transfer = false
@@ -23,6 +24,14 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.styleModelPicker.delegate = self
+        self.styleModelPicker.dataSource = self
+        self.styleModelPicker.isHidden = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
+        self.imageView.addGestureRecognizer(tap)
+        self.imageView.isUserInteractionEnabled = true
         
         self.captureDevice = AVCaptureDevice.default(for: .video)!
         
@@ -137,6 +146,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.takePhotoButton.isEnabled = false
         self.saveImageButton.isEnabled = true
         self.styleTransferButton.isEnabled = !perform_transfer
+        self.styleModelPicker.isHidden = true
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
@@ -157,4 +167,32 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
     }
     
+    @IBAction func toggleShowStylePicker(_ sender: Any) {
+        self.styleModelPicker.isHidden = !self.styleModelPicker.isHidden
+    }
+    
+    @objc func imageTapAction() {
+        if !self.styleModelPicker.isHidden {
+            self.styleModelPicker.isHidden = true
+        }
+    }
+    
+}
+
+extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return modelNames.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return modelNames[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        setModel(targetModel: modelList[row])
+    }
 }
