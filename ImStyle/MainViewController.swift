@@ -16,41 +16,40 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     let cameraSession = AVCaptureSession()
     var perform_transfer = false
     
+    private var isRearCamera = true
+    private var captureDevice: AVCaptureDevice?
     private let image_size = 720
-    
     private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let captureDevice = AVCaptureDevice.default(for: .video)!
-        // front-facing camera:
-        // let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
+        self.captureDevice = AVCaptureDevice.default(for: .video)!
         
         do {
-            let deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-            
+            let deviceInput = try AVCaptureDeviceInput(device: captureDevice!)
+
             cameraSession.beginConfiguration()
-            
+
             if (cameraSession.canAddInput(deviceInput) == true) {
                 cameraSession.addInput(deviceInput)
             }
-            
+
             let dataOutput = AVCaptureVideoDataOutput()
-            
+
             dataOutput.videoSettings = [((kCVPixelBufferPixelFormatTypeKey as NSString) as String) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)]
-            
+
             dataOutput.alwaysDiscardsLateVideoFrames = true
-            
+
             if (cameraSession.canAddOutput(dataOutput) == true) {
                 cameraSession.addOutput(dataOutput)
             }
-            
+
             cameraSession.commitConfiguration()
-            
+
             let queue = DispatchQueue(label: "com.styletransfer.video-output")
             dataOutput.setSampleBufferDelegate(self, queue: queue)
-            
+
         }
         catch let error as NSError {
             NSLog("\(error), \(error.localizedDescription)")
@@ -94,6 +93,25 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.imageView.image = uiImage;
     }
     
+    private func changeCamera() {
+        do {
+            let deviceInput = try AVCaptureDeviceInput(device: captureDevice!)
+            
+            cameraSession.stopRunning()
+            cameraSession.removeInput(cameraSession.inputs[0])
+            
+            if (cameraSession.canAddInput(deviceInput) == true) {
+                cameraSession.addInput(deviceInput)
+            }
+            
+            cameraSession.startRunning()
+            
+        }
+        catch let error as NSError {
+            NSLog("\(error), \(error.localizedDescription)")
+        }
+    }
+    
     @IBAction func toggle_transfer(_ sender: Any) {
         if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
             let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
@@ -125,6 +143,18 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         cameraSession.startRunning()
         self.takePhotoButton.isEnabled = true
         self.styleTransferButton.isEnabled = true
+    }
+    
+    @IBAction func toggleCamera(_ sender: Any) {
+        if self.isRearCamera {
+            self.captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
+            self.changeCamera()
+            self.isRearCamera = false
+        } else {
+            self.captureDevice = AVCaptureDevice.default(for: .video)!
+            self.changeCamera()
+            self.isRearCamera = true
+        }
     }
     
 }
