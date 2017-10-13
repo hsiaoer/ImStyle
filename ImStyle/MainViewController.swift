@@ -25,8 +25,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.styleModelPicker.delegate = self
-        self.styleModelPicker.dataSource = self
+        self.styleModelPicker.delegate = modelPicker
+        self.styleModelPicker.dataSource = modelPicker
         self.styleModelPicker.isHidden = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
@@ -72,6 +72,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         frame.size.height = frame.size.height - 35.0
         
         cameraSession.startRunning()
+        
+        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -179,20 +181,21 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
 }
 
-extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return modelNames.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return modelNames[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        setModel(targetModel: modelList[row])
-    }
-}
+//extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//    
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return modelNames.count
+//    }
+//    
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return modelNames[row]
+//    }
+//    
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        setModel(targetModel: modelList[row])
+//    }
+//}
+
