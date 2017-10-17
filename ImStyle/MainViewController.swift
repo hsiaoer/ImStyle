@@ -7,6 +7,7 @@ import VideoToolbox
 class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var loadImageButton: UIButton!
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
@@ -34,9 +35,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.imageView.addGestureRecognizer(tap)
         self.imageView.isUserInteractionEnabled = true
         
-//        let swipeToSettings: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "toSettings")
-//        swipeToSettings.direction = .left
-//        self.view.addGestureRecognizer(swipeToSettings)
+        self.clearImageButton.isEnabled = false
         
         self.captureDevice = AVCaptureDevice.default(for: .video)!
         
@@ -108,7 +107,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     func updateOutputImage(uiImage: UIImage) {
-        self.imageView.image = uiImage;
+        if(self.takePhotoButton.isEnabled) {
+            self.imageView.image = uiImage;
+        }
     }
     
     private func changeCamera() {
@@ -172,6 +173,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         cameraSession.startRunning()
         self.takePhotoButton.isEnabled = true
         self.styleTransferButton.isEnabled = true
+        self.clearImageButton.isEnabled = false
         
         // reset SF button label
         self.styleTransferButton.setTitle("Style Transfer", for: [])
@@ -199,8 +201,60 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
     }
     
-//    func toSettings(recognizer : UISwipeGestureRecognizer) {
-//        self.performSegue(withIdentifier: "SettingsViewController", sender: self)
-//    }
+    @IBAction func loadPhotoButtonPressed(_ sender: Any) {
+        cameraSession.stopRunning()
+        self.openPhotoLibrary()
+        self.takePhotoButton.isEnabled = false
+        self.saveImageButton.isEnabled = true
+        self.styleTransferButton.isEnabled = true
+    }
     
+    func openPhotoLibrary() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self as UIImagePickerControllerDelegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(imagePicker, animated: true)
+        } else {
+            print("Cannot open photo library")
+            return
+        }
+    }
+    
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self as UIImagePickerControllerDelegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            self.present(imagePicker, animated: true)
+        } else {
+            print("Cannot open camera")
+            return
+        }
+    }
+    
+}
+
+extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        defer {
+            picker.dismiss(animated: true)
+        }
+
+        // get the image
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            return
+        }
+        
+        // save to imageView
+        self.imageView.image = image
+        self.clearImageButton.isEnabled = true
+        self.styleTransferButton.isEnabled = true
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        defer {
+            picker.dismiss(animated: true)
+        }
+    }
 }
