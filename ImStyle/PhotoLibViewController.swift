@@ -13,12 +13,11 @@ import CoreML
 import Photos
 import CoreImage
 
-class ImageViewController: UIViewController {
+class PhotoLibViewController: UIViewController {
     // image selection reference:
     // https://medium.com/@abhimuralidharan/accessing-photos-in-ios-swift-3-43da29ca4ccb
     
     @IBOutlet weak var openPhotoLib: UIButton!
-    @IBOutlet weak var takePhoto: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var saveImageButton: UIButton!
@@ -40,10 +39,6 @@ class ImageViewController: UIViewController {
     
     @IBAction func openLibraryAction(_ sender: Any) {
         self.openPhotoLibrary()
-    }
-    
-    @IBAction func openCameraAction(_ sender: Any) {
-        self.openCamera()
     }
     
     @IBAction func clearImage(_ sender: Any) {
@@ -97,7 +92,7 @@ class ImageViewController: UIViewController {
     
 }
 
-extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension PhotoLibViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         defer {
             picker.dismiss(animated: true)

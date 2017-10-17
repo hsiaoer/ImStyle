@@ -18,17 +18,37 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.styleModelPicker.delegate = self
-        self.styleModelPicker.dataSource = self
-        self.styleModelImagePreview.image = UIImage(named: modelList[0] + "-source-image")
+        self.styleModelPicker.delegate = modelPicker
+        self.styleModelPicker.dataSource = modelPicker
+        self.updateImage()
+        modelPicker.setSettingsView(sv: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.updateImage()
     }
+    
+    func updateImage() {
+        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
+        self.styleModelImagePreview.image = UIImage(named: modelList[modelPicker.currentStyle] + "-source-image")
+    }
+    
 }
 
-extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+class ModelPickerController: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
+    var currentStyle = 0
+    var settingsView: SettingsViewController?
+    var mainView: MainViewController?
+    
+    func setSettingsView(sv: SettingsViewController) {
+        self.settingsView = sv
+    }
+    
+    func setMainView(mv: MainViewController) {
+        self.mainView = mv
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -43,6 +63,12 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         setModel(targetModel: modelList[row])
-        self.styleModelImagePreview.image = UIImage(named: modelList[row] + "-source-image")
+        self.currentStyle = row
+        if (self.settingsView != nil) {
+            self.settingsView!.updateImage()
+        }
+        if (self.mainView != nil) {
+            self.mainView!.updatePicker()
+        }
     }
 }

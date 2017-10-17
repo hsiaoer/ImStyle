@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VRViewController: VideoFeedViewController {
+class VRViewController: MainViewController {
     
     
     @IBOutlet weak var rightEyeView: UIImageView!
