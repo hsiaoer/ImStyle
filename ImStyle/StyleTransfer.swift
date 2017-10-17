@@ -15,8 +15,8 @@ import Photos
 import CoreImage
 import VideoToolbox
 
-let modelNames = ["Mosaic", "Udnie"]
-let modelList = ["mosaic_style", "udnie_style"]
+let modelNames = ["No Style", "Mosaic", "Udnie"]
+let modelList = ["none", "mosaic_style", "udnie_style"]
 var model = mosaic_style().model
 
 //TODO: On memory warning, unload these
