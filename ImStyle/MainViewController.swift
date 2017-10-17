@@ -76,8 +76,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         cameraSession.startRunning()
         
-        self.updatePicker()
-        
         self.styleModelPicker.isHidden = true
     }
     
@@ -131,10 +129,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         catch let error as NSError {
             NSLog("\(error), \(error.localizedDescription)")
         }
-    }
-    
-    func updatePicker() {
-        self.styleModelPicker.selectRow(modelPicker.currentStyle, inComponent: 0, animated: true)
     }
     
     @IBAction func toggle_transfer(_ sender: Any) {
