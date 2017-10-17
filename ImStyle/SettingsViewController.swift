@@ -21,7 +21,6 @@ class SettingsViewController: UIViewController {
         self.styleModelPicker.delegate = modelPicker
         self.styleModelPicker.dataSource = modelPicker
         self.updateImage()
-        modelPicker.setSettingsView(sv: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,16 +37,7 @@ class SettingsViewController: UIViewController {
 
 class ModelPickerController: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
     var currentStyle = 0
-    var settingsView: SettingsViewController?
-    var mainView: MainViewController?
     
-    func setSettingsView(sv: SettingsViewController) {
-        self.settingsView = sv
-    }
-    
-    func setMainView(mv: MainViewController) {
-        self.mainView = mv
-    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -64,11 +54,5 @@ class ModelPickerController: UIPickerView, UIPickerViewDataSource, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         setModel(targetModel: modelList[row])
         self.currentStyle = row
-        if (self.settingsView != nil) {
-            self.settingsView!.updateImage()
-        }
-        if (self.mainView != nil) {
-            self.mainView!.updatePicker()
-        }
     }
 }

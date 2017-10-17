@@ -16,6 +16,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     let cameraSession = AVCaptureSession()
     var perform_transfer = false
+    var currentStyle = 0
     
     private var isRearCamera = true
     private var captureDevice: AVCaptureDevice?
@@ -26,9 +27,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.styleModelPicker.delegate = modelPicker
-        self.styleModelPicker.dataSource = modelPicker
-        modelPicker.setMainView(mv: self)
+        self.styleModelPicker.delegate = self
+        self.styleModelPicker.dataSource = self
         self.styleModelPicker.isHidden = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
@@ -142,12 +142,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         } else if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
             // save unstyled image
             self.prevImage = self.imageView.image!
-            let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
-            
-            let stylized_image = applyStyleTransfer(uiImage: image, model: model)
-            
-            // update image
-            self.imageView.image = stylized_image
+            self.stylizeAndUpdate()
             
             // update SF button label
             self.styleTransferButton.setTitle("Undo Style", for: [])
@@ -167,6 +162,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveImageButton.isEnabled = true
         self.styleTransferButton.isEnabled = !perform_transfer
         self.styleModelPicker.isHidden = true
+        self.clearImageButton.isEnabled = true
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
@@ -233,6 +229,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
     }
     
+    func stylizeAndUpdate() {
+        let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
+        let stylized_image = applyStyleTransfer(uiImage: image, model: model)
+        self.imageView.image = stylized_image
+    }
+    
 }
 
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -257,4 +259,29 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             picker.dismiss(animated: true)
         }
     }
+}
+
+extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return modelNames.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return modelNames[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        setModel(targetModel: modelList[row])
+        self.currentStyle = row
+        //TODO make this it's own function. It's duplicated.
+        if(self.styleTransferButton.titleLabel?.text == "Undo Style") {
+            self.stylizeAndUpdate()
+        }
+    }
+
 }
