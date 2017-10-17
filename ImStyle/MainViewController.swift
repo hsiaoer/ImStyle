@@ -98,6 +98,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 } else {
                     outImage = uiImage;
                 }
+                if (!isRearCamera) {
+                    outImage = UIImage(cgImage: outImage.cgImage!, scale: 1.0, orientation: .upMirrored)
+                }
                 DispatchQueue.main.async {
                     self.updateOutputImage(uiImage: outImage);
                 }
