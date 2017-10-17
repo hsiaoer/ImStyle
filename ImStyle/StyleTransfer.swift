@@ -19,12 +19,16 @@ let modelNames = ["Mosaic", "Udnie"]
 let modelList = ["mosaic_style", "udnie_style"]
 var model = mosaic_style().model
 
+//TODO: On memory warning, unload these
+let mosaic_style_ = mosaic_style().model
+let udnie_style_  = udnie_style().model
+
 func setModel(targetModel: String) {
     switch targetModel {
     case "mosaic_style":
-        model = mosaic_style().model
+        model = mosaic_style_
     case "udnie_style":
-        model = udnie_style().model
+        model = udnie_style_
     default:
         break
     }
