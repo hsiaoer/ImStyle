@@ -264,6 +264,10 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         
         // save to imageView
         self.imageView.image = image
+        self.prevImage = image
+        if(self.currentStyle != 0) {
+            self.stylizeAndUpdate()
+        }
         self.clearImageButton.isEnabled = true
     }
     
