@@ -22,6 +22,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0qU-kT-YCK">
                                 <rect key="frame" x="-12" y="0.0" width="399" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0qU-kT-YCK" secondAttribute="height" multiplier="1:1" constant="-268" id="dSF-fZ-J9r"/>
                                 </constraints>
@@ -43,34 +44,11 @@
                                     <action selector="clearImageAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="be0-Hh-WSN"/>
                                 </connections>
                             </button>
-                            <pickerView alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZI-TD-pZx">
-                                <rect key="frame" x="-12" y="20" width="399" height="142"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="142" id="A6N-Dd-54N"/>
-                                </constraints>
-                            </pickerView>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bC-7k-2Pf" userLabel="Style Select Button">
-                                <rect key="frame" x="334" y="29" width="25" height="32"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="Bpm-M6-sJf"/>
-                                </constraints>
-                                <state key="normal" image="icons8-Settings-50"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="toggleShowStylePicker:" destination="BRE-eg-EID" eventType="touchUpInside" id="HoA-cA-QBT"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
                                 <rect key="frame" x="149" y="570" width="77" height="77"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="77" id="nE3-Jb-Cca"/>
+                                    <constraint firstAttribute="width" constant="77" id="K9G-GS-AAf"/>
                                 </constraints>
                                 <state key="normal" image="takephoto"/>
                                 <userDefinedRuntimeAttributes>
@@ -135,51 +113,57 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="VZI-TD-pZx" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" id="22I-Db-4WN"/>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="20" symbolic="YES" id="3Ng-qR-t0S"/>
-                            <constraint firstItem="iKA-oc-ihR" firstAttribute="leading" secondItem="f23-Bz-one" secondAttribute="trailing" constant="102" id="8cn-qM-fTN"/>
-                            <constraint firstItem="2bC-7k-2Pf" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="9" id="9qy-nR-gFU"/>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="q1I-ma-Aqc" secondAttribute="trailingMargin" id="9s1-9c-Lk7"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="trailing" secondItem="VZI-TD-pZx" secondAttribute="trailing" id="Gfs-37-wy8"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" id="CLW-L9-hh0"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="550" id="Mtd-Ws-LCw"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="8" id="S68-R9-yKJ"/>
                             <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="uwq-z8-mjs" secondAttribute="leading" id="UYb-ek-geU"/>
-                            <constraint firstItem="dPA-3G-PLh" firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" id="VDs-2c-73m"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="centerX" secondItem="0qU-kT-YCK" secondAttribute="centerX" id="Vjp-Rs-jKU"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="q1I-ma-Aqc" secondAttribute="centerX" id="Xj5-A0-h0U"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" id="cOL-rX-O1n"/>
                             <constraint firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" constant="20" symbolic="YES" id="dsd-YC-YmW"/>
                             <constraint firstAttribute="bottom" secondItem="dPA-3G-PLh" secondAttribute="bottom" constant="20" symbolic="YES" id="gX9-PG-pID"/>
-                            <constraint firstItem="iKA-oc-ihR" firstAttribute="centerX" secondItem="VZI-TD-pZx" secondAttribute="centerX" id="gsw-VT-d5Q"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="hnA-Uh-mvh"/>
-                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="2bC-7k-2Pf" secondAttribute="trailing" id="kpW-fN-Msb"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="VZI-TD-pZx" secondAttribute="leading" id="ltN-a7-7w5"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="bottom" secondItem="Ybc-kP-tAC" secondAttribute="bottom" id="mIH-1R-WYG"/>
-                            <constraint firstItem="f23-Bz-one" firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" id="o6G-wp-9sw"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="top" id="qto-C0-4V8"/>
-                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" id="sOu-9Y-59V"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="bottom" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" id="yj1-dD-eIo"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="11" id="z2h-gg-96p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="cRY-fK-PS7" appends="YES" id="biq-V5-EIf"/>
+                            <outletCollection property="gestureRecognizers" destination="UnP-1Y-w8L" appends="YES" id="V06-fL-u8m"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="clearImageButton" destination="dPA-3G-PLh" id="nsz-qw-dpP"/>
                         <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
                         <outlet property="loadImageButton" destination="f23-Bz-one" id="S4r-au-O96"/>
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
-                        <outlet property="styleModelPicker" destination="VZI-TD-pZx" id="Tdx-NG-JDA"/>
                         <outlet property="takePhotoButton" destination="iKA-oc-ihR" id="ADS-Ly-8s6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="cRY-fK-PS7">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BRE-eg-EID" id="KkP-cd-ahy"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="UnP-1Y-w8L">
+                    <connections>
+                        <action selector="swipeRight:" destination="BRE-eg-EID" id="O43-Xa-Pzd"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-245.59999999999999" y="-219.04047976011995"/>
         </scene>
     </scenes>
     <resources>
-        <image name="camflip" width="490" height="368"/>
+        <image name="camflip" width="800" height="800"/>
         <image name="clearimage" width="1000" height="1000"/>
-        <image name="icons8-Settings-50" width="25" height="25"/>
         <image name="loadimage" width="100" height="100"/>
         <image name="saveimage" width="800" height="800"/>
         <image name="takephoto" width="97" height="94"/>
