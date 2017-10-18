@@ -25,7 +25,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     private var rearCaptureDevice: AVCaptureDevice?
     private var prevImage: UIImage?
     private let image_size = 720
-    private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
+    //private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +78,13 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             let rearQueue = DispatchQueue(label: "com.styletransfer.rear-video-output")
             frontDataOutput.setSampleBufferDelegate(self, queue: frontQueue)
             rearDataOutput.setSampleBufferDelegate(self, queue: rearQueue)
+            
+            frontCameraSession.commitConfiguration()
+            rearCameraSession.commitConfiguration()
+            
+            frontCameraSession.startRunning()
+            frontCameraSession.stopRunning()
+            rearCameraSession.startRunning()
         }
         catch let error as NSError {
             NSLog("\(error), \(error.localizedDescription)")
@@ -89,8 +96,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         var frame = view.frame
         frame.size.height = frame.size.height - 35.0
-        
-        rearCameraSession.startRunning()
         
         self.styleModelPicker.isHidden = true
     }
