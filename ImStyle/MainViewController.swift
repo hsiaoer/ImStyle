@@ -115,7 +115,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             if let uiImage = img {
                 var outImage : UIImage
                 if (perform_transfer) {
-                    self.prevImage = uiImage
+                    if(!isRearCamera){
+                        self.prevImage = UIImage(cgImage: uiImage.cgImage!, scale: 1.0, orientation: .upMirrored)
+                    } else {
+                        self.prevImage = uiImage
+                    }
                     outImage = applyStyleTransfer(uiImage: uiImage, model: model)
                 } else {
                     outImage = uiImage;
@@ -160,7 +164,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
 
     @IBAction func save_image(_ sender: Any) {
-        self.saveToPhotoLibrary(uiImage: self.imageView.image!)
+        UIGraphicsBeginImageContext(CGSize(width: self.imageView.frame.size.width, height: self.imageView.frame.size.height))
+        self.imageView.drawHierarchy(in: CGRect(x: 0.0, y: 0.0, width: self.imageView.frame.size.width, height: self.imageView.frame.size.height), afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.saveToPhotoLibrary(uiImage: image!)
     }
     
     @IBAction func takePhotoAction(_ sender: Any) {
