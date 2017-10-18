@@ -115,6 +115,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             if let uiImage = img {
                 var outImage : UIImage
                 if (perform_transfer) {
+                    self.prevImage = uiImage
                     outImage = applyStyleTransfer(uiImage: uiImage, model: model)
                 } else {
                     outImage = uiImage;
