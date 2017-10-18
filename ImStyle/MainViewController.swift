@@ -11,7 +11,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
-    @IBOutlet weak var styleTransferButton: UIButton!
     @IBOutlet weak var styleModelPicker: UIPickerView!
     
     let cameraSession = AVCaptureSession()
@@ -136,16 +135,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func toggle_transfer(_ sender: Any) {
-        if (self.styleTransferButton.titleLabel?.text == "Undo Style") {
-            self.styleTransferButton.setTitle("Style Transfer", for: [])
+        if (!self.perform_transfer) {
             self.imageView.image = self.prevImage
         } else if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
             // save unstyled image
             self.prevImage = self.imageView.image!
             self.stylizeAndUpdate()
-            
-            // update SF button label
-            self.styleTransferButton.setTitle("Undo Style", for: [])
         } else {
             perform_transfer = !perform_transfer
             self.saveImageButton.isEnabled = perform_transfer
@@ -159,8 +154,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBAction func takePhotoAction(_ sender: Any) {
         cameraSession.stopRunning()
         self.takePhotoButton.isEnabled = false
+        self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
-        self.styleTransferButton.isEnabled = !perform_transfer
         self.styleModelPicker.isHidden = true
         self.clearImageButton.isEnabled = true
     }
@@ -168,11 +163,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBAction func clearImageAction(_ sender: Any) {
         cameraSession.startRunning()
         self.takePhotoButton.isEnabled = true
-        self.styleTransferButton.isEnabled = true
+        self.takePhotoButton.isHidden = false
         self.clearImageButton.isEnabled = false
-        
-        // reset SF button label
-        self.styleTransferButton.setTitle("Style Transfer", for: [])
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
@@ -202,7 +194,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.openPhotoLibrary()
         self.takePhotoButton.isEnabled = false
         self.saveImageButton.isEnabled = true
-        self.styleTransferButton.isEnabled = true
     }
     
     func openPhotoLibrary() {
@@ -251,7 +242,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         // save to imageView
         self.imageView.image = image
         self.clearImageButton.isEnabled = true
-        self.styleTransferButton.isEnabled = true
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -277,10 +267,15 @@ extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         setModel(targetModel: modelList[row])
+        if(self.currentStyle == 0 && row != 0) {
+            self.prevImage = self.imageView.image;
+        }
         self.currentStyle = row
-        //TODO make this it's own function. It's duplicated.
-        if(self.styleTransferButton.titleLabel?.text == "Undo Style") {
+        self.perform_transfer = row != 0
+        if(self.perform_transfer) {
             self.stylizeAndUpdate()
+        } else if(!cameraSession.isRunning) { // if we're looking at a single image
+            self.imageView.image = self.prevImage;
         }
     }
 
