@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -27,10 +26,14 @@
                                     <constraint firstAttribute="width" secondItem="0qU-kT-YCK" secondAttribute="height" multiplier="1:1" constant="-268" id="dSF-fZ-J9r"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPA-3G-PLh">
-                                <rect key="frame" x="16" y="605" width="82" height="30"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Clear Image"/>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPA-3G-PLh">
+                                <rect key="frame" x="11" y="616" width="31" height="31"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="SfV-A6-OqP"/>
+                                    <constraint firstAttribute="width" constant="31" id="uqy-BO-tov"/>
+                                </constraints>
+                                <state key="normal" image="clearimage"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
@@ -50,6 +53,9 @@
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bC-7k-2Pf" userLabel="Style Select Button">
                                 <rect key="frame" x="334" y="29" width="25" height="32"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Bpm-M6-sJf"/>
+                                </constraints>
                                 <state key="normal" image="icons8-Settings-50"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -60,24 +66,29 @@
                                     <action selector="toggleShowStylePicker:" destination="BRE-eg-EID" eventType="touchUpInside" id="HoA-cA-QBT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f23-Bz-one">
-                                <rect key="frame" x="18" y="605" width="78" height="30"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Load Photo"/>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
+                                <rect key="frame" x="149" y="570" width="77" height="77"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="77" id="nE3-Jb-Cca"/>
+                                </constraints>
+                                <state key="normal" image="takephoto"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="loadPhotoButtonPressed:" destination="BRE-eg-EID" eventType="touchUpInside" id="lOJ-0h-6Yr"/>
-                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="EeW-sB-HhR"/>
+                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvZ-Fd-sDp">
-                                <rect key="frame" x="264" y="605" width="79" height="30"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Save Image"/>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvZ-Fd-sDp">
+                                <rect key="frame" x="328" y="616" width="31" height="31"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="31" id="gzC-gm-CN0"/>
+                                </constraints>
+                                <state key="normal" title="Save Image" image="saveimage"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
@@ -89,12 +100,12 @@
                             </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwq-z8-mjs" userLabel="Toggle Camera Button">
                                 <rect key="frame" x="16" y="28" width="32" height="32"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="2l4-Ja-hFF"/>
                                     <constraint firstAttribute="height" constant="32" id="UZP-VJ-V1T"/>
                                 </constraints>
-                                <state key="normal" image="icons8-Camera-50"/>
+                                <state key="normal" image="camflip"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
@@ -104,47 +115,50 @@
                                     <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
-                                <rect key="frame" x="149" y="605" width="76" height="30"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Take Photo"/>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f23-Bz-one">
+                                <rect key="frame" x="16" y="616" width="31" height="31"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="31" id="hYi-mx-Hhd"/>
+                                    <constraint firstAttribute="height" constant="31" id="k2u-6G-623"/>
+                                </constraints>
+                                <state key="normal" image="loadimage"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
+                                    <action selector="loadPhotoButtonPressed:" destination="BRE-eg-EID" eventType="touchUpInside" id="lOJ-0h-6Yr"/>
+                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="EeW-sB-HhR"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="2bC-7k-2Pf" secondAttribute="top" constant="-1" id="4mo-T3-Hny"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="8" id="6bQ-QY-q8P"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" constant="-28" id="CGi-2Z-lLL"/>
-                            <constraint firstItem="Ybc-kP-tAC" firstAttribute="trailing" secondItem="2bC-7k-2Pf" secondAttribute="trailing" constant="16" id="DA5-1U-ASs"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="dPA-3G-PLh" secondAttribute="leading" id="E9r-TC-AgV"/>
-                            <constraint firstItem="2bC-7k-2Pf" firstAttribute="baseline" secondItem="uwq-z8-mjs" secondAttribute="baseline" constant="1" id="G8V-Za-SVm"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="baseline" secondItem="2bC-7k-2Pf" secondAttribute="baseline" constant="-1" id="IDJ-bN-aey"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dPA-3G-PLh" secondAttribute="trailing" constant="20" symbolic="YES" id="IwI-5S-rzc"/>
-                            <constraint firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" constant="32" id="KS7-eC-hgf"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="trailing" secondItem="VZI-TD-pZx" secondAttribute="trailing" id="M9t-Uf-hKW"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" id="Pzt-yv-WYq"/>
-                            <constraint firstAttribute="trailing" secondItem="nvZ-Fd-sDp" secondAttribute="trailing" constant="32" id="Vjd-SW-SrQ"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="q1I-ma-Aqc" secondAttribute="centerX" id="We5-m6-Lyb"/>
-                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="baseline" secondItem="f23-Bz-one" secondAttribute="baseline" id="YlY-dK-yTX"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="firstBaseline" secondItem="2bC-7k-2Pf" secondAttribute="firstBaseline" constant="-1" id="Zxo-K3-9xm"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="iKA-oc-ihR" secondAttribute="centerX" id="egr-DO-4GH"/>
-                            <constraint firstItem="VZI-TD-pZx" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" id="gT5-B2-YV5"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="gd2-dG-611"/>
-                            <constraint firstItem="dPA-3G-PLh" firstAttribute="baseline" secondItem="f23-Bz-one" secondAttribute="baseline" id="hZp-1D-pej"/>
-                            <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="18" id="kjx-aw-Kbd"/>
-                            <constraint firstItem="2bC-7k-2Pf" firstAttribute="firstBaseline" secondItem="uwq-z8-mjs" secondAttribute="firstBaseline" constant="1" id="tB8-le-NaC"/>
-                            <constraint firstItem="f23-Bz-one" firstAttribute="top" secondItem="iKA-oc-ihR" secondAttribute="bottom" constant="-30" id="uQ9-OV-wfH"/>
-                            <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="VZI-TD-pZx" secondAttribute="leading" id="w7l-al-7K4"/>
-                            <constraint firstItem="iKA-oc-ihR" firstAttribute="trailing" secondItem="f23-Bz-one" secondAttribute="trailing" constant="129" id="y98-u1-Nni"/>
-                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="20" symbolic="YES" id="zGX-lW-PMQ"/>
+                            <constraint firstItem="VZI-TD-pZx" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" id="22I-Db-4WN"/>
+                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="20" symbolic="YES" id="3Ng-qR-t0S"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="leading" secondItem="f23-Bz-one" secondAttribute="trailing" constant="102" id="8cn-qM-fTN"/>
+                            <constraint firstItem="2bC-7k-2Pf" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="9" id="9qy-nR-gFU"/>
+                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="q1I-ma-Aqc" secondAttribute="trailingMargin" id="9s1-9c-Lk7"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="trailing" secondItem="VZI-TD-pZx" secondAttribute="trailing" id="Gfs-37-wy8"/>
+                            <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="8" id="S68-R9-yKJ"/>
+                            <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="uwq-z8-mjs" secondAttribute="leading" id="UYb-ek-geU"/>
+                            <constraint firstItem="dPA-3G-PLh" firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" id="VDs-2c-73m"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="q1I-ma-Aqc" secondAttribute="centerX" id="Xj5-A0-h0U"/>
+                            <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" id="cOL-rX-O1n"/>
+                            <constraint firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" constant="20" symbolic="YES" id="dsd-YC-YmW"/>
+                            <constraint firstAttribute="bottom" secondItem="dPA-3G-PLh" secondAttribute="bottom" constant="20" symbolic="YES" id="gX9-PG-pID"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="centerX" secondItem="VZI-TD-pZx" secondAttribute="centerX" id="gsw-VT-d5Q"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="hnA-Uh-mvh"/>
+                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="2bC-7k-2Pf" secondAttribute="trailing" id="kpW-fN-Msb"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="VZI-TD-pZx" secondAttribute="leading" id="ltN-a7-7w5"/>
+                            <constraint firstItem="0qU-kT-YCK" firstAttribute="bottom" secondItem="Ybc-kP-tAC" secondAttribute="bottom" id="mIH-1R-WYG"/>
+                            <constraint firstItem="f23-Bz-one" firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" id="o6G-wp-9sw"/>
+                            <constraint firstItem="dPA-3G-PLh" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="top" id="qto-C0-4V8"/>
+                            <constraint firstItem="nvZ-Fd-sDp" firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" id="sOu-9Y-59V"/>
+                            <constraint firstItem="dPA-3G-PLh" firstAttribute="bottom" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" id="yj1-dD-eIo"/>
+                            <constraint firstItem="dPA-3G-PLh" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="11" id="z2h-gg-96p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
                     </view>
@@ -163,7 +177,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icons8-Camera-50" width="25" height="25"/>
+        <image name="camflip" width="490" height="368"/>
+        <image name="clearimage" width="1000" height="1000"/>
         <image name="icons8-Settings-50" width="25" height="25"/>
+        <image name="loadimage" width="100" height="100"/>
+        <image name="saveimage" width="800" height="800"/>
+        <image name="takephoto" width="97" height="94"/>
     </resources>
 </document>
