@@ -13,15 +13,19 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var styleModelPicker: UIPickerView!
     
-    let cameraSession = AVCaptureSession()
+    let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
+    let rearCamera = AVCaptureDevice.default(for: .video)!
+    let frontCameraSession = AVCaptureSession()
+    let rearCameraSession = AVCaptureSession()
     var perform_transfer = false
     var currentStyle = 0
     
     private var isRearCamera = true
-    private var captureDevice: AVCaptureDevice?
+    private var frontCaptureDevice: AVCaptureDevice?
+    private var rearCaptureDevice: AVCaptureDevice?
     private var prevImage: UIImage?
     private let image_size = 720
-    private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
+    //private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,32 +40,51 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         self.clearImageButton.isEnabled = false
         
-        self.captureDevice = AVCaptureDevice.default(for: .video)!
+        self.rearCaptureDevice = rearCamera
+        self.frontCaptureDevice = frontCamera
         
         do {
-            let deviceInput = try AVCaptureDeviceInput(device: captureDevice!)
+            let frontInput = try AVCaptureDeviceInput(device: frontCaptureDevice!)
+            let rearInput = try AVCaptureDeviceInput(device: rearCaptureDevice!)
 
-            cameraSession.beginConfiguration()
+            frontCameraSession.beginConfiguration()
+            rearCameraSession.beginConfiguration()
 
-            if (cameraSession.canAddInput(deviceInput) == true) {
-                cameraSession.addInput(deviceInput)
+            if (frontCameraSession.canAddInput(frontInput)) {
+                frontCameraSession.addInput(frontInput)
+            }
+            
+            if (rearCameraSession.canAddInput(rearInput)) {
+                rearCameraSession.addInput(rearInput)
             }
 
-            let dataOutput = AVCaptureVideoDataOutput()
+            let rearDataOutput = AVCaptureVideoDataOutput()
+            rearDataOutput.videoSettings = [((kCVPixelBufferPixelFormatTypeKey as NSString) as String) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)]
+            rearDataOutput.alwaysDiscardsLateVideoFrames = true
 
-            dataOutput.videoSettings = [((kCVPixelBufferPixelFormatTypeKey as NSString) as String) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)]
-
-            dataOutput.alwaysDiscardsLateVideoFrames = true
-
-            if (cameraSession.canAddOutput(dataOutput) == true) {
-                cameraSession.addOutput(dataOutput)
+            if (rearCameraSession.canAddOutput(rearDataOutput)) {
+                rearCameraSession.addOutput(rearDataOutput)
+            }
+            
+            let frontDataOutput = AVCaptureVideoDataOutput()
+            frontDataOutput.videoSettings = [((kCVPixelBufferPixelFormatTypeKey as NSString) as String) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)]
+            frontDataOutput.alwaysDiscardsLateVideoFrames = true
+            
+            if (frontCameraSession.canAddOutput(frontDataOutput)) {
+                frontCameraSession.addOutput(frontDataOutput)
             }
 
-            cameraSession.commitConfiguration()
-
-            let queue = DispatchQueue(label: "com.styletransfer.video-output")
-            dataOutput.setSampleBufferDelegate(self, queue: queue)
-
+            let frontQueue = DispatchQueue(label: "com.styletransfer.front-video-output")
+            let rearQueue = DispatchQueue(label: "com.styletransfer.rear-video-output")
+            frontDataOutput.setSampleBufferDelegate(self, queue: frontQueue)
+            rearDataOutput.setSampleBufferDelegate(self, queue: rearQueue)
+            
+            frontCameraSession.commitConfiguration()
+            rearCameraSession.commitConfiguration()
+            
+            frontCameraSession.startRunning()
+            frontCameraSession.stopRunning()
+            rearCameraSession.startRunning()
         }
         catch let error as NSError {
             NSLog("\(error), \(error.localizedDescription)")
@@ -74,14 +97,16 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         var frame = view.frame
         frame.size.height = frame.size.height - 35.0
         
-        cameraSession.startRunning()
-        
         self.styleModelPicker.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        //cameraSession.stopRunning()
+        if(isRearCamera) {
+            rearCameraSession.stopRunning()
+        } else {
+            frontCameraSession.stopRunning()
+        }
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection){
@@ -113,21 +138,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     private func changeCamera() {
-        do {
-            let deviceInput = try AVCaptureDeviceInput(device: captureDevice!)
-            
-            cameraSession.stopRunning()
-            cameraSession.removeInput(cameraSession.inputs[0])
-            
-            if (cameraSession.canAddInput(deviceInput) == true) {
-                cameraSession.addInput(deviceInput)
-            }
-            
-            cameraSession.startRunning()
-            
-        }
-        catch let error as NSError {
-            NSLog("\(error), \(error.localizedDescription)")
+        if(!isRearCamera) {
+            rearCameraSession.startRunning()
+            frontCameraSession.stopRunning()
+        } else {
+            rearCameraSession.stopRunning()
+            frontCameraSession.startRunning()
         }
     }
     
@@ -149,7 +165,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func takePhotoAction(_ sender: Any) {
-        cameraSession.stopRunning()
+        if(isRearCamera) {
+            rearCameraSession.stopRunning()
+        } else {
+            frontCameraSession.stopRunning()
+        }
         self.takePhotoButton.isEnabled = false
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
@@ -158,7 +178,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
-        cameraSession.startRunning()
+        if(isRearCamera) {
+            rearCameraSession.startRunning()
+        } else {
+            frontCameraSession.startRunning()
+        }
         self.takePhotoButton.isEnabled = true
         self.takePhotoButton.isHidden = false
         self.clearImageButton.isEnabled = false
@@ -166,11 +190,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     @IBAction func toggleCamera(_ sender: Any) {
         if self.isRearCamera {
-            self.captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
             self.changeCamera()
             self.isRearCamera = false
         } else {
-            self.captureDevice = AVCaptureDevice.default(for: .video)!
             self.changeCamera()
             self.isRearCamera = true
         }
@@ -187,7 +209,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
-        cameraSession.stopRunning()
+        if(isRearCamera) {
+            rearCameraSession.stopRunning()
+        } else {
+            frontCameraSession.stopRunning()
+        }
         self.openPhotoLibrary()
         self.takePhotoButton.isEnabled = false
         self.saveImageButton.isEnabled = true
@@ -271,7 +297,7 @@ extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         self.perform_transfer = row != 0
         if(self.perform_transfer) {
             self.stylizeAndUpdate()
-        } else if(!cameraSession.isRunning) { // if we're looking at a single image
+        } else if(!rearCameraSession.isRunning && !frontCameraSession.isRunning) { // if we're looking at a single image
             self.imageView.image = self.prevImage;
         }
     }

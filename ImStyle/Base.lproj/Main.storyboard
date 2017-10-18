@@ -148,7 +148,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Video" image="icons8-Movie-50" selectedImage="icons8-Movie-50" id="hMH-S1-wP1"/>
                     <connections>
                         <outlet property="clearImageButton" destination="dPA-3G-PLh" id="nsz-qw-dpP"/>
                         <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
@@ -165,7 +164,6 @@
     </scenes>
     <resources>
         <image name="icons8-Camera-50" width="25" height="25"/>
-        <image name="icons8-Movie-50" width="25" height="25"/>
         <image name="icons8-Settings-50" width="25" height="25"/>
     </resources>
 </document>
