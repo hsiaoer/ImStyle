@@ -11,12 +11,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
-    @IBOutlet weak var styleModelPicker: UIPickerView!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
     let frontCameraSession = AVCaptureSession()
     let rearCameraSession = AVCaptureSession()
+    let num_styles = modelList.count
     var perform_transfer = false
     var currentStyle = 0
     
@@ -29,10 +29,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.styleModelPicker.delegate = self
-        self.styleModelPicker.dataSource = self
-        self.styleModelPicker.isHidden = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
         self.imageView.addGestureRecognizer(tap)
@@ -102,8 +98,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         var frame = view.frame
         frame.size.height = frame.size.height - 35.0
-        
-        self.styleModelPicker.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -123,6 +117,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             if let uiImage = img {
                 var outImage : UIImage
                 if (perform_transfer) {
+                    self.prevImage = uiImage
                     outImage = applyStyleTransfer(uiImage: uiImage, model: model)
                 } else {
                     outImage = uiImage;
@@ -179,7 +174,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.takePhotoButton.isEnabled = false
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
-        self.styleModelPicker.isHidden = true
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
@@ -210,14 +204,37 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
     }
     
-    @IBAction func toggleShowStylePicker(_ sender: Any) {
-        self.styleModelPicker.isHidden = !self.styleModelPicker.isHidden
+    @IBAction func swipeRight(_ sender: Any) {
+        let oldStyle = self.currentStyle
+        self.currentStyle = self.currentStyle - 1
+        if(self.currentStyle < 0) {
+            self.currentStyle = self.num_styles - 1
+        }
+        updateStyle(oldStyle: oldStyle)
+    }
+    
+    @IBAction func swipeLeft(_ sender: Any) {
+        let oldStyle = self.currentStyle
+        self.currentStyle = (self.currentStyle + 1) % self.num_styles
+        updateStyle(oldStyle: oldStyle)
+    }
+    
+    func updateStyle(oldStyle: Int) {
+        setModel(targetModel: modelList[self.currentStyle])
+        if(oldStyle == 0) {
+            self.prevImage = self.imageView.image;
+        }
+        self.perform_transfer = self.currentStyle != 0
+        if(!rearCameraSession.isRunning && !frontCameraSession.isRunning) { // if we're looking at a single image
+            self.imageView.image = self.prevImage;
+        }
+        if(self.perform_transfer) {
+            self.stylizeAndUpdate()
+        }
     }
     
     @objc func imageTapAction() {
-        if !self.styleModelPicker.isHidden {
-            self.styleModelPicker.isHidden = true
-        }
+        // Nothing to do here
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
@@ -310,32 +327,3 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     }
 }
 
-extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return modelNames.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return modelNames[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        setModel(targetModel: modelList[row])
-        if(self.currentStyle == 0 && row != 0) {
-            self.prevImage = self.imageView.image;
-        }
-        self.currentStyle = row
-        self.perform_transfer = row != 0
-        if(self.perform_transfer) {
-            self.stylizeAndUpdate()
-        } else if(!rearCameraSession.isRunning && !frontCameraSession.isRunning) { // if we're looking at a single image
-            self.imageView.image = self.prevImage;
-        }
-    }
-
-}
