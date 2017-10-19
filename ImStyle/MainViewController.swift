@@ -12,6 +12,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var stylePreviewImageView: UIImageView!
+    @IBOutlet weak var stylePreviewImageBorder: UIView!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -39,10 +40,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.imageView.isUserInteractionEnabled = true
         
         self.stylePreviewImageView.isHidden = true
-        self.stylePreviewImageView.layer.borderColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8).cgColor
-        self.stylePreviewImageView.layer.borderWidth = 8
-        self.stylePreviewImageView.layer.cornerRadius = 4
-        self.stylePreviewImageView.clipsToBounds = true
+//        self.stylePreviewImageView.layer.borderColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8).cgColor
+//        self.stylePreviewImageView.layer.borderWidth = 8
+//        self.stylePreviewImageView.clipsToBounds = true
+        self.stylePreviewImageBorder.isHidden = true
+        self.stylePreviewImageBorder.layer.cornerRadius = 4
         
         self.clearImageButton.isEnabled = false
         
@@ -299,6 +301,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.stylePreviewImageView.image = UIImage(named: modelList[self.currentStyle] + "-source-image")
             //        self.stylePreviewImageView.alpha = 1
             self.stylePreviewImageView.isHidden = false
+            self.stylePreviewImageBorder.isHidden = false
             self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.8, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
         }
     }
@@ -306,6 +309,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @objc func hideStylePreviewAnimate(timer: Timer) {
         self.stylePreviewAnimation = UIViewPropertyAnimator(duration: 1, curve: .easeOut, animations: {
             self.stylePreviewImageView.alpha = 0.0
+            self.stylePreviewImageBorder.alpha = 0.0
         })
         self.stylePreviewAnimation!.addCompletion({ _ in
             self.hideStylePreview()
@@ -316,7 +320,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     func hideStylePreview() -> Void {
         self.stylePreviewAnimation?.stopAnimation(true)
         self.stylePreviewImageView.isHidden = true
+        self.stylePreviewImageBorder.isHidden = true
         self.stylePreviewImageView.alpha = 1.0
+        self.stylePreviewImageBorder.alpha = 0.9
     }
     
 }
