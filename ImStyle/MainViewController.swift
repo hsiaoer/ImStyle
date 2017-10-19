@@ -18,6 +18,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     let frontCameraSession = AVCaptureSession()
     let rearCameraSession = AVCaptureSession()
     let num_styles = modelList.count
+    var stylePreviewAnimation: UIViewPropertyAnimator?
     var perform_transfer = false
     var currentStyle = 0
     
@@ -36,6 +37,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
         self.imageView.addGestureRecognizer(tap)
         self.imageView.isUserInteractionEnabled = true
+        
+        self.stylePreviewImageView.isHidden = true
+        self.stylePreviewImageView.layer.borderColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8).cgColor
+        self.stylePreviewImageView.layer.borderWidth = 8
+        self.stylePreviewImageView.layer.cornerRadius = 4
+        self.stylePreviewImageView.clipsToBounds = true
         
         self.clearImageButton.isEnabled = false
         
@@ -288,17 +295,28 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.hideStylePreview()
             self.stylePreviewTimer?.invalidate()
         }
-        self.stylePreviewImageView.image = UIImage(named: modelList[self.currentStyle] + "-source-image")
-//        self.stylePreviewImageView.alpha = 1
-        self.stylePreviewImageView.isHidden = false
-        self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(hideStylePreview), userInfo: nil, repeats: false)
+        if (self.currentStyle != 0) {
+            self.stylePreviewImageView.image = UIImage(named: modelList[self.currentStyle] + "-source-image")
+            //        self.stylePreviewImageView.alpha = 1
+            self.stylePreviewImageView.isHidden = false
+            self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.8, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
+        }
     }
     
-    @objc func hideStylePreview() {
-//        UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: {
-//            self.stylePreviewImageView.alpha = 0.0
-//        }).startAnimation()
+    @objc func hideStylePreviewAnimate(timer: Timer) {
+        self.stylePreviewAnimation = UIViewPropertyAnimator(duration: 1, curve: .easeOut, animations: {
+            self.stylePreviewImageView.alpha = 0.0
+        })
+        self.stylePreviewAnimation!.addCompletion({ _ in
+            self.hideStylePreview()
+        })
+        self.stylePreviewAnimation!.startAnimation()
+    }
+    
+    func hideStylePreview() -> Void {
+        self.stylePreviewAnimation?.stopAnimation(true)
         self.stylePreviewImageView.isHidden = true
+        self.stylePreviewImageView.alpha = 1.0
     }
     
 }
