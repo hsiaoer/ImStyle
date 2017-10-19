@@ -159,19 +159,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             frontCameraSession.startRunning()
         }
     }
-    
-    @IBAction func toggle_transfer(_ sender: Any) {
-        if (!self.perform_transfer) {
-            self.imageView.image = self.prevImage
-        } else if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
-            // save unstyled image
-            self.prevImage = self.imageView.image!
-            self.stylizeAndUpdate()
-        } else {
-            perform_transfer = !perform_transfer
-            self.saveImageButton.isEnabled = perform_transfer
-        }
-    }
 
     @IBAction func save_image(_ sender: Any) {
         UIGraphicsBeginImageContext(CGSize(width: self.imageView.frame.size.width, height: self.imageView.frame.size.height))
@@ -227,6 +214,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.displayingVideo = true
             self.videoTimer!.invalidate()
             self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(renderVideoFrame), userInfo: nil, repeats: true)
+        } else {
+            self.videoTimer!.invalidate()
         }
         self.toggleCameraButton.isEnabled = false
         self.toggleCameraButton.isHidden = true
@@ -296,7 +285,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoStyleProgressBar.isHidden = false
             self.isStylizingVideo = true
             DispatchQueue.global().async {
-                self.stylizedVideoFrames = []
+                    self.stylizedVideoFrames = []
                 for (index, frame) in self.videoFrames.enumerated() {
                     DispatchQueue.main.async {
                         self.videoStyleProgressBar.progress = Float(index) / Float(self.videoFrames.count)
