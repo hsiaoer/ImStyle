@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -57,7 +57,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
+                                    <action selector="takePhotoTouchDown:" destination="BRE-eg-EID" eventType="touchDown" id="Jzi-2T-bnG"/>
+                                    <action selector="takePhotoTouchUpInside:" destination="BRE-eg-EID" eventType="touchUpInside" id="ysc-tG-Wkc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvZ-Fd-sDp">
