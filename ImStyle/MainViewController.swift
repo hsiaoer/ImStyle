@@ -178,25 +178,26 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveToPhotoLibrary(uiImage: image!)
     }
     
-    func startVideo(){
+    @objc func startVideo() {
         if(self.currentStyle != 0) {
             print("TODO: alert user that you can't record live video in style")
             return
         }
-        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: Selector(("saveFrame")), userInfo: nil, repeats: true)
+        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(saveFrame), userInfo: nil, repeats: true)
         self.loadImageButton.isHidden = true
         self.loadImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
         self.saveImageButton.isEnabled = false
         self.recordingVideo = true
+        self.videoPlaybackFrame = 0
         self.videoFrames = []
     }
     
-    func saveFrame(){
+    @objc func saveFrame(){
         self.videoFrames.append(self.imageView.image!)
     }
     
-    func renderVideoFrame() {
+    @objc func renderVideoFrame() {
         if(self.currentStyle == 0) {
             self.imageView.image = self.videoFrames[self.videoPlaybackFrame]
         } else {
@@ -209,7 +210,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func takePhotoTouchDown(_ sender: Any) {
-        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: Selector(("startVideo")), userInfo: nil, repeats: false)
+        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(startVideo), userInfo: nil, repeats: false)
     }
     
     @IBAction func takePhotoTouchUpInside(_ sender: Any) {
@@ -222,7 +223,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.recordingVideo = false
             self.displayingVideo = true
             self.videoTimer!.invalidate()
-            self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: Selector(("renderVideoFrame")), userInfo: nil, repeats: true)
+            self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(renderVideoFrame), userInfo: nil, repeats: true)
         }
         self.toggleCameraButton.isEnabled = false
         self.toggleCameraButton.isHidden = true
@@ -286,7 +287,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     func updateStyle(oldStyle: Int) {
         setModel(targetModel: modelList[self.currentStyle])
-        if(self.displayingVideo) {
+        if(self.displayingVideo && self.currentStyle != 0) {
             for frame in self.videoFrames {
                 self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
             }
