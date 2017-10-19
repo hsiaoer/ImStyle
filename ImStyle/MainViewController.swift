@@ -229,6 +229,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.takePhotoButton.isEnabled = false
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
+        self.saveImageButton.isHidden = false
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
@@ -254,6 +255,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.loadImageButton.isHidden = false
         self.toggleCameraButton.isHidden = false
         self.toggleCameraButton.isEnabled = true
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
