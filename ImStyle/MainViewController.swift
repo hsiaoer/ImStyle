@@ -89,6 +89,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         catch let error as NSError {
             NSLog("\(error), \(error.localizedDescription)")
         }
+        
+        self.clearImageButton.isHidden = true
+        self.clearImageButton.isEnabled = false
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -175,6 +179,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveImageButton.isEnabled = true
         self.styleModelPicker.isHidden = true
         self.clearImageButton.isEnabled = true
+        self.clearImageButton.isHidden = false
+        self.loadImageButton.isEnabled = false
+        self.loadImageButton.isHidden = true
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
@@ -186,6 +193,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.takePhotoButton.isEnabled = true
         self.takePhotoButton.isHidden = false
         self.clearImageButton.isEnabled = false
+        self.clearImageButton.isHidden = true
+        self.loadImageButton.isEnabled = true
+        self.loadImageButton.isHidden = false
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
@@ -209,14 +219,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
-        if(isRearCamera) {
-            rearCameraSession.stopRunning()
-        } else {
-            frontCameraSession.stopRunning()
-        }
         self.openPhotoLibrary()
-        self.takePhotoButton.isEnabled = false
-        self.saveImageButton.isEnabled = true
     }
     
     func openPhotoLibrary() {
@@ -269,12 +272,39 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             self.stylizeAndUpdate()
         }
         self.clearImageButton.isEnabled = true
+        self.clearImageButton.isHidden = false
+        self.loadImageButton.isEnabled = false
+        self.loadImageButton.isHidden = true
+        
+        self.takePhotoButton.isEnabled = false
+        self.saveImageButton.isEnabled = true
+        
+        if(isRearCamera) {
+            rearCameraSession.stopRunning()
+        } else {
+            frontCameraSession.stopRunning()
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         defer {
             picker.dismiss(animated: true)
         }
+        
+        if(isRearCamera) {
+            rearCameraSession.startRunning()
+        } else {
+            frontCameraSession.startRunning()
+        }
+        
+        self.takePhotoButton.isEnabled = true
+        self.takePhotoButton.isHidden = false
+        
+        self.clearImageButton.isEnabled = false
+        self.clearImageButton.isHidden = true
+        self.loadImageButton.isEnabled = true
+        self.loadImageButton.isHidden = false
+        
     }
 }
 

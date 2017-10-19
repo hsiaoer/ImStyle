@@ -60,21 +60,8 @@
                                     <action selector="toggleShowStylePicker:" destination="BRE-eg-EID" eventType="touchUpInside" id="HoA-cA-QBT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
-                                <rect key="frame" x="149" y="538" width="76" height="30"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Take Photo"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f23-Bz-one">
-                                <rect key="frame" x="147" y="605" width="78" height="30"/>
+                                <rect key="frame" x="18" y="605" width="78" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Load Photo"/>
                                 <userDefinedRuntimeAttributes>
@@ -117,6 +104,19 @@
                                     <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKA-oc-ihR">
+                                <rect key="frame" x="149" y="605" width="76" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Take Photo"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="yOb-xh-VvH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -128,7 +128,7 @@
                             <constraint firstItem="2bC-7k-2Pf" firstAttribute="baseline" secondItem="uwq-z8-mjs" secondAttribute="baseline" constant="1" id="G8V-Za-SVm"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="baseline" secondItem="2bC-7k-2Pf" secondAttribute="baseline" constant="-1" id="IDJ-bN-aey"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dPA-3G-PLh" secondAttribute="trailing" constant="20" symbolic="YES" id="IwI-5S-rzc"/>
-                            <constraint firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" constant="99" id="KS7-eC-hgf"/>
+                            <constraint firstAttribute="bottom" secondItem="iKA-oc-ihR" secondAttribute="bottom" constant="32" id="KS7-eC-hgf"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="trailing" secondItem="VZI-TD-pZx" secondAttribute="trailing" id="M9t-Uf-hKW"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" id="Pzt-yv-WYq"/>
                             <constraint firstAttribute="trailing" secondItem="nvZ-Fd-sDp" secondAttribute="trailing" constant="32" id="Vjd-SW-SrQ"/>
@@ -139,11 +139,11 @@
                             <constraint firstItem="VZI-TD-pZx" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" id="gT5-B2-YV5"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="gd2-dG-611"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="baseline" secondItem="f23-Bz-one" secondAttribute="baseline" id="hZp-1D-pej"/>
-                            <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="147" id="kjx-aw-Kbd"/>
+                            <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="18" id="kjx-aw-Kbd"/>
                             <constraint firstItem="2bC-7k-2Pf" firstAttribute="firstBaseline" secondItem="uwq-z8-mjs" secondAttribute="firstBaseline" constant="1" id="tB8-le-NaC"/>
-                            <constraint firstItem="f23-Bz-one" firstAttribute="top" secondItem="iKA-oc-ihR" secondAttribute="bottom" constant="37" id="uQ9-OV-wfH"/>
+                            <constraint firstItem="f23-Bz-one" firstAttribute="top" secondItem="iKA-oc-ihR" secondAttribute="bottom" constant="-30" id="uQ9-OV-wfH"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="leading" secondItem="VZI-TD-pZx" secondAttribute="leading" id="w7l-al-7K4"/>
-                            <constraint firstItem="iKA-oc-ihR" firstAttribute="trailing" secondItem="f23-Bz-one" secondAttribute="trailing" id="y98-u1-Nni"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="trailing" secondItem="f23-Bz-one" secondAttribute="trailing" constant="129" id="y98-u1-Nni"/>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="20" symbolic="YES" id="zGX-lW-PMQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ybc-kP-tAC"/>
