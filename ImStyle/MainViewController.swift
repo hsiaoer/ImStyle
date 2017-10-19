@@ -11,6 +11,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var toggleCameraButton: UIButton!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -36,10 +37,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
-        self.imageView.addGestureRecognizer(tap)
-        self.imageView.isUserInteractionEnabled = true
         
         self.clearImageButton.isEnabled = false
         
@@ -97,7 +94,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         self.clearImageButton.isHidden = true
         self.clearImageButton.isEnabled = false
-        
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -226,6 +224,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoTimer!.invalidate()
             self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: Selector(("renderVideoFrame")), userInfo: nil, repeats: true)
         }
+        self.toggleCameraButton.isEnabled = false
+        self.toggleCameraButton.isHidden = true
         self.takePhotoButton.isEnabled = false
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
@@ -252,6 +252,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isHidden = true
         self.loadImageButton.isEnabled = true
         self.loadImageButton.isHidden = false
+        self.toggleCameraButton.isHidden = false
+        self.toggleCameraButton.isEnabled = true
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
@@ -296,10 +298,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.perform_transfer) {
             self.stylizeAndUpdate()
         }
-    }
-    
-    @objc func imageTapAction() {
-        // Nothing to do here
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {

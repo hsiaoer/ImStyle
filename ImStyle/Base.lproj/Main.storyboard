@@ -77,23 +77,6 @@
                                     <action selector="save_image:" destination="BRE-eg-EID" eventType="touchUpInside" id="JBM-cP-FU7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwq-z8-mjs" userLabel="Toggle Camera Button">
-                                <rect key="frame" x="16" y="28" width="32" height="32"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="32" id="2l4-Ja-hFF"/>
-                                    <constraint firstAttribute="height" constant="32" id="UZP-VJ-V1T"/>
-                                </constraints>
-                                <state key="normal" image="camflip"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f23-Bz-one">
                                 <rect key="frame" x="16" y="616" width="31" height="31"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -112,6 +95,23 @@
                                     <action selector="takePhotoAction:" destination="BRE-eg-EID" eventType="touchUpInside" id="EeW-sB-HhR"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwq-z8-mjs" userLabel="Toggle Camera Button">
+                                <rect key="frame" x="327" y="615" width="32" height="32"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="2l4-Ja-hFF"/>
+                                    <constraint firstAttribute="height" constant="32" id="UZP-VJ-V1T"/>
+                                </constraints>
+                                <state key="normal" image="camflip"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -120,11 +120,11 @@
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="q1I-ma-Aqc" secondAttribute="trailingMargin" id="9s1-9c-Lk7"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" id="CLW-L9-hh0"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="550" id="Mtd-Ws-LCw"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="8" id="S68-R9-yKJ"/>
-                            <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="uwq-z8-mjs" secondAttribute="leading" id="UYb-ek-geU"/>
+                            <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="595" id="S68-R9-yKJ"/>
+                            <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="uwq-z8-mjs" secondAttribute="leading" constant="-311" id="UYb-ek-geU"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="centerX" secondItem="0qU-kT-YCK" secondAttribute="centerX" id="Vjp-Rs-jKU"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="q1I-ma-Aqc" secondAttribute="centerX" id="Xj5-A0-h0U"/>
-                            <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" id="cOL-rX-O1n"/>
+                            <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" constant="311" id="cOL-rX-O1n"/>
                             <constraint firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" constant="20" symbolic="YES" id="dsd-YC-YmW"/>
                             <constraint firstAttribute="bottom" secondItem="dPA-3G-PLh" secondAttribute="bottom" constant="20" symbolic="YES" id="gX9-PG-pID"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="hnA-Uh-mvh"/>
@@ -145,6 +145,7 @@
                         <outlet property="loadImageButton" destination="f23-Bz-one" id="S4r-au-O96"/>
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
                         <outlet property="takePhotoButton" destination="iKA-oc-ihR" id="ADS-Ly-8s6"/>
+                        <outlet property="toggleCameraButton" destination="uwq-z8-mjs" id="FDf-H2-zwc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>
