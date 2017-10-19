@@ -82,6 +82,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             frontCameraSession.commitConfiguration()
             rearCameraSession.commitConfiguration()
             
+            rearCameraSession.startRunning()
+            rearCameraSession.stopRunning()
             frontCameraSession.startRunning()
             frontCameraSession.stopRunning()
             rearCameraSession.startRunning()
