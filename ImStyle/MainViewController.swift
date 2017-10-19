@@ -11,6 +11,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var toggleCameraButton: UIButton!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -20,19 +21,22 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var perform_transfer = false
     var currentStyle = 0
     
+    var recordingVideo = false
+    var displayingVideo = false
+    var videoFrames: [UIImage] = []
+    var stylizedVideoFrames: [UIImage] = []
+    var videoPlaybackFrame = 0
+    
+    private var videoTimer : Timer? = nil
+    
     private var isRearCamera = true
     private var frontCaptureDevice: AVCaptureDevice?
     private var rearCaptureDevice: AVCaptureDevice?
     private var prevImage: UIImage?
     private let image_size = 720
-    //private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
-        self.imageView.addGestureRecognizer(tap)
-        self.imageView.isUserInteractionEnabled = true
         
         self.clearImageButton.isEnabled = false
         
@@ -90,7 +94,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         self.clearImageButton.isHidden = true
         self.clearImageButton.isEnabled = false
-        
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -173,22 +178,72 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveToPhotoLibrary(uiImage: image!)
     }
     
-    @IBAction func takePhotoAction(_ sender: Any) {
+    @objc func startVideo() {
+        if(self.currentStyle != 0) {
+            print("TODO: alert user that you can't record live video in style")
+            return
+        }
+        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(saveFrame), userInfo: nil, repeats: true)
+        self.loadImageButton.isHidden = true
+        self.loadImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
+        self.saveImageButton.isEnabled = false
+        self.recordingVideo = true
+        self.videoPlaybackFrame = 0
+        self.videoFrames = []
+        self.stylizedVideoFrames = []
+    }
+    
+    @objc func saveFrame(){
+        self.videoFrames.append(self.imageView.image!)
+    }
+    
+    @objc func renderVideoFrame() {
+        if(self.currentStyle == 0) {
+            self.imageView.image = self.videoFrames[self.videoPlaybackFrame]
+        } else {
+            self.imageView.image = self.stylizedVideoFrames[self.videoPlaybackFrame]
+        }
+        self.videoPlaybackFrame += 1;
+        if(self.videoPlaybackFrame == self.videoFrames.count) {
+            self.videoPlaybackFrame = 0;
+        }
+    }
+    
+    @IBAction func takePhotoTouchDown(_ sender: Any) {
+        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(startVideo), userInfo: nil, repeats: false)
+    }
+    
+    @IBAction func takePhotoTouchUpInside(_ sender: Any) {
         if(isRearCamera) {
             rearCameraSession.stopRunning()
         } else {
             frontCameraSession.stopRunning()
         }
+        if(self.recordingVideo) {
+            self.recordingVideo = false
+            self.displayingVideo = true
+            self.videoTimer!.invalidate()
+            self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(renderVideoFrame), userInfo: nil, repeats: true)
+        }
+        self.toggleCameraButton.isEnabled = false
+        self.toggleCameraButton.isHidden = true
         self.takePhotoButton.isEnabled = false
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
+        self.saveImageButton.isHidden = false
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
         self.loadImageButton.isHidden = true
+
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
+        if(self.displayingVideo) {
+            self.displayingVideo = false
+            self.videoTimer!.invalidate()
+        }
         if(isRearCamera) {
             rearCameraSession.startRunning()
         } else {
@@ -200,6 +255,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isHidden = true
         self.loadImageButton.isEnabled = true
         self.loadImageButton.isHidden = false
+        self.toggleCameraButton.isHidden = false
+        self.toggleCameraButton.isEnabled = true
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
@@ -229,6 +288,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     func updateStyle(oldStyle: Int) {
         setModel(targetModel: modelList[self.currentStyle])
+        if(self.displayingVideo && self.currentStyle != 0) {
+            for frame in self.videoFrames {
+                self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
+            }
+        }
         if(oldStyle == 0) {
             self.prevImage = self.imageView.image;
         }
@@ -239,10 +303,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.perform_transfer) {
             self.stylizeAndUpdate()
         }
-    }
-    
-    @objc func imageTapAction() {
-        // Nothing to do here
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
