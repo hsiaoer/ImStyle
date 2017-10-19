@@ -191,6 +191,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.recordingVideo = true
         self.videoPlaybackFrame = 0
         self.videoFrames = []
+        self.stylizedVideoFrames = []
     }
     
     @objc func saveFrame(){
