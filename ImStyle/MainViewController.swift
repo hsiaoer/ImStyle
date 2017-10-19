@@ -12,6 +12,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var toggleCameraButton: UIButton!
+    @IBOutlet weak var videoStyleProgressBar: UIProgressView!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -21,6 +22,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var perform_transfer = false
     var currentStyle = 0
     
+    var isStylizingVideo = false
     var recordingVideo = false
     var displayingVideo = false
     var videoFrames: [UIImage] = []
@@ -96,6 +98,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isEnabled = false
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
+        self.videoStyleProgressBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -191,7 +194,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.recordingVideo = true
         self.videoPlaybackFrame = 0
         self.videoFrames = []
-        self.stylizedVideoFrames = []
     }
     
     @objc func saveFrame(){
@@ -199,7 +201,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @objc func renderVideoFrame() {
-        if(self.currentStyle == 0) {
+        if(self.currentStyle == 0 || self.isStylizingVideo) {
             self.imageView.image = self.videoFrames[self.videoPlaybackFrame]
         } else {
             self.imageView.image = self.stylizedVideoFrames[self.videoPlaybackFrame]
@@ -289,8 +291,25 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     func updateStyle(oldStyle: Int) {
         setModel(targetModel: modelList[self.currentStyle])
         if(self.displayingVideo && self.currentStyle != 0) {
-            for frame in self.videoFrames {
-                self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
+            self.saveImageButton.isEnabled = false
+            self.clearImageButton.isEnabled = false
+            self.videoStyleProgressBar.isHidden = false
+            self.isStylizingVideo = true
+            DispatchQueue.global().async {
+                self.stylizedVideoFrames = []
+                for (index, frame) in self.videoFrames.enumerated() {
+                    DispatchQueue.main.async {
+                        self.videoStyleProgressBar.progress = Float(index) / Float(self.videoFrames.count)
+                    }
+                    self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
+                }
+                DispatchQueue.main.async {
+                    self.videoStyleProgressBar.isHidden = true
+                    self.videoStyleProgressBar.progress = 0;
+                    self.saveImageButton.isEnabled = true
+                    self.clearImageButton.isEnabled = true
+                    self.isStylizingVideo = false
+                }
             }
         }
         if(oldStyle == 0) {

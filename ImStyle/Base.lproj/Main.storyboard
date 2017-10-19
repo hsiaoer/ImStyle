@@ -112,6 +112,17 @@
                                     <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ive-yS-abg">
+                                <rect key="frame" x="112" y="331" width="150" height="20"/>
+                                <subviews>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-UY-utZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="20"/>
+                                    </progressView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="YNx-gb-Nqr"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -119,6 +130,8 @@
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="20" symbolic="YES" id="3Ng-qR-t0S"/>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="q1I-ma-Aqc" secondAttribute="trailingMargin" id="9s1-9c-Lk7"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" id="CLW-L9-hh0"/>
+                            <constraint firstItem="Ive-yS-abg" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="112" id="Gi7-A7-siv"/>
+                            <constraint firstItem="Ive-yS-abg" firstAttribute="centerX" secondItem="iKA-oc-ihR" secondAttribute="centerX" id="IcX-ux-i96"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="550" id="Mtd-Ws-LCw"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="595" id="S68-R9-yKJ"/>
                             <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="uwq-z8-mjs" secondAttribute="leading" constant="-311" id="UYb-ek-geU"/>
@@ -126,6 +139,7 @@
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="q1I-ma-Aqc" secondAttribute="centerX" id="Xj5-A0-h0U"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" constant="311" id="cOL-rX-O1n"/>
                             <constraint firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" constant="20" symbolic="YES" id="dsd-YC-YmW"/>
+                            <constraint firstItem="Ive-yS-abg" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="311" id="fSa-f5-Eul"/>
                             <constraint firstAttribute="bottom" secondItem="dPA-3G-PLh" secondAttribute="bottom" constant="20" symbolic="YES" id="gX9-PG-pID"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="hnA-Uh-mvh"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="bottom" secondItem="Ybc-kP-tAC" secondAttribute="bottom" id="mIH-1R-WYG"/>
@@ -146,6 +160,7 @@
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
                         <outlet property="takePhotoButton" destination="iKA-oc-ihR" id="ADS-Ly-8s6"/>
                         <outlet property="toggleCameraButton" destination="uwq-z8-mjs" id="FDf-H2-zwc"/>
+                        <outlet property="videoStyleProgressBar" destination="xrd-UY-utZ" id="4Sc-C4-ygP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>
