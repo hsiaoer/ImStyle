@@ -318,6 +318,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                     }
                 }
             }
+        } else {
+            self.videoStyleProgressBar.isHidden = true
         }
         if(oldStyle == 0) {
             self.prevImage = self.imageView.image;
