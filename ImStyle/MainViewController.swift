@@ -247,6 +247,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         } else {
             frontCameraSession.startRunning()
         }
+        let oldStyle = self.currentStyle
+        self.currentStyle = 0
+        self.updateStyle(oldStyle: oldStyle)
+        
         self.takePhotoButton.isEnabled = true
         self.takePhotoButton.isHidden = false
         self.clearImageButton.isEnabled = false
