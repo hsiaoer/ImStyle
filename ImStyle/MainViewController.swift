@@ -202,6 +202,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @objc func renderVideoFrame() {
+        //print("currentStyle: \(self.currentStyle), self.videoFrames[0].count: \(self.videoFrames[0].count), self.videoFrames[self.currentStyle].count: \(self.videoFrames[self.currentStyle].count)")
         if(self.currentStyle == 0 || self.videoFrames[0].count > self.videoFrames[self.currentStyle].count) {
             self.imageView.image = self.videoFrames[0][self.videoPlaybackFrame]
         } else {
@@ -240,7 +241,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(renderVideoFrame), userInfo: nil, repeats: true)
         } else {
             self.videoFrames[0] = [self.latestRawInputFrame!]
-            self.updateOutputImage(uiImage: self.latestRawInputFrame!);
+            if(self.currentStyle == 0) {
+                self.updateOutputImage(uiImage: self.latestRawInputFrame!);
+            }
             for index in 1..<self.videoFrames.count {
                 self.videoFrames[index] = []
             }
@@ -339,15 +342,16 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 self.isStylizingVideo = true
                 let style = self.currentStyle // thread-safe constant for which style this thread is working on
                 for frame in self.videoFrames[0][self.numFramesRendered[style]..<self.videoFrames[0].count] {
+                    print("STYLIZING with style \(style). Completed \(self.numFramesRendered[style]) frame(s) so far")
                     if(self.videoStyleWasInterrupted) {break}
-                    if(self.numFramesRendered[style] == self.videoFrames[0].count - 1) {
+                    self.numFramesRendered[style] += 1
+                    if(self.numFramesRendered[style] == self.videoFrames[0].count) {
                         self.finishedVideoStyle = true
                     }
                     DispatchQueue.main.async {
                         self.videoStyleProgressBar.progress = Float(self.numFramesRendered[style]) / Float(self.videoFrames[0].count)
                     }
-                    self.videoFrames[self.currentStyle].append(applyStyleTransfer(uiImage: frame, model: model))
-                    self.numFramesRendered[style] += 1
+                    self.videoFrames[style].append(applyStyleTransfer(uiImage: frame, model: models[style-1]))
                 }
                 self.isStylizingVideo = false
                 self.videoStyleWasInterrupted = false
