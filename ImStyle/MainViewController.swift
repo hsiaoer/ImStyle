@@ -13,6 +13,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var stylePreviewImageView: UIImageView!
     @IBOutlet weak var stylePreviewImageBorder: UIView!
+    @IBOutlet weak var toggleCameraButton: UIButton!
+    @IBOutlet weak var videoStyleProgressBar: UIProgressView!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -22,7 +24,14 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var stylePreviewAnimation: UIViewPropertyAnimator?
     var perform_transfer = false
     var currentStyle = 0
+    var isStylizingVideo = false
+    var recordingVideo = false
+    var displayingVideo = false
+    var videoFrames: [UIImage] = []
+    var stylizedVideoFrames: [UIImage] = []
+    var videoPlaybackFrame = 0
     
+    private var videoTimer : Timer? = nil
     private var stylePreviewTimer : Timer? = nil
     
     private var isRearCamera = true
@@ -30,19 +39,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     private var rearCaptureDevice: AVCaptureDevice?
     private var prevImage: UIImage?
     private let image_size = 720
-    //private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.imageTapAction))
-        self.imageView.addGestureRecognizer(tap)
-        self.imageView.isUserInteractionEnabled = true
-        
         self.stylePreviewImageView.isHidden = true
-//        self.stylePreviewImageView.layer.borderColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8).cgColor
-//        self.stylePreviewImageView.layer.borderWidth = 8
-//        self.stylePreviewImageView.clipsToBounds = true
         self.stylePreviewImageBorder.isHidden = true
         self.stylePreviewImageBorder.layer.cornerRadius = 4
         
@@ -102,7 +103,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         self.clearImageButton.isHidden = true
         self.clearImageButton.isEnabled = false
-        
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
+        self.videoStyleProgressBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -163,19 +166,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             frontCameraSession.startRunning()
         }
     }
-    
-    @IBAction func toggle_transfer(_ sender: Any) {
-        if (!self.perform_transfer) {
-            self.imageView.image = self.prevImage
-        } else if (!perform_transfer && self.takePhotoButton.isEnabled == false) {
-            // save unstyled image
-            self.prevImage = self.imageView.image!
-            self.stylizeAndUpdate()
-        } else {
-            perform_transfer = !perform_transfer
-            self.saveImageButton.isEnabled = perform_transfer
-        }
-    }
 
     @IBAction func save_image(_ sender: Any) {
         UIGraphicsBeginImageContext(CGSize(width: self.imageView.frame.size.width, height: self.imageView.frame.size.height))
@@ -185,22 +175,73 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveToPhotoLibrary(uiImage: image!)
     }
     
-    @IBAction func takePhotoAction(_ sender: Any) {
+    @objc func startVideo() {
+        if(self.currentStyle != 0) {
+            print("TODO: alert user that you can't record live video in style")
+            return
+        }
+        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(saveFrame), userInfo: nil, repeats: true)
+        self.loadImageButton.isHidden = true
+        self.loadImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
+        self.saveImageButton.isEnabled = false
+        self.recordingVideo = true
+        self.videoPlaybackFrame = 0
+        self.videoFrames = []
+    }
+    
+    @objc func saveFrame(){
+        self.videoFrames.append(self.imageView.image!)
+    }
+    
+    @objc func renderVideoFrame() {
+        if(self.currentStyle == 0 || self.isStylizingVideo) {
+            self.imageView.image = self.videoFrames[self.videoPlaybackFrame]
+        } else {
+            self.imageView.image = self.stylizedVideoFrames[self.videoPlaybackFrame]
+        }
+        self.videoPlaybackFrame += 1;
+        if(self.videoPlaybackFrame == self.videoFrames.count) {
+            self.videoPlaybackFrame = 0;
+        }
+    }
+    
+    @IBAction func takePhotoTouchDown(_ sender: Any) {
+        self.videoTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(startVideo), userInfo: nil, repeats: false)
+    }
+    
+    @IBAction func takePhotoTouchUpInside(_ sender: Any) {
         if(isRearCamera) {
             rearCameraSession.stopRunning()
         } else {
             frontCameraSession.stopRunning()
         }
+        if(self.recordingVideo) {
+            self.recordingVideo = false
+            self.displayingVideo = true
+            self.videoTimer!.invalidate()
+            self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(renderVideoFrame), userInfo: nil, repeats: true)
+        } else {
+            self.videoTimer!.invalidate()
+        }
+        self.toggleCameraButton.isEnabled = false
+        self.toggleCameraButton.isHidden = true
         self.takePhotoButton.isEnabled = false
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
+        self.saveImageButton.isHidden = false
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
         self.loadImageButton.isHidden = true
+
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
+        if(self.displayingVideo) {
+            self.displayingVideo = false
+            self.videoTimer!.invalidate()
+        }
         if(isRearCamera) {
             rearCameraSession.startRunning()
         } else {
@@ -212,6 +253,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isHidden = true
         self.loadImageButton.isEnabled = true
         self.loadImageButton.isHidden = false
+        self.toggleCameraButton.isHidden = false
+        self.toggleCameraButton.isEnabled = true
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
@@ -241,6 +286,28 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     func updateStyle(oldStyle: Int) {
         setModel(targetModel: modelList[self.currentStyle])
+        if(self.displayingVideo && self.currentStyle != 0) {
+            self.saveImageButton.isEnabled = false
+            self.clearImageButton.isEnabled = false
+            self.videoStyleProgressBar.isHidden = false
+            self.isStylizingVideo = true
+            DispatchQueue.global().async {
+                    self.stylizedVideoFrames = []
+                for (index, frame) in self.videoFrames.enumerated() {
+                    DispatchQueue.main.async {
+                        self.videoStyleProgressBar.progress = Float(index) / Float(self.videoFrames.count)
+                    }
+                    self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
+                }
+                DispatchQueue.main.async {
+                    self.videoStyleProgressBar.isHidden = true
+                    self.videoStyleProgressBar.progress = 0;
+                    self.saveImageButton.isEnabled = true
+                    self.clearImageButton.isEnabled = true
+                    self.isStylizingVideo = false
+                }
+            }
+        }
         if(oldStyle == 0) {
             self.prevImage = self.imageView.image;
         }
@@ -252,10 +319,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.stylizeAndUpdate()
         }
         self.showStylePreview()
-    }
-    
-    @objc func imageTapAction() {
-        // Nothing to do here
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
