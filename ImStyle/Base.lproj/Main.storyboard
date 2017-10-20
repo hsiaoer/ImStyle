@@ -111,47 +111,58 @@
                                     <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
                                 </connections>
                             </button>
-                            <view alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="057-UY-kxG">
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="057-UY-kxG">
                                 <rect key="frame" x="115" y="426" width="144" height="144"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="exm-RB-ORo">
-                                <rect key="frame" x="123" y="434" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="exm-RB-ORo">
+                                <rect key="frame" x="115" y="426" width="144" height="144"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ive-yS-abg">
                                 <rect key="frame" x="112" y="331" width="150" height="20"/>
-                                <subviews>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-UY-utZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="20"/>
-                                    </progressView>
-                                </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="YNx-gb-Nqr"/>
                                 </constraints>
                             </stackView>
+                            <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weg-Jq-D4T">
+                                <rect key="frame" x="115" y="426" width="144" height="144"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="144" id="7cN-4G-5Fb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q1I-ma-Aqc" secondAttribute="leading" constant="20" symbolic="YES" id="3Ng-qR-t0S"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="115" id="7tW-R9-5m7"/>
                             <constraint firstItem="nvZ-Fd-sDp" firstAttribute="trailing" secondItem="q1I-ma-Aqc" secondAttribute="trailingMargin" id="9s1-9c-Lk7"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="bottom" secondItem="057-UY-kxG" secondAttribute="bottom" id="ASL-jN-d6T"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="top" secondItem="Ive-yS-abg" secondAttribute="bottom" constant="75" id="CD6-XJ-4fD"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="bottom" secondItem="weg-Jq-D4T" secondAttribute="bottom" id="CHK-S7-bIT"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" id="CLW-L9-hh0"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="trailing" secondItem="057-UY-kxG" secondAttribute="trailing" id="CeW-re-s6R"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="centerX" secondItem="iKA-oc-ihR" secondAttribute="centerX" id="DTd-Aq-k0A"/>
                             <constraint firstItem="Ive-yS-abg" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="112" id="Gi7-A7-siv"/>
                             <constraint firstItem="Ive-yS-abg" firstAttribute="centerX" secondItem="iKA-oc-ihR" secondAttribute="centerX" id="IcX-ux-i96"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="leading" secondItem="057-UY-kxG" secondAttribute="leading" id="Mtc-fp-nBC"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="550" id="Mtd-Ws-LCw"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="595" id="S68-R9-yKJ"/>
                             <constraint firstItem="f23-Bz-one" firstAttribute="leading" secondItem="uwq-z8-mjs" secondAttribute="leading" constant="-311" id="UYb-ek-geU"/>
                             <constraint firstItem="iKA-oc-ihR" firstAttribute="centerX" secondItem="0qU-kT-YCK" secondAttribute="centerX" id="Vjp-Rs-jKU"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="centerX" secondItem="q1I-ma-Aqc" secondAttribute="centerX" id="Xj5-A0-h0U"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="top" secondItem="057-UY-kxG" secondAttribute="top" id="cDh-wZ-Eha"/>
                             <constraint firstItem="uwq-z8-mjs" firstAttribute="leading" secondItem="q1I-ma-Aqc" secondAttribute="leadingMargin" constant="311" id="cOL-rX-O1n"/>
                             <constraint firstAttribute="bottom" secondItem="f23-Bz-one" secondAttribute="bottom" constant="20" symbolic="YES" id="dsd-YC-YmW"/>
                             <constraint firstItem="Ive-yS-abg" firstAttribute="top" secondItem="Ybc-kP-tAC" secondAttribute="top" constant="311" id="fSa-f5-Eul"/>
                             <constraint firstAttribute="bottom" secondItem="dPA-3G-PLh" secondAttribute="bottom" constant="20" symbolic="YES" id="gX9-PG-pID"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="hnA-Uh-mvh"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="bottom" secondItem="Ybc-kP-tAC" secondAttribute="bottom" id="mIH-1R-WYG"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="top" secondItem="weg-Jq-D4T" secondAttribute="top" id="nzo-hU-ycE"/>
+                            <constraint firstItem="exm-RB-ORo" firstAttribute="leading" secondItem="weg-Jq-D4T" secondAttribute="leading" id="oMA-qt-HpG"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="top" id="qto-C0-4V8"/>
+                            <constraint firstItem="iKA-oc-ihR" firstAttribute="top" secondItem="weg-Jq-D4T" secondAttribute="bottom" id="upI-n0-hSF"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="bottom" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" id="yj1-dD-eIo"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="11" id="z2h-gg-96p"/>
                         </constraints>
@@ -165,12 +176,12 @@
                         <outlet property="clearImageButton" destination="dPA-3G-PLh" id="nsz-qw-dpP"/>
                         <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
                         <outlet property="loadImageButton" destination="f23-Bz-one" id="S4r-au-O96"/>
+                        <outlet property="progressView" destination="weg-Jq-D4T" id="cad-7v-vYM"/>
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
                         <outlet property="stylePreviewImageBorder" destination="057-UY-kxG" id="gcv-Qa-myq"/>
                         <outlet property="stylePreviewImageView" destination="exm-RB-ORo" id="E0u-Va-hTF"/>
                         <outlet property="takePhotoButton" destination="iKA-oc-ihR" id="ADS-Ly-8s6"/>
                         <outlet property="toggleCameraButton" destination="uwq-z8-mjs" id="FDf-H2-zwc"/>
-                        <outlet property="videoStyleProgressBar" destination="xrd-UY-utZ" id="4Sc-C4-ygP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-mL-VAX" sceneMemberID="firstResponder"/>

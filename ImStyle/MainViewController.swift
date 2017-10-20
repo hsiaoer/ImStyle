@@ -14,7 +14,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var stylePreviewImageView: UIImageView!
     @IBOutlet weak var stylePreviewImageBorder: UIView!
     @IBOutlet weak var toggleCameraButton: UIButton!
-    @IBOutlet weak var videoStyleProgressBar: UIProgressView!
+    @IBOutlet weak var progressView: UIView!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -50,6 +50,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.stylePreviewImageBorder.layer.cornerRadius = 4
         
         self.clearImageButton.isEnabled = false
+        
+        //This only removes constraints that are self-identified by the progress view
+        //In this case, that is the 'width' constraint
+        self.progressView.removeConstraints(self.progressView.constraints)
         
         self.rearCaptureDevice = rearCamera
         self.frontCaptureDevice = frontCamera
@@ -112,7 +116,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isEnabled = false
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
-        self.videoStyleProgressBar.isHidden = true
+        self.progressView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -268,12 +272,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoFrames[index] = []
             self.numFramesRendered[index] = 0
         }
-        if(self.isStylizingVideo) {
-            let old_style = self.currentStyle
-            self.currentStyle = 0
-            updateStyle(oldStyle: old_style)
-            return
-        }
         if(self.displayingVideo) {
             self.displayingVideo = false
             self.videoTimer!.invalidate()
@@ -283,6 +281,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         } else {
             frontCameraSession.startRunning()
         }
+        let oldStyle = self.currentStyle
+        self.currentStyle = 0
+        self.updateStyle(oldStyle: oldStyle)
         self.takePhotoButton.isEnabled = true
         self.takePhotoButton.isHidden = false
         self.clearImageButton.isEnabled = false
@@ -332,24 +333,36 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             }
             if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
                 self.saveImageButton.isEnabled = true
-                self.videoStyleProgressBar.isHidden = true
+                self.progressView.isHidden = true
                 return
             }
             self.saveImageButton.isEnabled = false
-            self.videoStyleProgressBar.progress = 0;
-            self.videoStyleProgressBar.isHidden = false
+            self.progressView.isHidden = false
             DispatchQueue.global().async {
                 self.isStylizingVideo = true
                 let style = self.currentStyle // thread-safe constant for which style this thread is working on
                 for frame in self.videoFrames[0][self.numFramesRendered[style]..<self.videoFrames[0].count] {
-                    print("STYLIZING with style \(style). Completed \(self.numFramesRendered[style]) frame(s) so far")
                     if(self.videoStyleWasInterrupted) {break}
                     self.numFramesRendered[style] += 1
                     if(self.numFramesRendered[style] == self.videoFrames[0].count) {
                         self.finishedVideoStyle = true
                     }
                     DispatchQueue.main.async {
-                        self.videoStyleProgressBar.progress = Float(self.numFramesRendered[style]) / Float(self.videoFrames[0].count)
+                        if(self.finishedVideoStyle) {
+                            self.progressView.isHidden = true
+                        } else {
+                            self.progressView.frame = CGRect(
+                                x: self.stylePreviewImageView!.frame.minX +
+                                    (CGFloat(self.numFramesRendered[style]) /
+                                    CGFloat(self.videoFrames[0].count) *
+                                    self.stylePreviewImageView!.frame.width),
+                                y: self.stylePreviewImageView!.frame.minY,
+                                width: self.stylePreviewImageView!.frame.width *
+                                    (1.0 - CGFloat(self.numFramesRendered[style]) /
+                                    CGFloat(self.videoFrames[0].count)),
+                                height: self.stylePreviewImageView!.frame.height
+                            )
+                        }
                     }
                     self.videoFrames[style].append(applyStyleTransfer(uiImage: frame, model: models[style-1]))
                 }
@@ -357,14 +370,14 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 self.videoStyleWasInterrupted = false
                 DispatchQueue.main.async {
                     if(self.finishedVideoStyle) {
-                        self.videoStyleProgressBar.isHidden = true
+                        self.hideStylePreviewAnimate()
                         self.saveImageButton.isEnabled = true
                         self.finishedVideoStyle = false
                     }
                 }
             }
         } else {
-            self.videoStyleProgressBar.isHidden = true
+            self.progressView.isHidden = true
             self.saveImageButton.isEnabled = true
         }
         if(oldStyle == 0 && !self.displayingVideo) {
@@ -426,11 +439,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             //        self.stylePreviewImageView.alpha = 1
             self.stylePreviewImageView.isHidden = false
             self.stylePreviewImageBorder.isHidden = false
-            self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.8, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
+            self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
         }
     }
     
-    @objc func hideStylePreviewAnimate(timer: Timer) {
+    @objc func hideStylePreviewAnimate() {
+        if(self.isStylizingVideo) {return}
         self.stylePreviewAnimation = UIViewPropertyAnimator(duration: 1, curve: .easeOut, animations: {
             self.stylePreviewImageView.alpha = 0.0
             self.stylePreviewImageBorder.alpha = 0.0
