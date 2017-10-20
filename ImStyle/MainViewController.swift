@@ -475,10 +475,16 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             return
         }
+
+        //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
+        for index in 0..<self.videoFrames.count {
+            self.videoFrames[index] = []
+            self.numFramesRendered[index] = 0
+        }
         
         // save to imageView
         self.imageView.image = image
-        self.videoFrames[0][0] = image
+        self.videoFrames[0] = [image]
         if(self.currentStyle != 0) {
             self.stylizeAndUpdate()
         }
@@ -488,7 +494,11 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         self.loadImageButton.isHidden = true
         
         self.takePhotoButton.isEnabled = false
+        self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
+        self.saveImageButton.isHidden = false
+        self.toggleCameraButton.isEnabled = false
+        self.toggleCameraButton.isHidden = true
         
         if(isRearCamera) {
             rearCameraSession.stopRunning()
