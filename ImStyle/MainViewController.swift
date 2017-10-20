@@ -202,7 +202,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @objc func renderVideoFrame() {
-        print("currentStyle: \(self.currentStyle), self.videoFrames[0].count: \(self.videoFrames[0].count), self.videoFrames[self.currentStyle].count: \(self.videoFrames[self.currentStyle].count)")
         if(self.currentStyle == 0 || self.videoFrames[0].count > self.videoFrames[self.currentStyle].count) {
             self.imageView.image = self.videoFrames[0][self.videoPlaybackFrame]
         } else {
