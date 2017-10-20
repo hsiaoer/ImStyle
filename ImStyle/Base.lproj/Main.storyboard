@@ -112,6 +112,15 @@
                                     <action selector="toggleCamera:" destination="BRE-eg-EID" eventType="touchUpInside" id="3EI-id-6z0"/>
                                 </connections>
                             </button>
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="057-UY-kxG">
+                                <rect key="frame" x="115" y="426" width="144" height="144"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="exm-RB-ORo">
+                                <rect key="frame" x="123" y="434" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ive-yS-abg">
                                 <rect key="frame" x="112" y="331" width="150" height="20"/>
                                 <subviews>
@@ -158,6 +167,8 @@
                         <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
                         <outlet property="loadImageButton" destination="f23-Bz-one" id="S4r-au-O96"/>
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
+                        <outlet property="stylePreviewImageBorder" destination="057-UY-kxG" id="gcv-Qa-myq"/>
+                        <outlet property="stylePreviewImageView" destination="exm-RB-ORo" id="E0u-Va-hTF"/>
                         <outlet property="takePhotoButton" destination="iKA-oc-ihR" id="ADS-Ly-8s6"/>
                         <outlet property="toggleCameraButton" destination="uwq-z8-mjs" id="FDf-H2-zwc"/>
                         <outlet property="videoStyleProgressBar" destination="xrd-UY-utZ" id="4Sc-C4-ygP"/>

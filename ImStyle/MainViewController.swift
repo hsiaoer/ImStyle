@@ -11,6 +11,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var clearImageButton: UIButton!
     @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var stylePreviewImageView: UIImageView!
+    @IBOutlet weak var stylePreviewImageBorder: UIView!
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var videoStyleProgressBar: UIProgressView!
     
@@ -19,9 +21,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     let frontCameraSession = AVCaptureSession()
     let rearCameraSession = AVCaptureSession()
     let num_styles = modelList.count
+    var stylePreviewAnimation: UIViewPropertyAnimator?
     var perform_transfer = false
     var currentStyle = 0
-    
     var isStylizingVideo = false
     var recordingVideo = false
     var displayingVideo = false
@@ -30,6 +32,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var videoPlaybackFrame = 0
     
     private var videoTimer : Timer? = nil
+    private var stylePreviewTimer : Timer? = nil
     
     private var isRearCamera = true
     private var frontCaptureDevice: AVCaptureDevice?
@@ -39,6 +42,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.stylePreviewImageView.isHidden = true
+        self.stylePreviewImageBorder.isHidden = true
+        self.stylePreviewImageBorder.layer.cornerRadius = 4
         
         self.clearImageButton.isEnabled = false
         
@@ -311,6 +318,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.perform_transfer) {
             self.stylizeAndUpdate()
         }
+        self.showStylePreview()
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
@@ -345,6 +353,39 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
         let stylized_image = applyStyleTransfer(uiImage: image, model: model)
         self.imageView.image = stylized_image
+    }
+    
+    func showStylePreview() {
+        if (self.stylePreviewImageView.isHidden == false) {
+            self.hideStylePreview()
+            self.stylePreviewTimer?.invalidate()
+        }
+        if (self.currentStyle != 0) {
+            self.stylePreviewImageView.image = UIImage(named: modelList[self.currentStyle] + "-source-image")
+            //        self.stylePreviewImageView.alpha = 1
+            self.stylePreviewImageView.isHidden = false
+            self.stylePreviewImageBorder.isHidden = false
+            self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.8, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
+        }
+    }
+    
+    @objc func hideStylePreviewAnimate(timer: Timer) {
+        self.stylePreviewAnimation = UIViewPropertyAnimator(duration: 1, curve: .easeOut, animations: {
+            self.stylePreviewImageView.alpha = 0.0
+            self.stylePreviewImageBorder.alpha = 0.0
+        })
+        self.stylePreviewAnimation!.addCompletion({ _ in
+            self.hideStylePreview()
+        })
+        self.stylePreviewAnimation!.startAnimation()
+    }
+    
+    func hideStylePreview() -> Void {
+        self.stylePreviewAnimation?.stopAnimation(true)
+        self.stylePreviewImageView.isHidden = true
+        self.stylePreviewImageBorder.isHidden = true
+        self.stylePreviewImageView.alpha = 1.0
+        self.stylePreviewImageBorder.alpha = 0.9
     }
     
 }
