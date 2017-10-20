@@ -234,6 +234,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.displayingVideo) {
             self.displayingVideo = false
             self.videoTimer!.invalidate()
+            let oldStyle = self.currentStyle
+            self.currentStyle = 0
+            self.updateStyle(oldStyle: oldStyle)
         }
         if(isRearCamera) {
             rearCameraSession.startRunning()
