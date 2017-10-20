@@ -27,6 +27,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var isStylizingVideo = false
     var recordingVideo = false
     var displayingVideo = false
+    var finishedVideoStyle = false
     var videoStyleWasInterrupted = false
     var videoFrames: [UIImage] = []
     var stylizedVideoFrames: [UIImage] = []
@@ -239,6 +240,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
+        if(self.isStylizingVideo) {
+            let old_style = self.currentStyle
+            self.currentStyle = 0
+            updateStyle(oldStyle: old_style)
+            return
+        }
         if(self.displayingVideo) {
             self.displayingVideo = false
             self.videoTimer!.invalidate()
@@ -295,7 +302,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 while(self.isStylizingVideo) {} //busy wait on a separate thread
             }
             self.saveImageButton.isEnabled = false
-            self.clearImageButton.isEnabled = false
             self.videoStyleProgressBar.progress = 0;
             self.videoStyleProgressBar.isHidden = false
             DispatchQueue.global().async {
@@ -303,6 +309,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 self.stylizedVideoFrames = []
                 for (index, frame) in self.videoFrames.enumerated() {
                     if(self.videoStyleWasInterrupted) {break}
+                    if(index == self.videoFrames.count - 1) {self.finishedVideoStyle = true}
                     DispatchQueue.main.async {
                         self.videoStyleProgressBar.progress = Float(index) / Float(self.videoFrames.count)
                     }
@@ -311,15 +318,16 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 self.isStylizingVideo = false
                 self.videoStyleWasInterrupted = false
                 DispatchQueue.main.async {
-                    if(!self.isStylizingVideo) {
+                    if(self.finishedVideoStyle) {
                         self.videoStyleProgressBar.isHidden = true
                         self.saveImageButton.isEnabled = true
-                        self.clearImageButton.isEnabled = true
+                        self.finishedVideoStyle = false
                     }
                 }
             }
         } else {
             self.videoStyleProgressBar.isHidden = true
+            self.saveImageButton.isEnabled = true
         }
         if(oldStyle == 0) {
             self.prevImage = self.imageView.image;
