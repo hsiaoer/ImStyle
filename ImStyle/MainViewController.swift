@@ -29,8 +29,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var displayingVideo = false
     var finishedVideoStyle = false
     var videoStyleWasInterrupted = false
-    var videoFrames: [UIImage] = []
-    var stylizedVideoFrames: [UIImage] = []
+    var videoFrames: [[UIImage]] = []
+    var numFramesRendered: [Int] = []
     var videoPlaybackFrame = 0
     
     private var videoTimer : Timer? = nil
@@ -108,6 +108,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
         self.videoStyleProgressBar.isHidden = true
+        
+        for _ in 0..<modelList.count {
+            self.videoFrames.append([])
+            self.numFramesRendered.append(0)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -189,21 +194,20 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveImageButton.isEnabled = false
         self.recordingVideo = true
         self.videoPlaybackFrame = 0
-        self.videoFrames = []
     }
     
     @objc func saveFrame(){
-        self.videoFrames.append(self.imageView.image!)
+        self.videoFrames[0].append(self.imageView.image!)
     }
     
     @objc func renderVideoFrame() {
-        if(self.currentStyle == 0 || self.videoFrames.count != self.stylizedVideoFrames.count) {
-            self.imageView.image = self.videoFrames[self.videoPlaybackFrame]
+        if(self.currentStyle == 0 || self.videoFrames[0].count != self.videoFrames[self.currentStyle].count) {
+            self.imageView.image = self.videoFrames[0][self.videoPlaybackFrame]
         } else {
-            self.imageView.image = self.stylizedVideoFrames[self.videoPlaybackFrame]
+            self.imageView.image = self.videoFrames[self.currentStyle][self.videoPlaybackFrame]
         }
         self.videoPlaybackFrame += 1;
-        if(self.videoPlaybackFrame == self.videoFrames.count) {
+        if(self.videoPlaybackFrame == self.videoFrames[0].count) {
             self.videoPlaybackFrame = 0;
         }
     }
@@ -240,6 +244,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
+        for index in 0..<self.videoFrames.count {
+            self.videoFrames[index] = []
+            self.numFramesRendered[index] = 0
+        }
         if(self.isStylizingVideo) {
             let old_style = self.currentStyle
             self.currentStyle = 0
@@ -293,6 +301,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     func updateStyle(oldStyle: Int) {
+        self.showStylePreview()
         if(self.isStylizingVideo) {
             self.videoStyleWasInterrupted = true
         }
@@ -301,19 +310,27 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             DispatchQueue.global().sync {
                 while(self.isStylizingVideo) {} //busy wait on a separate thread
             }
+            if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
+                self.saveImageButton.isEnabled = true
+                self.videoStyleProgressBar.isHidden = true
+                return
+            }
             self.saveImageButton.isEnabled = false
             self.videoStyleProgressBar.progress = 0;
             self.videoStyleProgressBar.isHidden = false
             DispatchQueue.global().async {
                 self.isStylizingVideo = true
-                self.stylizedVideoFrames = []
-                for (index, frame) in self.videoFrames.enumerated() {
+                let style = self.currentStyle // thread-safe constant for which style this thread is working on
+                for frame in self.videoFrames[0][self.numFramesRendered[style]..<self.videoFrames[0].count] {
                     if(self.videoStyleWasInterrupted) {break}
-                    if(index == self.videoFrames.count - 1) {self.finishedVideoStyle = true}
-                    DispatchQueue.main.async {
-                        self.videoStyleProgressBar.progress = Float(index) / Float(self.videoFrames.count)
+                    if(self.numFramesRendered[style] == self.videoFrames[0].count - 1) {
+                        self.finishedVideoStyle = true
                     }
-                    self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
+                    DispatchQueue.main.async {
+                        self.videoStyleProgressBar.progress = Float(self.numFramesRendered[style]) / Float(self.videoFrames[0].count)
+                    }
+                    self.videoFrames[self.currentStyle].append(applyStyleTransfer(uiImage: frame, model: model))
+                    self.numFramesRendered[style] += 1
                 }
                 self.isStylizingVideo = false
                 self.videoStyleWasInterrupted = false
@@ -339,7 +356,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.perform_transfer) {
             self.stylizeAndUpdate()
         }
-        self.showStylePreview()
     }
     
     @IBAction func loadPhotoButtonPressed(_ sender: Any) {
