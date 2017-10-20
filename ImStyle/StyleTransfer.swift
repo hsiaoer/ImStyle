@@ -22,6 +22,7 @@ var model = mosaic_style().model
 //TODO: On memory warning, unload these
 let mosaic_style_ = mosaic_style().model
 let udnie_style_  = udnie_style().model
+let models = [mosaic_style_, udnie_style_]
 
 func setModel(targetModel: String) {
     switch targetModel {
