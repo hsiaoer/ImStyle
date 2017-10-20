@@ -27,6 +27,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var isStylizingVideo = false
     var recordingVideo = false
     var displayingVideo = false
+    var videoStyleWasInterrupted = false
     var videoFrames: [UIImage] = []
     var stylizedVideoFrames: [UIImage] = []
     var videoPlaybackFrame = 0
@@ -195,7 +196,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @objc func renderVideoFrame() {
-        if(self.currentStyle == 0 || self.isStylizingVideo) {
+        if(self.currentStyle == 0 || self.videoFrames.count != self.stylizedVideoFrames.count) {
             self.imageView.image = self.videoFrames[self.videoPlaybackFrame]
         } else {
             self.imageView.image = self.stylizedVideoFrames[self.videoPlaybackFrame]
@@ -285,26 +286,36 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     func updateStyle(oldStyle: Int) {
+        if(self.isStylizingVideo) {
+            self.videoStyleWasInterrupted = true
+        }
         setModel(targetModel: modelList[self.currentStyle])
         if(self.displayingVideo && self.currentStyle != 0) {
+            DispatchQueue.global().sync {
+                while(self.isStylizingVideo) {} //busy wait on a separate thread
+            }
             self.saveImageButton.isEnabled = false
             self.clearImageButton.isEnabled = false
+            self.videoStyleProgressBar.progress = 0;
             self.videoStyleProgressBar.isHidden = false
-            self.isStylizingVideo = true
             DispatchQueue.global().async {
-                    self.stylizedVideoFrames = []
+                self.isStylizingVideo = true
+                self.stylizedVideoFrames = []
                 for (index, frame) in self.videoFrames.enumerated() {
+                    if(self.videoStyleWasInterrupted) {break}
                     DispatchQueue.main.async {
                         self.videoStyleProgressBar.progress = Float(index) / Float(self.videoFrames.count)
                     }
                     self.stylizedVideoFrames.append(applyStyleTransfer(uiImage: frame, model: model))
                 }
+                self.isStylizingVideo = false
+                self.videoStyleWasInterrupted = false
                 DispatchQueue.main.async {
-                    self.videoStyleProgressBar.isHidden = true
-                    self.videoStyleProgressBar.progress = 0;
-                    self.saveImageButton.isEnabled = true
-                    self.clearImageButton.isEnabled = true
-                    self.isStylizingVideo = false
+                    if(!self.isStylizingVideo) {
+                        self.videoStyleProgressBar.isHidden = true
+                        self.saveImageButton.isEnabled = true
+                        self.clearImageButton.isEnabled = true
+                    }
                 }
             }
         }
