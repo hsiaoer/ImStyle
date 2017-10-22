@@ -28,7 +28,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var isStylizingVideo = false
     var recordingVideo = false
     var displayingVideo = false
-    var finishedVideoStyle = false
     var videoStyleWasInterrupted = false
     var videoFrames: [[UIImage]] = []
     var numFramesRendered: [Int] = []
@@ -50,10 +49,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.stylePreviewImageBorder.layer.cornerRadius = 4
         
         self.clearImageButton.isEnabled = false
-        
-        //This only removes constraints that are self-identified by the progress view
-        //In this case, that is the 'width' constraint
-        self.progressView.removeConstraints(self.progressView.constraints)
         
         self.rearCaptureDevice = rearCamera
         self.frontCaptureDevice = frontCamera
@@ -321,6 +316,21 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         updateStyle(oldStyle: oldStyle)
     }
     
+    func updateProgressView(frames: Int) {
+        if(self.videoFrames[0].count == 0) {return}
+        self.progressView.frame = CGRect(
+            x: self.stylePreviewImageView!.frame.minX +
+                (CGFloat(frames) /
+                    CGFloat(self.videoFrames[0].count) *
+                    self.stylePreviewImageView!.frame.width),
+            y: self.stylePreviewImageView!.frame.minY,
+            width: self.stylePreviewImageView!.frame.width *
+                (1.0 - CGFloat(frames) /
+                    CGFloat(self.videoFrames[0].count)),
+            height: self.stylePreviewImageView!.frame.height
+        )
+    }
+    
     func updateStyle(oldStyle: Int) {
         self.showStylePreview()
         if(self.isStylizingVideo) {
@@ -328,40 +338,33 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
         setModel(targetModel: modelList[self.currentStyle])
         if(self.displayingVideo && self.currentStyle != 0) {
+            self.progressView.isHidden = false
             DispatchQueue.global().sync {
                 while(self.isStylizingVideo) {} //busy wait on a separate thread
             }
             if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
                 self.saveImageButton.isEnabled = true
+                print("Spot A")
                 self.progressView.isHidden = true
                 return
             }
             self.saveImageButton.isEnabled = false
-            self.progressView.isHidden = false
             DispatchQueue.global().async {
                 self.isStylizingVideo = true
+                var finishedVideoStyle = false
                 let style = self.currentStyle // thread-safe constant for which style this thread is working on
                 for frame in self.videoFrames[0][self.numFramesRendered[style]..<self.videoFrames[0].count] {
                     if(self.videoStyleWasInterrupted) {break}
                     self.numFramesRendered[style] += 1
                     if(self.numFramesRendered[style] == self.videoFrames[0].count) {
-                        self.finishedVideoStyle = true
+                        finishedVideoStyle = true
                     }
                     DispatchQueue.main.async {
-                        if(self.finishedVideoStyle) {
+                        if(finishedVideoStyle) {
+                            print("Spot B")
                             self.progressView.isHidden = true
                         } else {
-                            self.progressView.frame = CGRect(
-                                x: self.stylePreviewImageView!.frame.minX +
-                                    (CGFloat(self.numFramesRendered[style]) /
-                                    CGFloat(self.videoFrames[0].count) *
-                                    self.stylePreviewImageView!.frame.width),
-                                y: self.stylePreviewImageView!.frame.minY,
-                                width: self.stylePreviewImageView!.frame.width *
-                                    (1.0 - CGFloat(self.numFramesRendered[style]) /
-                                    CGFloat(self.videoFrames[0].count)),
-                                height: self.stylePreviewImageView!.frame.height
-                            )
+                            self.updateProgressView(frames: self.numFramesRendered[style])
                         }
                     }
                     self.videoFrames[style].append(applyStyleTransfer(uiImage: frame, model: models[style-1]))
@@ -369,15 +372,14 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 self.isStylizingVideo = false
                 self.videoStyleWasInterrupted = false
                 DispatchQueue.main.async {
-                    if(self.finishedVideoStyle) {
+                    if(finishedVideoStyle) {
                         self.hideStylePreviewAnimate()
                         self.saveImageButton.isEnabled = true
-                        self.finishedVideoStyle = false
                     }
                 }
             }
         } else {
-            self.progressView.isHidden = true
+            self.updateProgressView(frames: self.videoFrames[0].count)
             self.saveImageButton.isEnabled = true
         }
         if(oldStyle == 0 && !self.displayingVideo) {
@@ -436,7 +438,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
         if (self.currentStyle != 0) {
             self.stylePreviewImageView.image = UIImage(named: modelList[self.currentStyle] + "-source-image")
-            //        self.stylePreviewImageView.alpha = 1
             self.stylePreviewImageView.isHidden = false
             self.stylePreviewImageBorder.isHidden = false
             self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
