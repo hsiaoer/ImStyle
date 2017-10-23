@@ -22,6 +22,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     let rearCameraSession = AVCaptureSession()
     let num_styles = modelList.count
     var stylePreviewAnimation: UIViewPropertyAnimator?
+    var latestRawInputFrame: UIImage?
     var perform_transfer = false
     var currentStyle = 0
     var isStylizingVideo = false
@@ -39,7 +40,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     private var isRearCamera = true
     private var frontCaptureDevice: AVCaptureDevice?
     private var rearCaptureDevice: AVCaptureDevice?
-    private var prevImage: UIImage?
     private let image_size = 720
     
     override func viewDidLoad() {
@@ -53,6 +53,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         
         self.rearCaptureDevice = rearCamera
         self.frontCaptureDevice = frontCamera
+        
+        for _ in 0..<modelList.count {
+            self.videoFrames.append([])
+            self.numFramesRendered.append(0)
+        }
         
         do {
             let frontInput = try AVCaptureDeviceInput(device: frontCaptureDevice!)
@@ -108,11 +113,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
         self.videoStyleProgressBar.isHidden = true
-        
-        for _ in 0..<modelList.count {
-            self.videoFrames.append([])
-            self.numFramesRendered.append(0)
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -138,18 +138,15 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             let img = UIImage(ciImage: ciImage).resizeTo(CGSize(width: 720, height: 720))
             if let uiImage = img {
                 var outImage : UIImage
-                if (perform_transfer) {
-                    if(!isRearCamera){
-                        self.prevImage = UIImage(cgImage: uiImage.cgImage!, scale: 1.0, orientation: .upMirrored)
-                    } else {
-                        self.prevImage = uiImage
-                    }
-                    outImage = applyStyleTransfer(uiImage: uiImage, model: model)
+                if(!isRearCamera){
+                    outImage = UIImage(cgImage: uiImage.cgImage!, scale: 1.0, orientation: .upMirrored)
                 } else {
-                    outImage = uiImage;
+                    outImage = uiImage
                 }
-                if (!isRearCamera) {
-                    outImage = UIImage(cgImage: outImage.cgImage!, scale: 1.0, orientation: .upMirrored)
+                self.latestRawInputFrame = outImage
+                if (perform_transfer) {
+                    outImage = applyStyleTransfer(uiImage: outImage, model: model)
+                    self.videoFrames[self.currentStyle] = [outImage]
                 }
                 DispatchQueue.main.async {
                     self.updateOutputImage(uiImage: outImage);
@@ -187,6 +184,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             print("TODO: alert user that you can't record live video in style")
             return
         }
+        for index in 0..<modelList.count {
+            self.videoFrames[index] = []
+            self.numFramesRendered[index] = 0
+        }
         self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(saveFrame), userInfo: nil, repeats: true)
         self.loadImageButton.isHidden = true
         self.loadImageButton.isEnabled = false
@@ -201,7 +202,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @objc func renderVideoFrame() {
-        if(self.currentStyle == 0 || self.videoFrames[0].count != self.videoFrames[self.currentStyle].count) {
+        //print("currentStyle: \(self.currentStyle), self.videoFrames[0].count: \(self.videoFrames[0].count), self.videoFrames[self.currentStyle].count: \(self.videoFrames[self.currentStyle].count)")
+        if(self.currentStyle == 0 || self.videoFrames[0].count > self.videoFrames[self.currentStyle].count) {
             self.imageView.image = self.videoFrames[0][self.videoPlaybackFrame]
         } else {
             self.imageView.image = self.videoFrames[self.currentStyle][self.videoPlaybackFrame]
@@ -216,6 +218,16 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.videoTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(startVideo), userInfo: nil, repeats: false)
     }
     
+    func stylizeSingleFrame() {
+        DispatchQueue.global().async {
+            while(self.videoFrames[0].count == 0) {} // busy wait until new frame is ready
+            for (index, model) in models.enumerated() {
+                let image = self.videoFrames[0][0].scaled(to: CGSize(width: self.image_size, height: self.image_size), scalingMode: .aspectFit)
+                self.videoFrames[index+1] = [applyStyleTransfer(uiImage: image, model: model)]
+            }
+        }
+    }
+    
     @IBAction func takePhotoTouchUpInside(_ sender: Any) {
         if(isRearCamera) {
             rearCameraSession.stopRunning()
@@ -228,7 +240,15 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoTimer!.invalidate()
             self.videoTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(renderVideoFrame), userInfo: nil, repeats: true)
         } else {
+            self.videoFrames[0] = [self.latestRawInputFrame!]
+            if(self.currentStyle == 0) {
+                self.updateOutputImage(uiImage: self.latestRawInputFrame!);
+            }
+            for index in 1..<self.videoFrames.count {
+                self.videoFrames[index] = []
+            }
             self.videoTimer!.invalidate()
+            self.stylizeSingleFrame()
         }
         self.toggleCameraButton.isEnabled = false
         self.toggleCameraButton.isHidden = true
@@ -326,15 +346,16 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                 self.isStylizingVideo = true
                 let style = self.currentStyle // thread-safe constant for which style this thread is working on
                 for frame in self.videoFrames[0][self.numFramesRendered[style]..<self.videoFrames[0].count] {
+                    print("STYLIZING with style \(style). Completed \(self.numFramesRendered[style]) frame(s) so far")
                     if(self.videoStyleWasInterrupted) {break}
-                    if(self.numFramesRendered[style] == self.videoFrames[0].count - 1) {
+                    self.numFramesRendered[style] += 1
+                    if(self.numFramesRendered[style] == self.videoFrames[0].count) {
                         self.finishedVideoStyle = true
                     }
                     DispatchQueue.main.async {
                         self.videoStyleProgressBar.progress = Float(self.numFramesRendered[style]) / Float(self.videoFrames[0].count)
                     }
-                    self.videoFrames[self.currentStyle].append(applyStyleTransfer(uiImage: frame, model: model))
-                    self.numFramesRendered[style] += 1
+                    self.videoFrames[style].append(applyStyleTransfer(uiImage: frame, model: models[style-1]))
                 }
                 self.isStylizingVideo = false
                 self.videoStyleWasInterrupted = false
@@ -350,12 +371,13 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoStyleProgressBar.isHidden = true
             self.saveImageButton.isEnabled = true
         }
-        if(oldStyle == 0) {
-            self.prevImage = self.imageView.image;
+        if(oldStyle == 0 && !self.displayingVideo) {
+            self.videoFrames[0] = [self.imageView.image!];
         }
         self.perform_transfer = self.currentStyle != 0
-        if(!rearCameraSession.isRunning && !frontCameraSession.isRunning) { // if we're looking at a single image
-            self.imageView.image = self.prevImage;
+        if(!rearCameraSession.isRunning && !frontCameraSession.isRunning) {
+            // if we're looking at a single image TODO look @ this (maybe && !self.displayingVideo
+            self.imageView.image = self.videoFrames[0][0];
         }
         if(self.perform_transfer) {
             self.stylizeAndUpdate()
@@ -391,9 +413,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     func stylizeAndUpdate() {
-        let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
-        let stylized_image = applyStyleTransfer(uiImage: image, model: model)
-        self.imageView.image = stylized_image
+        if(self.videoFrames[self.currentStyle].count == 0) {
+            let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
+            self.videoFrames[self.currentStyle] = [applyStyleTransfer(uiImage: image, model: model)]
+        }
+        self.imageView.image = self.videoFrames[self.currentStyle][0]
     }
     
     func showStylePreview() {
@@ -444,7 +468,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         
         // save to imageView
         self.imageView.image = image
-        self.prevImage = image
+        self.videoFrames[0][0] = image
         if(self.currentStyle != 0) {
             self.stylizeAndUpdate()
         }
