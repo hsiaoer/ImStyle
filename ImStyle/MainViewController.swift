@@ -14,7 +14,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var stylePreviewImageView: UIImageView!
     @IBOutlet weak var stylePreviewImageBorder: UIView!
     @IBOutlet weak var toggleCameraButton: UIButton!
-    @IBOutlet weak var videoStyleProgressBar: UIProgressView!
+    @IBOutlet weak var progressView: UIView!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -28,7 +28,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var isStylizingVideo = false
     var recordingVideo = false
     var displayingVideo = false
-    var finishedVideoStyle = false
     var videoStyleWasInterrupted = false
     var videoFrames: [[UIImage]] = []
     var numFramesRendered: [Int] = []
@@ -112,7 +111,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isEnabled = false
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
-        self.videoStyleProgressBar.isHidden = true
+        self.progressView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -268,12 +267,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             self.videoFrames[index] = []
             self.numFramesRendered[index] = 0
         }
-        if(self.isStylizingVideo) {
-            let old_style = self.currentStyle
-            self.currentStyle = 0
-            updateStyle(oldStyle: old_style)
-            return
-        }
         if(self.displayingVideo) {
             self.displayingVideo = false
             self.videoTimer!.invalidate()
@@ -286,7 +279,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         let oldStyle = self.currentStyle
         self.currentStyle = 0
         self.updateStyle(oldStyle: oldStyle)
-        
+
         self.takePhotoButton.isEnabled = true
         self.takePhotoButton.isHidden = false
         self.clearImageButton.isEnabled = false
@@ -324,6 +317,21 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         updateStyle(oldStyle: oldStyle)
     }
     
+    func updateProgressView(frames: Int) {
+        if(self.videoFrames[0].count == 0) {return}
+        self.progressView.frame = CGRect(
+            x: self.stylePreviewImageView!.frame.minX +
+                (CGFloat(frames) /
+                    CGFloat(self.videoFrames[0].count) *
+                    self.stylePreviewImageView!.frame.width),
+            y: self.stylePreviewImageView!.frame.minY,
+            width: self.stylePreviewImageView!.frame.width *
+                (1.0 - CGFloat(frames) /
+                    CGFloat(self.videoFrames[0].count)),
+            height: self.stylePreviewImageView!.frame.height
+        )
+    }
+    
     func updateStyle(oldStyle: Int) {
         self.showStylePreview()
         if(self.isStylizingVideo) {
@@ -331,44 +339,48 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
         setModel(targetModel: modelList[self.currentStyle])
         if(self.displayingVideo && self.currentStyle != 0) {
+            self.progressView.isHidden = false
             DispatchQueue.global().sync {
                 while(self.isStylizingVideo) {} //busy wait on a separate thread
             }
             if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
                 self.saveImageButton.isEnabled = true
-                self.videoStyleProgressBar.isHidden = true
+                print("Spot A")
+                self.progressView.isHidden = true
                 return
             }
             self.saveImageButton.isEnabled = false
-            self.videoStyleProgressBar.progress = 0;
-            self.videoStyleProgressBar.isHidden = false
             DispatchQueue.global().async {
                 self.isStylizingVideo = true
+                var finishedVideoStyle = false
                 let style = self.currentStyle // thread-safe constant for which style this thread is working on
                 for frame in self.videoFrames[0][self.numFramesRendered[style]..<self.videoFrames[0].count] {
-                    print("STYLIZING with style \(style). Completed \(self.numFramesRendered[style]) frame(s) so far")
                     if(self.videoStyleWasInterrupted) {break}
                     self.numFramesRendered[style] += 1
                     if(self.numFramesRendered[style] == self.videoFrames[0].count) {
-                        self.finishedVideoStyle = true
+                        finishedVideoStyle = true
                     }
                     DispatchQueue.main.async {
-                        self.videoStyleProgressBar.progress = Float(self.numFramesRendered[style]) / Float(self.videoFrames[0].count)
+                        if(finishedVideoStyle) {
+                            print("Spot B")
+                            self.progressView.isHidden = true
+                        } else {
+                            self.updateProgressView(frames: self.numFramesRendered[style])
+                        }
                     }
                     self.videoFrames[style].append(applyStyleTransfer(uiImage: frame, model: models[style-1]))
                 }
                 self.isStylizingVideo = false
                 self.videoStyleWasInterrupted = false
                 DispatchQueue.main.async {
-                    if(self.finishedVideoStyle) {
-                        self.videoStyleProgressBar.isHidden = true
+                    if(finishedVideoStyle) {
+                        self.hideStylePreviewAnimate()
                         self.saveImageButton.isEnabled = true
-                        self.finishedVideoStyle = false
                     }
                 }
             }
         } else {
-            self.videoStyleProgressBar.isHidden = true
+            self.updateProgressView(frames: self.videoFrames[0].count)
             self.saveImageButton.isEnabled = true
         }
         if(oldStyle == 0 && !self.displayingVideo) {
@@ -427,14 +439,14 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
         if (self.currentStyle != 0) {
             self.stylePreviewImageView.image = UIImage(named: modelList[self.currentStyle] + "-source-image")
-            //        self.stylePreviewImageView.alpha = 1
             self.stylePreviewImageView.isHidden = false
             self.stylePreviewImageBorder.isHidden = false
-            self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.8, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
+            self.stylePreviewTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(hideStylePreviewAnimate), userInfo: nil, repeats: false)
         }
     }
     
-    @objc func hideStylePreviewAnimate(timer: Timer) {
+    @objc func hideStylePreviewAnimate() {
+        if(self.isStylizingVideo) {return}
         self.stylePreviewAnimation = UIViewPropertyAnimator(duration: 1, curve: .easeOut, animations: {
             self.stylePreviewImageView.alpha = 0.0
             self.stylePreviewImageBorder.alpha = 0.0
@@ -465,10 +477,16 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             return
         }
+
+        //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
+        for index in 0..<self.videoFrames.count {
+            self.videoFrames[index] = []
+            self.numFramesRendered[index] = 0
+        }
         
         // save to imageView
         self.imageView.image = image
-        self.videoFrames[0][0] = image
+        self.videoFrames[0] = [image]
         if(self.currentStyle != 0) {
             self.stylizeAndUpdate()
         }
@@ -478,7 +496,11 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         self.loadImageButton.isHidden = true
         
         self.takePhotoButton.isEnabled = false
+        self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
+        self.saveImageButton.isHidden = false
+        self.toggleCameraButton.isEnabled = false
+        self.toggleCameraButton.isHidden = true
         
         if(isRearCamera) {
             rearCameraSession.stopRunning()
