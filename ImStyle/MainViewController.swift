@@ -475,7 +475,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         defer {
             picker.dismiss(animated: true)
         }
-        
+
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
             for index in 0..<self.videoFrames.count {
@@ -490,15 +490,15 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
                 self.stylizeAndUpdate()
             }
         }
-        else if let videoUrl = info[UIImagePickerControllerPHAsset] as? NSURL {
+        else if let videoUrl = info["UIImagePickerControllerMediaURL"] as? NSURL {
             //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
             for index in 0..<self.videoFrames.count {
                 self.videoFrames[index] = []
                 self.numFramesRendered[index] = 0
             }
             
-            self.displayingVideo = true
             self.videoFormatHandler.videoToArray(videoResource: videoUrl)
+            self.displayingVideo = true
         }
         else {
             return
