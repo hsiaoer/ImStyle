@@ -40,14 +40,14 @@ class VideoFormatHandler {
         generator.generateCGImagesAsynchronously(forTimes: times as [NSValue], completionHandler: self.frameGenCompletion(reqT:img:actualT:result:err:))
     }
     
-    
     func frameGenCompletion(reqT: CMTime, img: CGImage?, actualT: CMTime, result: AVAssetImageGeneratorResult, err: Error?) -> Void {
         if (img == nil) {
             print("Could not get image: ", err!)
             self.numFramesRequested -= 1
         } else {
             // update the main view controller with the new frame
-            let frame = UIImage(cgImage: img!).scaled(to: CGSize(width: self.imageSize, height: self.imageSize), scalingMode: .aspectFit)
+            var frame = UIImage(cgImage: img!, scale: 1, orientation: UIImageOrientation.right)
+            frame = frame.scaled(to: CGSize(width: self.imageSize, height: self.imageSize), scalingMode: .aspectFill)
             self.mainVC.videoFrames[0].append(frame)
             self.numFramesLoaded += 1
         }
