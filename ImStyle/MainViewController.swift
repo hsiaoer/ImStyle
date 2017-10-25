@@ -33,7 +33,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var numFramesRendered: [Int] = []
     var videoPlaybackFrame = 0
     
-    private var videoTimer : Timer? = nil
+    var videoTimer : Timer? = nil
     private var stylePreviewTimer : Timer? = nil
     private var videoFormatHandler: VideoFormatHandler!
     private var isRearCamera = true
@@ -44,7 +44,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.videoFormatHandler = VideoFormatHandler(mainVC: self)
+        self.videoFormatHandler = VideoFormatHandler(mainVC: self, imageSize: self.image_size, callback: #selector(self.renderVideoFrame))
         
         self.stylePreviewImageView.isHidden = true
         self.stylePreviewImageBorder.isHidden = true
@@ -272,6 +272,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.displayingVideo) {
             self.displayingVideo = false
             self.videoTimer!.invalidate()
+            self.progressView.isHidden = true
         }
         if(isRearCamera) {
             rearCameraSession.startRunning()
@@ -498,7 +499,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             }
             
             self.videoFormatHandler.videoToArray(videoResource: videoUrl)
-            self.displayingVideo = true
         }
         else {
             return
