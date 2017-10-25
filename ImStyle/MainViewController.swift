@@ -348,7 +348,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             }
             if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
                 self.saveImageButton.isEnabled = true
-                print("Spot A")
                 self.progressView.isHidden = true
                 return
             }
@@ -365,7 +364,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                     }
                     DispatchQueue.main.async {
                         if(finishedVideoStyle) {
-                            print("Spot B")
                             self.progressView.isHidden = true
                         } else {
                             self.updateProgressView(frames: self.numFramesRendered[style])
@@ -504,24 +502,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             return
         }
         
-
-//        // get the image
-//        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-//            return
-//        }
-
-//        //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
-//        for index in 0..<self.videoFrames.count {
-//            self.videoFrames[index] = []
-//            self.numFramesRendered[index] = 0
-//        }
-//
-//        // save to imageView
-//        self.imageView.image = image
-//        self.videoFrames[0] = [image]
-//        if(self.currentStyle != 0) {
-//            self.stylizeAndUpdate()
-//        }
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
