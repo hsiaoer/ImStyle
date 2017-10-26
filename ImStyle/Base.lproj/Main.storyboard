@@ -126,13 +126,6 @@
                                     <constraint firstAttribute="height" constant="20" id="YNx-gb-Nqr"/>
                                 </constraints>
                             </stackView>
-                            <view alpha="0.75" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="weg-Jq-D4T">
-                                <rect key="frame" x="115" y="426" width="144" height="144"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="144" id="7cN-4G-5Fb"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ae7-cq-djn">
                                 <rect key="frame" x="328" y="577" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -163,7 +156,6 @@
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="top" secondItem="q1I-ma-Aqc" secondAttribute="top" id="hnA-Uh-mvh"/>
                             <constraint firstItem="0qU-kT-YCK" firstAttribute="bottom" secondItem="Ybc-kP-tAC" secondAttribute="bottom" id="mIH-1R-WYG"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="top" secondItem="nvZ-Fd-sDp" secondAttribute="top" id="qto-C0-4V8"/>
-                            <constraint firstItem="iKA-oc-ihR" firstAttribute="top" secondItem="weg-Jq-D4T" secondAttribute="bottom" id="upI-n0-hSF"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="bottom" secondItem="nvZ-Fd-sDp" secondAttribute="bottom" id="yj1-dD-eIo"/>
                             <constraint firstItem="dPA-3G-PLh" firstAttribute="leading" secondItem="Ybc-kP-tAC" secondAttribute="leading" constant="11" id="z2h-gg-96p"/>
                         </constraints>
@@ -177,7 +169,6 @@
                         <outlet property="clearImageButton" destination="dPA-3G-PLh" id="nsz-qw-dpP"/>
                         <outlet property="imageView" destination="0qU-kT-YCK" id="9Dq-N1-eN4"/>
                         <outlet property="loadImageButton" destination="f23-Bz-one" id="S4r-au-O96"/>
-                        <outlet property="progressView" destination="weg-Jq-D4T" id="cad-7v-vYM"/>
                         <outlet property="saveImageButton" destination="nvZ-Fd-sDp" id="k5j-i8-v8B"/>
                         <outlet property="shareButton" destination="ae7-cq-djn" id="FLL-jZ-UHo"/>
                         <outlet property="stylePreviewImageBorder" destination="057-UY-kxG" id="gcv-Qa-myq"/>
