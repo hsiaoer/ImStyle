@@ -33,9 +33,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var numFramesRendered: [Int] = []
     var videoPlaybackFrame = 0
     
-    private var videoTimer : Timer? = nil
+    var videoTimer : Timer? = nil
     private var stylePreviewTimer : Timer? = nil
-    
+    private var videoFormatHandler: VideoFormatHandler!
     private var isRearCamera = true
     private var frontCaptureDevice: AVCaptureDevice?
     private var rearCaptureDevice: AVCaptureDevice?
@@ -43,6 +43,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.videoFormatHandler = VideoFormatHandler(mainVC: self, imageSize: self.image_size, callback: #selector(self.renderVideoFrame))
         
         self.stylePreviewImageView.isHidden = true
         self.stylePreviewImageBorder.isHidden = true
@@ -270,6 +272,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         if(self.displayingVideo) {
             self.displayingVideo = false
             self.videoTimer!.invalidate()
+            self.progressView.isHidden = true
         }
         if(isRearCamera) {
             rearCameraSession.startRunning()
@@ -345,7 +348,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             }
             if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
                 self.saveImageButton.isEnabled = true
-                print("Spot A")
                 self.progressView.isHidden = true
                 return
             }
@@ -362,7 +364,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                     }
                     DispatchQueue.main.async {
                         if(finishedVideoStyle) {
-                            print("Spot B")
                             self.progressView.isHidden = true
                         } else {
                             self.updateProgressView(frames: self.numFramesRendered[style])
@@ -405,6 +406,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self as UIImagePickerControllerDelegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            imagePicker.mediaTypes = ["public.image", "public.movie"]
             self.present(imagePicker, animated: true)
         } else {
             print("Cannot open photo library")
@@ -473,23 +475,33 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             picker.dismiss(animated: true)
         }
 
-        // get the image
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
+            for index in 0..<self.videoFrames.count {
+                self.videoFrames[index] = []
+                self.numFramesRendered[index] = 0
+            }
+            
+            // save to imageView
+            self.imageView.image = image
+            self.videoFrames[0] = [image]
+            if(self.currentStyle != 0) {
+                self.stylizeAndUpdate()
+            }
+        }
+        else if let videoUrl = info["UIImagePickerControllerMediaURL"] as? NSURL {
+            //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
+            for index in 0..<self.videoFrames.count {
+                self.videoFrames[index] = []
+                self.numFramesRendered[index] = 0
+            }
+            
+            self.videoFormatHandler.videoToArray(videoResource: videoUrl)
+        }
+        else {
             return
         }
-
-        //make sure that the frames arrays are empty (this is almost always redundant, but can protect from an occasional thread collision issue.
-        for index in 0..<self.videoFrames.count {
-            self.videoFrames[index] = []
-            self.numFramesRendered[index] = 0
-        }
         
-        // save to imageView
-        self.imageView.image = image
-        self.videoFrames[0] = [image]
-        if(self.currentStyle != 0) {
-            self.stylizeAndUpdate()
-        }
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
