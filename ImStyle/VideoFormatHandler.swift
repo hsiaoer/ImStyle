@@ -88,6 +88,16 @@ class VideoFormatHandler {
         }
     }
     
+    func prepareAndShareVideo(frames: [UIImage]) {
+        self.removeTempVideoFile(videoUrl: self.settings.outputURL)
+        self.frames = frames
+        self.frameNum = 0
+        self.videoWriter.start()
+        self.videoWriter.render(appendPixelBuffers: appendPixelBuffers) {
+            self.mainVC.shareVideo(videoUrl: self.settings.outputURL)
+        }
+    }
+    
     func appendPixelBuffers(writer: VideoWriter) -> Bool {
         // kTimescale 600
         let frameDuration = CMTimeMake(Int64(600 / settings.fps), 600)

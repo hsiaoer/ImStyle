@@ -188,7 +188,32 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func shareAction(_ sender: Any) {
+        if (self.displayingVideo) {
+            self.videoFormatHandler.prepareAndShareVideo(frames: self.videoFrames[self.currentStyle])
+        } else {
+            let toShare = [self.imageView.image!]
+            // sharing: https://stackoverflow.com/questions/35931946/basic-example-for-sharing-text-or-image-with-uiactivityviewcontroller-in-swift
+            let activityViewController = UIActivityViewController(activityItems: toShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            
+            // exclude some activity types from the list (optional)
+            // activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+            
+            // present the view controller
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+    }
     
+    func shareVideo(videoUrl: NSURL) {
+        let toShare = [videoUrl]
+        let activityViewController = UIActivityViewController(activityItems: toShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // exclude some activity types from the list (optional)
+        // activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     @objc func startVideo() {
