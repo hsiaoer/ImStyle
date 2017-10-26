@@ -8,7 +8,6 @@
 
 import UIKit
 import Foundation
-import Photos
 
 extension UIViewController {
 
@@ -29,25 +28,10 @@ extension UIViewController {
         }
     }
     
-    func saveVideoToPhotoLibrary(videoUrl: NSURL) {
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: videoUrl as URL)
-        }) { (success, err) in
-            if !success {
-                print("Could not save video: ", err!)
-            } else {
-                self.removeTempVideoFile(videoUrl: videoUrl)
-            }
-        }
-    }
-    
-    func removeTempVideoFile(videoUrl: NSURL) {
-        do {
-            try FileManager.default.removeItem(atPath: videoUrl.path!)
-        }
-        catch _ as NSError {
-            print("Could not remove file")
-        }
+    func videoCallbackOnSuccess() {
+        let ac = UIAlertController(title: "Saved!", message: "Your stylized video has been saved to your photos.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
 
 }
