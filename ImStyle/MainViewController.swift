@@ -173,11 +173,16 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
 
     @IBAction func save_image(_ sender: Any) {
-        UIGraphicsBeginImageContext(CGSize(width: self.imageView.frame.size.width, height: self.imageView.frame.size.height))
-        self.imageView.drawHierarchy(in: CGRect(x: 0.0, y: 0.0, width: self.imageView.frame.size.width, height: self.imageView.frame.size.height), afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        self.saveToPhotoLibrary(uiImage: image!)
+        if (self.displayingVideo) {
+            let videoUrl = self.videoFormatHandler.makeVideo(self.videoFrames[self.currentStyle])
+            self.saveVideoToPhotoLibrary(videoUrl: videoUrl)
+        } else {
+            UIGraphicsBeginImageContext(CGSize(width: self.imageView.frame.size.width, height: self.imageView.frame.size.height))
+            self.imageView.drawHierarchy(in: CGRect(x: 0.0, y: 0.0, width: self.imageView.frame.size.width, height: self.imageView.frame.size.height), afterScreenUpdates: true)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            self.saveToPhotoLibrary(uiImage: image!)
+        }
     }
     
     @objc func startVideo() {
