@@ -15,6 +15,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var stylePreviewImageBorder: UIView!
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var progressView: UIView!
+    @IBOutlet weak var shareButton: UIButton!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
     let rearCamera = AVCaptureDevice.default(for: .video)!
@@ -113,6 +114,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isEnabled = false
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
+        self.shareButton.isEnabled = false
+        self.shareButton.isHidden = true
         self.progressView.isHidden = true
     }
     
@@ -184,6 +187,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         }
     }
     
+    @IBAction func shareAction(_ sender: Any) {
+    
+    }
+    
     @objc func startVideo() {
         if(self.currentStyle != 0) {
             print("TODO: alert user that you can't record live video in style")
@@ -198,6 +205,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.loadImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
         self.saveImageButton.isEnabled = false
+        self.shareButton.isHidden = true
+        self.shareButton.isEnabled = false
         self.recordingVideo = true
         self.videoPlaybackFrame = 0
     }
@@ -261,6 +270,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
         self.saveImageButton.isHidden = false
+        self.shareButton.isEnabled = true
+        self.shareButton.isHidden = false
         self.clearImageButton.isEnabled = true
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
@@ -297,6 +308,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.toggleCameraButton.isEnabled = true
         self.saveImageButton.isEnabled = false
         self.saveImageButton.isHidden = true
+        self.shareButton.isEnabled = false
+        self.shareButton.isHidden = true
     }
     
     @IBAction func toggleCamera(_ sender: Any) {
@@ -352,10 +365,12 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
             }
             if(self.numFramesRendered[self.currentStyle] == self.videoFrames[0].count) {
                 self.saveImageButton.isEnabled = true
+                self.shareButton.isEnabled = true
                 self.progressView.isHidden = true
                 return
             }
             self.saveImageButton.isEnabled = false
+            self.shareButton.isEnabled = false
             DispatchQueue.global().async {
                 self.isStylizingVideo = true
                 var finishedVideoStyle = false
@@ -381,12 +396,14 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                     if(finishedVideoStyle) {
                         self.hideStylePreviewAnimate()
                         self.saveImageButton.isEnabled = true
+                        self.shareButton.isEnabled = true
                     }
                 }
             }
         } else {
             self.updateProgressView(frames: self.videoFrames[0].count)
             self.saveImageButton.isEnabled = true
+            self.shareButton.isEnabled = true
         }
         if(oldStyle == 0 && !self.displayingVideo) {
             self.videoFrames[0] = [self.imageView.image!];
@@ -515,6 +532,8 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         self.takePhotoButton.isHidden = true
         self.saveImageButton.isEnabled = true
         self.saveImageButton.isHidden = false
+        self.shareButton.isEnabled = true
+        self.shareButton.isHidden = false
         self.toggleCameraButton.isEnabled = false
         self.toggleCameraButton.isHidden = true
         
