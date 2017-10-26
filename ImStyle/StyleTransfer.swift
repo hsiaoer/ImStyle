@@ -15,14 +15,15 @@ import Photos
 import CoreImage
 import VideoToolbox
 
-let modelNames = ["No Style", "Mosaic", "Udnie"]
-let modelList = ["none", "mosaic_style", "udnie_style"]
+let modelNames = ["No Style", "Mosaic", "Udnie", "Wave"]
+let modelList = ["none", "mosaic_style", "udnie_style", "wave_style"]
 var model = mosaic_style().model
 
 //TODO: On memory warning, unload these
 let mosaic_style_ = mosaic_style().model
 let udnie_style_  = udnie_style().model
-let models = [mosaic_style_, udnie_style_]
+let wave_style_ = wave_style().model
+let models = [mosaic_style_, udnie_style_, wave_style_]
 
 func setModel(targetModel: String) {
     switch targetModel {
@@ -30,6 +31,8 @@ func setModel(targetModel: String) {
         model = mosaic_style_
     case "udnie_style":
         model = udnie_style_
+    case "wave_style":
+        model = wave_style_
     default:
         break
     }
@@ -41,6 +44,8 @@ func modelInput(inputImage: CVPixelBuffer) -> MLFeatureProvider {
         return mosaic_styleInput(inputImage: inputImage)
     case "udnie_style":
         return udnie_styleInput(inputImage: inputImage)
+    case "wave_style":
+        return wave_styleInput(inputImage: inputImage)
     // default to mosaic style
     default:
         return mosaic_styleInput(inputImage: inputImage)
