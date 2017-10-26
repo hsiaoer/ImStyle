@@ -14,7 +14,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     @IBOutlet weak var stylePreviewImageView: UIImageView!
     @IBOutlet weak var stylePreviewImageBorder: UIView!
     @IBOutlet weak var toggleCameraButton: UIButton!
-    @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var shareButton: UIButton!
     
     let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
@@ -33,6 +32,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var videoFrames: [[UIImage]] = []
     var numFramesRendered: [Int] = []
     var videoPlaybackFrame = 0
+    var progressView: UIView!
     
     var videoTimer : Timer? = nil
     private var stylePreviewTimer : Timer? = nil
@@ -44,6 +44,11 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.progressView = UIView()
+        self.view.addSubview(progressView)
+        self.progressView.backgroundColor = UIColor.darkGray
+        self.progressView.alpha = 0.75
         
         self.videoFormatHandler = VideoFormatHandler(mainVC: self, imageSize: self.image_size, callback: #selector(self.renderVideoFrame))
         
