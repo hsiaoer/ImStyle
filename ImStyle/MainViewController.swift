@@ -144,7 +144,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         connection.videoOrientation = .portrait
         if let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) {
             let ciImage = CIImage(cvImageBuffer: imageBuffer)
-            let img = UIImage(ciImage: ciImage).resizeTo(CGSize(width: 720, height: 720))
+            let img = UIImage(ciImage: ciImage).resizeTo(CGSize(width: self.image_size, height: self.image_size))
             if let uiImage = img {
                 var outImage : UIImage
                 if(!isRearCamera){
