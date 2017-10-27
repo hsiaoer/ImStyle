@@ -531,8 +531,9 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             }
             
             // save to imageView
-            self.imageView.image = image
-            self.videoFrames[0] = [image]
+            let scaledImage = image.scaled(to: CGSize(width: self.image_size, height: self.image_size))
+            self.imageView.image = scaledImage
+            self.videoFrames[0] = [scaledImage]
             if(self.currentStyle != 0) {
                 self.stylizeAndUpdate()
             }
