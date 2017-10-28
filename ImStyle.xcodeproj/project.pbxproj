@@ -459,11 +459,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 554X9B982N;
+				DEVELOPMENT_TEAM = W93W78DLP2;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ImStyle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyle;
+				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
@@ -476,11 +476,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 554X9B982N;
+				DEVELOPMENT_TEAM = W93W78DLP2;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ImStyle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyle;
+				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
