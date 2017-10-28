@@ -266,6 +266,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         DispatchQueue.global().async {
             while(self.videoFrames[0].count == 0) {} // busy wait until new frame is ready
             for (index, model) in models.enumerated() {
+                if (self.videoFrames[0].count == 0) {break}
                 let image = self.videoFrames[0][0].scaled(to: CGSize(width: self.image_size, height: self.image_size), scalingMode: .aspectFit)
                 self.videoFrames[index+1] = [applyStyleTransfer(uiImage: image, model: model)]
             }
