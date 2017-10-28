@@ -45,6 +45,9 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(cleanMemory), name: Notification.Name("didEnterBackground"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("willEnterForeground"), object: nil)
+        
         self.progressView = UIView()
         self.view.addSubview(progressView)
         self.progressView.backgroundColor = UIColor.darkGray
@@ -513,6 +516,38 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.stylePreviewImageBorder.isHidden = true
         self.stylePreviewImageView.alpha = 1.0
         self.stylePreviewImageBorder.alpha = 0.9
+    }
+    
+    @objc func cleanMemory() {
+        // clean video frames
+        for index in 0..<self.videoFrames.count {
+            self.videoFrames[index] = []
+            self.numFramesRendered[index] = 0
+        }
+        
+        // invalidate timers
+        self.videoTimer?.invalidate()
+        self.stylePreviewTimer?.invalidate()
+        
+        self.currentStyle = 0
+        
+        // ui to default state
+        self.takePhotoButton.isEnabled = true
+        self.takePhotoButton.isHidden = false
+        self.clearImageButton.isEnabled = false
+        self.clearImageButton.isHidden = true
+        self.loadImageButton.isEnabled = true
+        self.loadImageButton.isHidden = false
+        self.toggleCameraButton.isHidden = false
+        self.toggleCameraButton.isEnabled = true
+        self.saveImageButton.isEnabled = false
+        self.saveImageButton.isHidden = true
+        self.shareButton.isEnabled = false
+        self.shareButton.isHidden = true
+    }
+    
+    @objc func reload() {
+        self.rearCameraSession.startRunning()
     }
     
 }
