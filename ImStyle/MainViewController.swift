@@ -48,6 +48,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         NotificationCenter.default.addObserver(self, selector: #selector(cleanMemory), name: Notification.Name("didEnterBackground"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("willEnterForeground"), object: nil)
         
+        loadModels()
+        
         self.progressView = UIView()
         self.view.addSubview(progressView)
         self.progressView.backgroundColor = UIColor.darkGray
@@ -531,6 +533,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.stylePreviewTimer?.invalidate()
         
         self.currentStyle = 0
+        unloadModels()
         
         // ui to default state
         self.takePhotoButton.isEnabled = true
@@ -549,6 +552,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     @objc func reload() {
         self.rearCameraSession.startRunning()
+        loadModels()
     }
     
 }
