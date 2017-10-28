@@ -532,7 +532,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.videoTimer?.invalidate()
         self.stylePreviewTimer?.invalidate()
         
-        self.currentStyle = 0
         unloadModels()
         
         // ui to default state
@@ -552,6 +551,8 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     @objc func reload() {
         self.rearCameraSession.startRunning()
+        self.currentStyle = 0
+        self.perform_transfer = false
         loadModels()
     }
     
