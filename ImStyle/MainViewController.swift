@@ -24,6 +24,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var stylePreviewAnimation: UIViewPropertyAnimator?
     var latestRawInputFrame: UIImage?
     var perform_transfer = false
+    var hitMaxVideoLength = false
     var currentStyle = 0
     var isStylizingVideo = false
     var recordingVideo = false
@@ -245,10 +246,13 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     @objc func saveFrame(){
         self.videoFrames[0].append(self.imageView.image!)
+        if(self.videoFrames[0].count >= 200) {
+            self.takePhotoTouchUpInside(true)
+            self.hitMaxVideoLength = true
+        }
     }
     
     @objc func renderVideoFrame() {
-        //print("currentStyle: \(self.currentStyle), self.videoFrames[0].count: \(self.videoFrames[0].count), self.videoFrames[self.currentStyle].count: \(self.videoFrames[self.currentStyle].count)")
         if(self.currentStyle == 0 || self.videoFrames[0].count > self.videoFrames[self.currentStyle].count) {
             self.imageView.image = self.videoFrames[0][self.videoPlaybackFrame]
         } else {
@@ -276,6 +280,10 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     }
     
     @IBAction func takePhotoTouchUpInside(_ sender: Any) {
+        if(self.hitMaxVideoLength) {
+            self.hitMaxVideoLength = false
+            return
+        }
         if(isRearCamera) {
             rearCameraSession.stopRunning()
         } else {
@@ -309,7 +317,6 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
         self.clearImageButton.isHidden = false
         self.loadImageButton.isEnabled = false
         self.loadImageButton.isHidden = true
-
     }
     
     @IBAction func clearImageAction(_ sender: Any) {
