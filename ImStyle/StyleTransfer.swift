@@ -20,19 +20,23 @@ let modelList = ["none", "mosaic_style", "udnie_style", "wave_style"]
 var model = mosaic_style().model
 
 //TODO: On memory warning, unload these
-let mosaic_style_ = mosaic_style().model
-let udnie_style_  = udnie_style().model
-let wave_style_ = wave_style().model
-let models = [mosaic_style_, udnie_style_, wave_style_]
+//var mosaic_style_ = mosaic_style().model
+//var udnie_style_  = udnie_style().model
+//var wave_style_ = wave_style().model
+//var models = [mosaic_style_, udnie_style_, wave_style_]
+var mosaic_style_: MLModel?
+var udnie_style_: MLModel?
+var wave_style_: MLModel?
+var models: [MLModel] = []
 
 func setModel(targetModel: String) {
     switch targetModel {
     case "mosaic_style":
-        model = mosaic_style_
+        model = mosaic_style_!
     case "udnie_style":
-        model = udnie_style_
+        model = udnie_style_!
     case "wave_style":
-        model = wave_style_
+        model = wave_style_!
     default:
         break
     }
@@ -50,6 +54,20 @@ func modelInput(inputImage: CVPixelBuffer) -> MLFeatureProvider {
     default:
         return mosaic_styleInput(inputImage: inputImage)
     }
+}
+
+func loadModels() {
+    mosaic_style_ = mosaic_style().model
+    udnie_style_  = udnie_style().model
+    wave_style_ = wave_style().model
+    models = [mosaic_style_!, udnie_style_!, wave_style_!]
+}
+
+func unloadModels() {
+    mosaic_style_ = nil
+    udnie_style_ = nil
+    wave_style_ = nil
+    models = []
 }
 
 func applyStyleTransfer(uiImage: UIImage, model: MLModel) -> UIImage {
