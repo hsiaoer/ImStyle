@@ -85,6 +85,7 @@ class VideoFormatHandler {
         self.videoWriter.start()
         self.videoWriter.render(appendPixelBuffers: appendPixelBuffers) {
             self.saveVideoToPhotoLibrary(videoUrl: self.settings.outputURL)
+            self.frames = []
         }
     }
     
@@ -95,6 +96,7 @@ class VideoFormatHandler {
         self.videoWriter.start()
         self.videoWriter.render(appendPixelBuffers: appendPixelBuffers) {
             self.mainVC.shareVideo(videoUrl: self.settings.outputURL)
+            self.frames = []
         }
     }
     
