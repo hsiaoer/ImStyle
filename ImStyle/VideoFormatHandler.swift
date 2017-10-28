@@ -52,7 +52,7 @@ class VideoFormatHandler {
         generator.requestedTimeToleranceBefore = CMTimeMake(1, 15)
         generator.requestedTimeToleranceAfter = CMTimeMake(1, 15)
         
-        let times = Array(stride(from: 0.0, to: Double(CMTimeGetSeconds(asset.duration)), by: self.sampleRate))
+        let times = Array(stride(from: 0.0, to: min(10.0, Double(CMTimeGetSeconds(asset.duration))), by: self.sampleRate))
         self.numFramesRequested = times.count
         generator.generateCGImagesAsynchronously(forTimes: times as [NSValue], completionHandler: self.frameGenCompletion(reqT:img:actualT:result:err:))
     }
