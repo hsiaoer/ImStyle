@@ -463,7 +463,7 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ImStyle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyl;
+				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImSty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
@@ -480,7 +480,7 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ImStyle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImStyl;
+				PRODUCT_BUNDLE_IDENTIFIER = ImageStyle.ImSty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
