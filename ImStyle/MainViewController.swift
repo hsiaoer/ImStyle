@@ -489,7 +489,7 @@ class MainViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     
     func stylizeAndUpdate() {
         if(self.videoFrames[self.currentStyle].count == 0) {
-            let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFit)
+            let image = (self.imageView.image!).scaled(to: CGSize(width: image_size, height: image_size), scalingMode: .aspectFill)
             self.videoFrames[self.currentStyle] = [applyStyleTransfer(uiImage: image, model: model)]
         }
         self.imageView.image = self.videoFrames[self.currentStyle][0]
@@ -579,8 +579,9 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
             }
             
             // save to imageView
-            self.imageView.image = image
-            self.videoFrames[0] = [image]
+            let scaledImage = image.scaled(to: CGSize(width: self.image_size, height: self.image_size), scalingMode: .aspectFill)
+            self.imageView.image = scaledImage
+            self.videoFrames[0] = [scaledImage]
             if(self.currentStyle != 0) {
                 self.stylizeAndUpdate()
             }
