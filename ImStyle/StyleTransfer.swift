@@ -19,11 +19,6 @@ let modelNames = ["No Style", "Mosaic", "Udnie", "Wave", "Water", "Eye"]
 let modelList = ["none", "mosaic_style", "udnie_style", "wave_style", "water_style", "eye_style"]
 var model = mosaic_style().model
 
-//TODO: On memory warning, unload these
-//var mosaic_style_ = mosaic_style().model
-//var udnie_style_  = udnie_style().model
-//var wave_style_ = wave_style().model
-//var models = [mosaic_style_, udnie_style_, wave_style_]
 var mosaic_style_: MLModel?
 var udnie_style_: MLModel?
 var wave_style_: MLModel?
