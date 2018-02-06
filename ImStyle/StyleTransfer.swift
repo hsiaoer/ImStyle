@@ -17,7 +17,7 @@ import VideoToolbox
 
 let modelNames = ["No Style", "Mosaic", "Udnie", "Wave"]
 let modelList = ["none", "mosaic_style", "udnie_style", "wave_style"]
-var model = mosaic_style().model
+var model = mosaic_style().fritz().model
 
 //TODO: On memory warning, unload these
 //var mosaic_style_ = mosaic_style().model
@@ -57,9 +57,9 @@ func modelInput(inputImage: CVPixelBuffer) -> MLFeatureProvider {
 }
 
 func loadModels() {
-    mosaic_style_ = mosaic_style().model
-    udnie_style_  = udnie_style().model
-    wave_style_ = wave_style().model
+    mosaic_style_ = mosaic_style().fritz().model
+    udnie_style_  = udnie_style().fritz().model
+    wave_style_ = wave_style().fritz().model
     models = [mosaic_style_!, udnie_style_!, wave_style_!]
 }
 
