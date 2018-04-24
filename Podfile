@@ -6,7 +6,7 @@ target 'ImStyle' do
   use_frameworks!
 
   # Pods for ImStyle
-  pod 'Fritz', '~> 1.0.0-beta'
+  pod 'Fritz', '~> 1.0.0-beta5'
 
   target 'ImStyleTests' do
     inherit! :search_paths

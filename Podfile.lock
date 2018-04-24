@@ -2,11 +2,15 @@ PODS:
   - Fritz (1.0.0-beta5)
 
 DEPENDENCIES:
-  - Fritz (~> 1.0.0-beta)
+  - Fritz (~> 1.0.0-beta5)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Fritz
 
 SPEC CHECKSUMS:
   Fritz: a3bf484ce949e36748f1b365049be9e5b21a91c9
 
-PODFILE CHECKSUM: 36c53b1b4352a0e091a431f1cdf0fd382f486b4d
+PODFILE CHECKSUM: 1ab70ef5aa753ef697aec977f1f4d1d7c26c5347
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

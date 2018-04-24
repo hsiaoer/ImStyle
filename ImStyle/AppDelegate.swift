@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Fritz
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FritzSDK.setup(models: [
+            udnie_style.self,
+            wave_style.self,
+            mosaic_style.self
+        ]);
         return true
     }
 
